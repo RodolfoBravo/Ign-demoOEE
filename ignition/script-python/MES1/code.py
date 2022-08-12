@@ -16,3 +16,5 @@ def getDefaultTagPath(eqPath):
 			tagPath = tagPath[len('[global]/'):]    #Remove [global]\
 		tagPath = tagPath + '/'
 	return tagPath
+def suma(x,y):
+	return x+y
