@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-09-23T21:47:38Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "updating",
+    "lastModificationSignature": "efc88b3ea24f891ea3b9d24d59721d8a19fbf7046f2fa90bb4f171a200d48f00"
+  }
+}

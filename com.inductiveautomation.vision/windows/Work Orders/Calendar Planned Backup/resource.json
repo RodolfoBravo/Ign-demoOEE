@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-10-14T05:52:43Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "area_sel,areas,otsProg_db,refresh,table,updating_gantt,updating_table,updating_table2",
+    "lastModificationSignature": "313a3056136bda70b8cb955d95f5f74da854c7cbab0d80de9ba96bef57d56e65"
+  }
+}

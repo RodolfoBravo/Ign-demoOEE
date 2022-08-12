@@ -1,0 +1,18 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "javier.fernandez",
+      "timestamp": "2021-01-16T01:22:58Z"
+    },
+    "xml-format-version": 1,
+    "lastModificationSignature": "15916c4ca7de13e4d3ff0efc9d8310c0b707deb91a0b3be3b0e84a6fd8542bd7"
+  }
+}

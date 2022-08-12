@@ -1,0 +1,429 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Dropdown"
+        },
+        "position": {
+          "height": 36,
+          "width": 256,
+          "x": 14.9667,
+          "y": 81.96316840209961
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_0"
+        },
+        "position": {
+          "height": 36,
+          "width": 256,
+          "x": 319.94770639038086,
+          "y": 73.96541696166992
+        },
+        "props": {
+          "options": [
+            {
+              "label": "cero",
+              "value": 0
+            },
+            {
+              "label": "uno",
+              "value": 1
+            }
+          ],
+          "value": 1
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_1"
+        },
+        "position": {
+          "height": 36,
+          "width": 256,
+          "x": 27,
+          "y": 110
+        },
+        "props": {
+          "options": [
+            {
+              "label": "cero",
+              "value": 0
+            },
+            {
+              "label": "uno",
+              "value": 1
+            }
+          ],
+          "value": 0
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_2"
+        },
+        "position": {
+          "height": 36,
+          "width": 256,
+          "x": 355,
+          "y": 118
+        },
+        "props": {
+          "options": [
+            {
+              "label": "cero",
+              "value": 0
+            },
+            {
+              "label": "uno",
+              "value": 1
+            }
+          ],
+          "value": 0
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Dropdown"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "props": {
+              "options": [
+                {
+                  "label": "one",
+                  "value": 0
+                },
+                {
+                  "label": "two",
+                  "value": 1
+                }
+              ],
+              "value": 0
+            },
+            "type": "ia.input.dropdown"
+          },
+          {
+            "meta": {
+              "name": "Dropdown_0"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "props": {
+              "options": [
+                {
+                  "label": "three",
+                  "value": 0
+                },
+                {
+                  "label": "four",
+                  "value": 1
+                }
+              ]
+            },
+            "type": "ia.input.dropdown"
+          },
+          {
+            "meta": {
+              "name": "Dropdown_1"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "props": {
+              "options": [
+                {
+                  "label": "one",
+                  "value": 0
+                },
+                {
+                  "label": "two",
+                  "value": 1
+                }
+              ],
+              "value": 1
+            },
+            "type": "ia.input.dropdown"
+          },
+          {
+            "meta": {
+              "name": "Dropdown_2"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "props": {
+              "options": [
+                {
+                  "label": "three",
+                  "value": 0
+                },
+                {
+                  "label": "four",
+                  "value": 1
+                }
+              ],
+              "value": 1
+            },
+            "type": "ia.input.dropdown"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "height": 73,
+          "width": 673,
+          "x": 86,
+          "y": 245
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "unoo",
+                      "value": 0
+                    },
+                    {
+                      "label": "doos",
+                      "value": 1
+                    }
+                  ]
+                },
+                "type": "ia.input.dropdown"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Dropdown"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "unoo",
+                          "value": 0
+                        },
+                        {
+                          "label": "doos",
+                          "value": 1
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "height": 200,
+                  "width": 200
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "200px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "unoo",
+                      "value": 0
+                    },
+                    {
+                      "label": "doos",
+                      "value": 1
+                    }
+                  ],
+                  "value": 1
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer_0"
+            },
+            "position": {
+              "basis": "200px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "unoo",
+                      "value": 0
+                    },
+                    {
+                      "label": "doos",
+                      "value": 1
+                    }
+                  ]
+                },
+                "type": "ia.input.dropdown"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Dropdown"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "unoo",
+                          "value": 0
+                        },
+                        {
+                          "label": "doos",
+                          "value": 1
+                        }
+                      ],
+                      "value": 0
+                    },
+                    "type": "ia.input.dropdown"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "height": 200,
+                  "width": 200
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer_1"
+            },
+            "position": {
+              "basis": "200px"
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "height": 200,
+          "width": 609,
+          "x": 50.48123817749024,
+          "y": 387.006
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "height": 32,
+          "width": 380,
+          "x": 129.993,
+          "y": 206.006
+        },
+        "props": {
+          "text": "sin binds, dentro de un flex:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "height": 32,
+          "width": 380,
+          "x": 54.992999999999995,
+          "y": 32.974999999999994
+        },
+        "props": {
+          "text": "sin binds, sobre root (coordinate):"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Label_1"
+        },
+        "position": {
+          "height": 32,
+          "width": 654,
+          "x": 31.993,
+          "y": 361.006
+        },
+        "props": {
+          "text": "sin binds, dentro de un flex, cada dropdown esta dentro de un coordinate a 100%:"
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.coord"
+  }
+}

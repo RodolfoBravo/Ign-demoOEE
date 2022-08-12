@@ -1,0 +1,15 @@
+{
+  "base": {
+    "animation": {
+      "duration": "1s",
+      "keyframes": {
+        "0%": {
+          "backgroundColor": "#E6871F"
+        },
+        "100%": {
+          "backgroundColor": "#ED4633"
+        }
+      }
+    }
+  }
+}

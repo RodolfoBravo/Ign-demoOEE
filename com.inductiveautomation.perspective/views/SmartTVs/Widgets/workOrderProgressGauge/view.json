@@ -1,0 +1,288 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/OEE/",
+    "ot": "000001382761",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO4"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.ot": {
+      "binding": {
+        "config": {
+          "path": "view.custom.tagPath"
+        },
+        "transforms": [
+          {
+            "code": "\ttagPath \u003d value + \"Work Order\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 231,
+      "width": 264
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "SimpleGauge"
+                },
+                "position": {
+                  "height": "96%",
+                  "rotate": {
+                    "anchor": "-8% -24%"
+                  },
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.arc.color": {
+                    "binding": {
+                      "config": {
+                        "path": "this.props.value"
+                      },
+                      "transforms": [
+                        {
+                          "fallback": null,
+                          "inputType": "range",
+                          "mappings": [
+                            {
+                              "input": {
+                                "max": 40,
+                                "min": 0
+                              },
+                              "output": "#EE4D4D"
+                            },
+                            {
+                              "input": {
+                                "max": 84,
+                                "min": 41
+                              },
+                              "output": "#FFC44D"
+                            },
+                            {
+                              "input": {
+                                "max": 100,
+                                "min": 85
+                              },
+                              "output": "#8BC94D"
+                            }
+                          ],
+                          "outputType": "scalar",
+                          "type": "map"
+                        },
+                        {
+                          "expression": "\"#FFC44D\"",
+                          "type": "expression"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  },
+                  "props.arcBackground.color": {
+                    "binding": {
+                      "config": {
+                        "path": "this.props.arc.color"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.maxValue": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "indirect",
+                        "references": {
+                          "1": "{view.custom.defaultPath}"
+                        },
+                        "tagPath": "{1}Work Order/Cantidad Programada"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.value": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "indirect",
+                        "references": {
+                          "1": "{view.custom.defaultPath}"
+                        },
+                        "tagPath": "{1}Work Order/Cantidad Actual"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "arc": {
+                    "width": 7
+                  },
+                  "arcBackground": {},
+                  "label": {
+                    "visible": false
+                  },
+                  "style": {
+                    "classes": []
+                  }
+                },
+                "type": "ia.chart.simple-gauge"
+              },
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "height": "99%",
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.style.color": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.fontColor"
+                      },
+                      "enabled": false,
+                      "type": "property"
+                    }
+                  },
+                  "props.style.fontSize": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.fontSize"
+                      },
+                      "enabled": false,
+                      "type": "property"
+                    }
+                  },
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "../SimpleGauge.props.value"
+                      },
+                      "transforms": [
+                        {
+                          "expression": "toInt(round(100 * {value} / {../SimpleGauge.props.maxValue})) + \"%\"",
+                          "type": "expression"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "3vh",
+                    "fontWeight": "bolder",
+                    "overflow": "hidden",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "50%",
+              "grow": 1
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Label Title"
+            },
+            "position": {
+              "basis": "32px"
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_medium",
+                "fontSize": "22px",
+                "textAlign": "center"
+              },
+              "text": "Progreso"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_workorder"
+        },
+        "position": {
+          "basis": "45%",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column-reverse",
+          "style": {
+            "classes": "Cards/Card_TV",
+            "overflow": "hidden",
+            "paddingBottom": "2px",
+            "paddingLeft": "2px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

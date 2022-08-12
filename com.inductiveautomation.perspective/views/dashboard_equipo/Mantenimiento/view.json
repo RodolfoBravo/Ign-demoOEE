@@ -1,0 +1,2097 @@
+{
+  "custom": {},
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1595271314059
+      ],
+      "$ts": 1595357697000
+    },
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_REFILADO\\REF3",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1595271300279
+      ],
+      "$ts": 1595271300279
+    }
+  },
+  "propConfig": {
+    "params.endDate": {
+      "onChange": {
+        "enabled": null,
+        "script": "\teqPath \u003d self.params.eqPath\n\tself.params.eqPath \u003d eqPath"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "onChange": {
+        "enabled": null,
+        "script": "\teqPath \u003d self.params.eqPath\n\tself.params.eqPath \u003d eqPath"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "width": 948
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              },
+              "text": "Tendencia: Tiempo Medio Entre Fallas"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mtbf_hora\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:value}\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Convert to list\n\t\tlist \u003d []\n\t\tfor i in range(data.rowCount):\t# col 0 \u003d datetime # col 1 \u003d availability (0-1)\t\n\t\t\tif data.getValueAt(i,1) !\u003d None:\n\t\t\t\tmtbfValue \u003d data.getValueAt(i,1)\n\t\t\telse:\n\t\t\t\tmtbfValue \u003d 0\n\t\t\tlist.append( {\u0027time\u0027: data.getValueAt(i,0), \u0027mtbf\u0027: mtbfValue} )\n\t\treturn list\n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\treturn [{\u0027time\u0027:date,\u0027mtbf\u0027:0}] ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Blues"
+              },
+              "series": [
+                {
+                  "name": "mtbf"
+                }
+              ],
+              "xTrace": {
+                "line": {
+                  "color": "#BEBEBE"
+                }
+              }
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_MTBF"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 0,
+              "rowIndex": 2,
+              "span": 12
+            },
+            {
+              "colIndex": 2,
+              "name": "md",
+              "order": 0,
+              "rowIndex": 1,
+              "span": 5
+            },
+            {
+              "colIndex": 2,
+              "name": "lg",
+              "order": 0,
+              "rowIndex": 1,
+              "span": 5
+            }
+          ],
+          "height": 230
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              },
+              "text": "Tendencia: Tiempo Medio para Reparación"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mttr_data\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:value}\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Convert to list\n\t\tif data.rowCount \u003e 0:\n\t\t\tlist \u003d []\n\t\t\tfor i in range(data.rowCount):\t# col 0 \u003d datetime # col 1 \u003d time (0-1)\t\n\t\t\t\tif data.getValueAt(i,0) !\u003d None:\n\t\t\t\t\tmttrVal \u003d data.getValueAt(i,1)\n\t\t\t\telse:\n\t\t\t\t\tmttrVal \u003d 0\n\t\t\t\tlist.append( {\u0027time\u0027: data.getValueAt(i,0), \u0027mttr\u0027: mttrVal} )\n\t\t\treturn list\n\t\telse:\n\t\t\treturn [{\u0027time\u0027:start,\u0027mttr\u0027:0}] \n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\treturn [{\u0027time\u0027:date,\u0027mttr\u0027:0}] ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Accent"
+              },
+              "series": [
+                {
+                  "name": "mttr"
+                }
+              ],
+              "xTrace": {
+                "line": {
+                  "color": "#66EA3D"
+                }
+              }
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_MTTR"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 3,
+              "span": 12
+            },
+            {
+              "colIndex": 7,
+              "name": "md",
+              "order": 0.5,
+              "rowIndex": 1,
+              "span": 5
+            },
+            {
+              "colIndex": 7,
+              "name": "lg",
+              "order": 0.5,
+              "rowIndex": 1,
+              "span": 5
+            }
+          ],
+          "height": 230
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "\"Disponibilidad por Hora\" //+ \" : \" + {view.params.startDate} + \" - \" + {view.params.endDate} "
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "XYChart"
+            },
+            "position": {
+              "basis": "160px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.dataSources.analysis": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.eqPath}+{view.params.startDate}+{view.params.endDate}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_dispo_hora\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:self.view.params.eqPath}\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\tlist \u003d []\n\t\tfor i in range(data.rowCount):\t# col 0 \u003d datetime # col 1 \u003d availability (0-1)\t\n\t\t\tlist.append( {\u0027datetime\u0027: data.getValueAt(i,0), \u0027availability\u0027: data.getValueAt(i,1)} )\n\t\treturn list\n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\treturn [{\u0027datetime\u0027:date,\u0027availability\u0027:0}] ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "background": {
+                "color": "#F1F1F1",
+                "opacity": 0
+              },
+              "dataSources": {
+                "example": [
+                  {
+                    "output_temp": 38,
+                    "process_temp": 63,
+                    "t_stamp": "Tue Aug 07 2018"
+                  },
+                  {
+                    "output_temp": 39,
+                    "process_temp": 59,
+                    "t_stamp": "Tue Aug 08 2018"
+                  },
+                  {
+                    "output_temp": 41,
+                    "process_temp": 62,
+                    "t_stamp": "Tue Aug 09 2018"
+                  },
+                  {
+                    "output_temp": 37,
+                    "process_temp": 63,
+                    "t_stamp": "Tue Aug 10 2018"
+                  },
+                  {
+                    "output_temp": 31,
+                    "process_temp": 48,
+                    "t_stamp": "Tue Aug 11 2018"
+                  },
+                  {
+                    "output_temp": 42,
+                    "process_temp": 54,
+                    "t_stamp": "Tue Aug 12 2018"
+                  },
+                  {
+                    "output_temp": 38,
+                    "process_temp": 49,
+                    "t_stamp": "Tue Aug 13 2018"
+                  },
+                  {
+                    "output_temp": 34,
+                    "process_temp": 69,
+                    "t_stamp": "Tue Aug 14 2018"
+                  },
+                  {
+                    "output_temp": 56,
+                    "process_temp": 73,
+                    "t_stamp": "Tue Aug 15 2018"
+                  },
+                  {
+                    "output_temp": 32,
+                    "process_temp": 61,
+                    "t_stamp": "Tue Aug 16 2018"
+                  },
+                  {
+                    "output_temp": 62,
+                    "process_temp": 73,
+                    "t_stamp": "Tue Aug 17 2018"
+                  }
+                ]
+              },
+              "legend": {
+                "enabled": false
+              },
+              "scrollBars": {
+                "vertical": {
+                  "enabled": false
+                }
+              },
+              "series": [
+                {
+                  "candlestick": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      }
+                    },
+                    "high": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "low": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "column": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "#82D877",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "height": null,
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "width": null
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "data": {
+                    "source": "analysis",
+                    "x": "datetime",
+                    "y": "availability"
+                  },
+                  "defaultState": {
+                    "visible": true
+                  },
+                  "hiddenInLegend": false,
+                  "label": {
+                    "text": "Disponibilidad"
+                  },
+                  "line": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": false,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "name": "availability",
+                  "render": "column",
+                  "stepLine": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  },
+                  "visible": true,
+                  "xAxis": "time",
+                  "yAxis": "availability",
+                  "zIndex": 0
+                }
+              ],
+              "xAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "#E8E8E8",
+                      "dashArray": "",
+                      "minDistance": 60,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#E8E8E8",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "d/M ha",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#E8E8E8",
+                    "enabled": true,
+                    "text": "Tiempo"
+                  },
+                  "name": "time",
+                  "render": "date",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "Horas"
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                }
+              ],
+              "yAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "#E8E8E8",
+                      "dashArray": "",
+                      "minDistance": null,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#E8E8E8",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d/yyyy HH:mm:ss",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#E8E8E8",
+                    "enabled": true,
+                    "text": "%"
+                  },
+                  "name": "availability",
+                  "render": "value",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "Porcentaje de Disponibilida"
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.## %",
+                    "logarithmic": false,
+                    "range": {
+                      "max": 1,
+                      "min": 0,
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                }
+              ]
+            },
+            "type": "ia.chart.xy"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_DispoHora"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 1.5,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 2,
+              "rowIndex": 0,
+              "span": 12
+            }
+          ],
+          "height": 220
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "35px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              },
+              "text": "Pérdidas por ocurrencia"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "PieChart"
+            },
+            "position": {
+              "basis": "85%"
+            },
+            "propConfig": {
+              "props.data": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mtto_dt_ocurrencias\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:value}\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Convert to list\n\t\tif data.rowCount \u003e 0:\n\t\t\tlist \u003d []\n\t\t\tfor i in range(data.rowCount):\t# col 0 \u003d datetime # col 1 \u003d availability (0-1)\t\n\t\t\t\tlist.append( {\u0027state\u0027: data.getValueAt(i,0), \u0027occurrence\u0027: data.getValueAt(i,1)} )\n\t\t\treturn list\n\t\telse:\n\t\t\treturn [{\u0027state\u0027:\"Ninguno\",\u0027occurrence\u0027:1}]\n\texcept:\n\t\treturn [{\u0027state\u0027:\"None\",\u0027occurrence\u0027:0}] ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "colors": [
+                "#3366CC",
+                "#EC4B3D",
+                "#4FC86C",
+                "#00A9C6",
+                "#E69300",
+                "#DD4477",
+                "#994499"
+              ],
+              "cutoutRadius": 60,
+              "showLegend": false
+            },
+            "type": "ia.chart.pie"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_PerdOcurrencia"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 4,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 0,
+              "rowIndex": 2,
+              "span": 6
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 1,
+              "rowIndex": 2,
+              "span": 6
+            }
+          ],
+          "height": 260
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "34px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              },
+              "text": "Pareto"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "XYChart"
+            },
+            "position": {
+              "basis": "303px"
+            },
+            "propConfig": {
+              "props.dataSources.updt": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mtto_perdidas\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:value}\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\tif data.rowCount \u003e 0:\n\t\t\t# Convert to list\n\t\t\tlist \u003d []\n\t\t\ttotalDt \u003d 0.0\n\t\t\tfor i in range(data.rowCount):\t# col 0 \u003d datetime # col 1 \u003d availability (0-1)\t\n\t\t\t\ttotalDt \u003d totalDt + data.getValueAt(i,1)\n\t\t\taccumulated \u003d 0.0\n\t\t\tfor i in range(data.rowCount):\n\t\t\t\tval \u003d data.getValueAt(i,1)\n\t\t\t\taccumulated \u003d accumulated + val\n\t\t\t\tperc \u003d 100 * accumulated / totalDt \n\t\t\t\tlist.append( {\u0027state\u0027: data.getValueAt(i,0), \u0027value\u0027: val, \u0027accumulated\u0027: perc} )\n\t\t\treturn list\n\t\telse:\n\t\t\treturn [{\u0027state\u0027:\"Ninguno\", \u0027value\u0027:1, \u0027accumulated\u0027:100 }]\n\t\t\t#return [{\u0027state\u0027:\"uno\", \u0027value\u0027:10, \u0027accumulated\u0027:10 }, {\u0027state\u0027:\"dos\", \u0027value\u0027:5, \u0027accumulated\u0027:15 }, {\u0027state\u0027:\"tres\", \u0027value\u0027:3, \u0027accumulated\u0027:18 }] \n\texcept:\n\t\treturn [{\u0027state\u0027:\"None\", \u0027value\u0027:0, \u0027accumulated\u0027:0 }]",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "background": {
+                "opacity": 0
+              },
+              "dataSources": {},
+              "legend": {
+                "labels": {
+                  "font": {
+                    "color": "#E8E8E8"
+                  }
+                }
+              },
+              "series": [
+                {
+                  "candlestick": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      }
+                    },
+                    "high": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "low": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "column": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "#D8BB77",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "height": null,
+                      "stacked": false,
+                      "stroke": {
+                        "color": "#C9A95C",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "width": null
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "data": {
+                    "source": "updt",
+                    "x": "state",
+                    "y": "value"
+                  },
+                  "defaultState": {
+                    "visible": true
+                  },
+                  "hiddenInLegend": false,
+                  "label": {
+                    "text": "Causas"
+                  },
+                  "line": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": false,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "name": "perdidas",
+                  "render": "column",
+                  "stepLine": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  },
+                  "visible": true,
+                  "xAxis": "states",
+                  "yAxis": "val",
+                  "zIndex": 0
+                },
+                {
+                  "candlestick": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      }
+                    },
+                    "high": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "low": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "column": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "#D8BB77",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "height": null,
+                      "stacked": false,
+                      "stroke": {
+                        "color": "#C9A95C",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "width": null
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "data": {
+                    "source": "updt",
+                    "x": "state",
+                    "y": "accumulated"
+                  },
+                  "defaultState": {
+                    "visible": true
+                  },
+                  "hiddenInLegend": false,
+                  "label": {
+                    "text": "Acumulado"
+                  },
+                  "line": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "name": "acumulado",
+                  "render": "line",
+                  "stepLine": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  },
+                  "visible": true,
+                  "xAxis": "states",
+                  "yAxis": "acc",
+                  "zIndex": 0
+                }
+              ],
+              "xAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "#E8E8E8",
+                      "dashArray": "",
+                      "minDistance": 60,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#E8E8E8",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#E8E8E8",
+                    "enabled": true,
+                    "text": "Causas"
+                  },
+                  "name": "states",
+                  "render": "category",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                }
+              ],
+              "yAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "#E8E8E8",
+                      "dashArray": "",
+                      "minDistance": null,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#E8E8E8",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d/yyyy HH:mm:ss",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#E8E8E8",
+                    "enabled": true,
+                    "text": "Tiempo Muerto"
+                  },
+                  "name": "val",
+                  "render": "value",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                },
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "#E8E8E8",
+                      "dashArray": "4,4",
+                      "minDistance": null,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#E8E8E8",
+                      "opacity": 1
+                    },
+                    "opposite": true
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d/yyyy",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#E8E8E8",
+                    "enabled": true,
+                    "text": "%"
+                  },
+                  "name": "acc",
+                  "render": "value",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.## ",
+                    "logarithmic": false,
+                    "range": {
+                      "max": 100,
+                      "min": 0,
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                }
+              ]
+            },
+            "type": "ia.chart.xy"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_Pareto"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 6,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 1,
+              "rowIndex": 3,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 1,
+              "rowIndex": 3,
+              "span": 12
+            }
+          ],
+          "height": 380
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "35px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Primary"
+              },
+              "text": "Pérdidas por personal"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "PieChart"
+            },
+            "position": {
+              "basis": "85%"
+            },
+            "propConfig": {
+              "props.data": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mtto_dt_personal\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027:value}\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Convert to list\n\t\tif data.rowCount \u003e 0:\n\t\t\tlist \u003d []\n\t\t\tfor i in range(data.rowCount):\t\n\t\t\t\tpersonnel \u003d str(data.getValueAt(i,1)) + \", \" + str(data.getValueAt(i,2))\n\t\t\t\tlist.append( {\u0027personnel\u0027: personnel, \u0027occurrence\u0027: data.getValueAt(i,0)} )\n\t\t\treturn list\n\t\telse:\n\t\t\treturn [{\u0027personnel\u0027:\"\u003cN/A\u003e\",\u0027occurrence\u0027:1}] \n\texcept:\n\t\treturn [{\u0027personnel\u0027:\"None\",\u0027occurrence\u0027:0}] ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "colors": [
+                "#3366CC",
+                "#EC4B3D",
+                "#4FC86C",
+                "#00A9C6",
+                "#E69300",
+                "#DD4477",
+                "#994499"
+              ],
+              "cutoutRadius": 60,
+              "showLegend": false
+            },
+            "type": "ia.chart.pie"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_PerdPersonal"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 5,
+              "span": 12
+            },
+            {
+              "colIndex": 6,
+              "name": "md",
+              "order": 0,
+              "rowIndex": 2,
+              "span": 6
+            },
+            {
+              "colIndex": 6,
+              "name": "lg",
+              "order": 1.5,
+              "rowIndex": 2,
+              "span": 6
+            }
+          ],
+          "height": 260
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "44px"
+                },
+                "props": {
+                  "style": {
+                    "classes": "Labels/Primary"
+                  },
+                  "text": "T. Medio entre fallas"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "72px"
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mtbf\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate,\u0027yyyy-MM-dd hh:mm:ss\u0027)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate,\u0027yyyy-MM-dd hh:mm:ss\u0027)\n\t\tparams \u003d {\u0027eqPath\u0027:  value }\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Get required value\n\t\tif data.rowCount \u003e 0:\n\t\t\tif data.getValueAt(0,0) !\u003d None:\n\t\t\t\treturn str(round(data.getValueAt(0,0), 1)) + \" min\"\n\t\t\telse:\n\t\t\t\treturn \"0.0 min\"\n\t\telse:\n\t\t\treturn \"0.0 min\"\n\texcept:\n\t\treturn \"000\" #[{\u0027value\u0027:0},{\u0027value\u0027:1}] ",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "color": "#77B2D8",
+                    "fontSize": "25px",
+                    "fontWeight": "bold",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_MTBF"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "44px"
+                },
+                "props": {
+                  "style": {
+                    "classes": "Labels/Primary"
+                  },
+                  "text": "T. Medio para reparación"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "72px"
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\t# Load Analysis Object\n\t\tanalysisName \u003d \"_equipo_mttr_data\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\t# Load analysis Params\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027: value }\n\t\t# Get analysis result Data\n\t\tdata \u003d system.mes.analysis.executeAnalysis(start, end, obj, params).getDataset()\n\t\t# Maintenance events by row including the duration.\n\t\tif data.rowCount \u003e 0:\n\t\t\tnOfRepairs \u003d data.rowCount\n\t\t\ttotalTime \u003d 0.0\n\t\t\tfor i in range(nOfRepairs):\n\t\t\t\ttotalTime \u003d totalTime + data.getValueAt(i,\"Line State Duration\")\n\t\t\tmttr \u003d totalTime / float(nOfRepairs)\n\t\telse:\n\t\t\tmttr \u003d 0\n\t\t# Convert to list\n\t\treturn str(round(mttr, 1)) + \" min\"\n\texcept:\n\t\treturn \"000\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "color": "#77D6D8",
+                    "fontSize": "25px",
+                    "fontWeight": "bold",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_MTTR"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_MeanTimes"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 0.5,
+              "rowIndex": 1,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": -0.5,
+              "rowIndex": 1,
+              "span": 2
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": -0.5,
+              "rowIndex": 1,
+              "span": 2
+            }
+          ],
+          "height": 234
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "breakpoints": [
+        {
+          "minWidth": 0,
+          "name": "sm"
+        },
+        {
+          "minWidth": 560,
+          "name": "md"
+        },
+        {
+          "minWidth": 996,
+          "name": "lg"
+        }
+      ],
+      "style": {
+        "backgroundColor": "#2B384B"
+      }
+    },
+    "type": "ia.container.column"
+  }
+}

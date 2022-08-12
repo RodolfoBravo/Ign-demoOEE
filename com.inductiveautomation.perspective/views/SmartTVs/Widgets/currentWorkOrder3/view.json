@@ -1,0 +1,461 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO6/OEE/",
+    "ot": "",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO6/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO6"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.ot": {
+      "binding": {
+        "config": {
+          "path": "view.custom.tagPath"
+        },
+        "transforms": [
+          {
+            "code": "\ttagPath \u003d value + \"Work Order\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 127,
+      "width": 249
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer 6"
+            },
+            "position": {
+              "basis": "10%",
+              "display": false
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Secundary",
+                "color": "#BBBBBB"
+              },
+              "text": "Siguiente Orden de Trabajo:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Spacer 7"
+            },
+            "position": {
+              "basis": "13%",
+              "display": false
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_small"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Material:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.tagPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttagPath \u003d value + \"Product Code\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\t#return tagValue\n\t\n\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\t\n\treturn rmv_zeros(tagValue)\n\t\n\t\n\t",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "15px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Material"
+            },
+            "position": {
+              "basis": "13%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_small",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Descripción:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\t\n\treturn rmv_zeros(value.getValueAt(0,\"Descripcion\"))",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "color": "#FFFFFF",
+                    "fontSize": "12px",
+                    "fontStyle": "italic"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Referencia"
+            },
+            "position": {
+              "basis": "20%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Orden:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "10%",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.ot"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t    new_str \u003d string\n\t    while len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t        new_str \u003d new_str[1:]\n\t    return new_str\n\t\n\treturn rmv_zeros(value)",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Orden"
+            },
+            "position": {
+              "basis": "12%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "KG Plan Orden:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "indirect",
+                        "references": {
+                          "1": "{view.custom.defaultPath}"
+                        },
+                        "tagPath": "{1}Work Order/Cantidad Programada"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Cant Prog"
+            },
+            "position": {
+              "basis": "15%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "KG Producidos:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "indirect",
+                        "references": {
+                          "1": "{view.custom.defaultPath}"
+                        },
+                        "tagPath": "{1}Work Order/Cantidad Actual"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Cant Prod"
+            },
+            "position": {
+              "basis": "15%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_workorder"
+        },
+        "position": {
+          "basis": "45%",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_TV",
+            "overflow": "hidden",
+            "paddingBottom": "2px",
+            "paddingLeft": "2px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

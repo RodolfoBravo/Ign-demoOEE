@@ -1,0 +1,16 @@
+{
+  "scope": "G",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "style.json"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "rodolfo.bravo",
+      "timestamp": "2020-06-11T21:19:42Z"
+    },
+    "lastModificationSignature": "3fa781ed88222a7ef9eae7af2b47c30d8ecc09c5fdd0818c75d3bc49537e1b5e"
+  }
+}

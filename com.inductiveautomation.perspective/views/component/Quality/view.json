@@ -1,0 +1,2334 @@
+{
+  "custom": {
+    "changeProperty": "[global]\\MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO22020-07-21 11:39:53.0002020-07-22 11:33:03.684",
+    "key": "value"
+  },
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1595435583684
+      ],
+      "$ts": 1595435583684
+    },
+    "eqPath": "[global]\\MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1595436004590
+      ],
+      "$ts": 1595349593000
+    }
+  },
+  "propConfig": {
+    "custom.changeProperty": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.eqPath}+{view.params.startDate}+{view.params.endDate}"
+        },
+        "type": "expr"
+      },
+      "onChange": {
+        "enabled": null,
+        "script": "\tanalysis_setting \u003d system.mes.analysis.createMESAnalysisSettings(\"quality_setting_general\")\n\tdatapoints \u003d [\n\t\t\t\t\"Hour Interval\",\n\t\t\t\t\"OEE Outfeed Count\",\n\t\t\t\t\"OEE Reject Count\",\n\t\t\t\t\"OEE Quality\"\n\t\t\t\t]\n\tanalysis_setting.setDataPoints(datapoints)\n\tanalysis_setting.addParameter(\u0027eqPath\u0027)\n\tanalysis_setting.setFilterExpression(\"Equipment Path \u003d @eqPath\")\n\t#analysis_setting.setGroupBy(\"Hour Interval\")\n\t \n\tstart_date \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\tend_date \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\tparams \u003d {\u0027eqPath\u0027:self.view.params.eqPath}\n\tdata \u003d  system.mes.analysis.executeAnalysis(start_date, end_date, analysis_setting, params).getDataset()\n\tpyData \u003d system.dataset.toPyDataSet(data)\n\tif len(pyData)\u003e0:\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"FlexContainer_production\").getChild(\"Label_production\").props.text \u003d pyData[0][\u0027OEE Outfeed Count\u0027]\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"FlexContainer_waste\").getChild(\"Label_waste\").props.text \u003d pyData[0][\u0027OEE Reject Count\u0027]\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"SimpleGauge\").props.value \u003d int(pyData[0][\u0027OEE Quality\u0027]*100)\n\telse:\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"FlexContainer_production\").getChild(\"Label_production\").props.text \u003d 0\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"FlexContainer_waste\").getChild(\"Label_waste\").props.text \u003d 0\n\t\tself.getChild(\"root\").getChild(\"FlexContainer\").getChild(\"CoordinateContainer\").getChild(\"SimpleGauge\").props.value \u003d 0\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)"
+      },
+      "persistent": true
+    },
+    "custom.key": {
+      "persistent": true
+    },
+    "params.endDate": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 222,
+      "width": 795
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "SimpleGauge"
+                },
+                "position": {
+                  "height": 160,
+                  "width": 200
+                },
+                "props": {
+                  "animate": true,
+                  "arc": {
+                    "color": "#7CB6D5",
+                    "cornerRadius": 4,
+                    "width": 10
+                  },
+                  "endAngle": 390,
+                  "label": {
+                    "visible": false
+                  },
+                  "startAngle": 150,
+                  "style": {
+                    "classes": []
+                  },
+                  "value": 100
+                },
+                "type": "ia.chart.simple-gauge"
+              },
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "height": 20,
+                  "width": 50,
+                  "x": 74.99263688708497,
+                  "y": 52.0032
+                },
+                "props": {
+                  "style": {
+                    "classes": "Labels/Secundary",
+                    "textAlign": "center"
+                  },
+                  "text": "Calidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "height": 54,
+                  "width": 90,
+                  "x": 54.4873,
+                  "y": 70.003
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "../SimpleGauge.props.value"
+                      },
+                      "transforms": [
+                        {
+                          "expression": "{value}+\u0027%\u0027",
+                          "type": "expression"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "color": "#C6C6C6",
+                    "fontSize": "30px",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "30%"
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "Labels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Producción"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_production"
+                    },
+                    "position": {
+                      "basis": "69%"
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontSize": "20px",
+                        "textAlign": "center"
+                      },
+                      "text": 151273
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_production"
+                },
+                "position": {
+                  "height": 56.00000000000001,
+                  "width": "45%",
+                  "y": 140
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "Label_1"
+                },
+                "position": {
+                  "height": 20,
+                  "width": 50,
+                  "x": 74.99263688708497,
+                  "y": 52.0032
+                },
+                "props": {
+                  "style": {
+                    "classes": "Labels/Secundary",
+                    "textAlign": "center"
+                  },
+                  "text": "Calidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_2"
+                },
+                "position": {
+                  "height": 20,
+                  "width": 192,
+                  "x": 3.9961,
+                  "y": 5.000689999999999
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\tname \u003d system.mes.loadMESObjectByEquipmentPath(value).getName()\n\texcept:\n\t\tname \u003d \u0027\u0027\n\treturn name",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "Labels/Primary",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "30%"
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "Labels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Residuo"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_waste"
+                    },
+                    "position": {
+                      "basis": "69%"
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontSize": "20px",
+                        "textAlign": "center"
+                      },
+                      "text": 0
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_waste"
+                },
+                "position": {
+                  "height": 56.00000000000001,
+                  "width": "45%",
+                  "x": 99.99542999267578,
+                  "y": 139.99189949035645
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "222px"
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "210px",
+          "shrink": 0
+        },
+        "props": {
+          "alignContent": "center",
+          "alignItems": "center",
+          "direction": "column",
+          "justify": "space-evenly",
+          "style": {
+            "classes": "Cards/Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Table"
+        },
+        "position": {
+          "basis": "400px",
+          "display": false
+        },
+        "props": {
+          "columns": [
+            {
+              "align": "center",
+              "boolean": "checkbox",
+              "dateFormat": "h:mm:ss a",
+              "editable": false,
+              "field": "Hour",
+              "footer": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "header": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": "Hora"
+              },
+              "justify": "auto",
+              "number": "value",
+              "numberFormat": "0,0.##",
+              "progressBar": {
+                "bar": {
+                  "color": "#62A3F6",
+                  "linecap": "round",
+                  "width": 5
+                },
+                "max": 100,
+                "track": {
+                  "color": "#DADADA",
+                  "linecap": "round",
+                  "width": 2
+                },
+                "value": {
+                  "color": "#7D7D7D",
+                  "show": true
+                }
+              },
+              "render": "date",
+              "resizable": true,
+              "sortable": true,
+              "strictWidth": false,
+              "style": {
+                "classes": ""
+              },
+              "toggleSwitch": {
+                "color": {
+                  "selected": "#2196F3",
+                  "unselected": "#FFFFFF"
+                }
+              },
+              "viewParams": {},
+              "viewPath": "",
+              "visible": true,
+              "width": ""
+            },
+            {
+              "align": "center",
+              "boolean": "checkbox",
+              "dateFormat": "h:mm:ss a",
+              "editable": false,
+              "field": "",
+              "footer": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "header": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "justify": "auto",
+              "number": "value",
+              "numberFormat": "0,0.##",
+              "progressBar": {
+                "bar": {
+                  "color": "#62A3F6",
+                  "linecap": "round",
+                  "width": 5
+                },
+                "max": 100,
+                "track": {
+                  "color": "#DADADA",
+                  "linecap": "round",
+                  "width": 2
+                },
+                "value": {
+                  "color": "#7D7D7D",
+                  "show": true
+                }
+              },
+              "render": "auto",
+              "resizable": true,
+              "sortable": true,
+              "strictWidth": false,
+              "style": {
+                "classes": ""
+              },
+              "toggleSwitch": {
+                "color": {
+                  "selected": "#2196F3",
+                  "unselected": "#FFFFFF"
+                }
+              },
+              "viewParams": {},
+              "viewPath": "",
+              "visible": true,
+              "width": ""
+            },
+            {
+              "align": "center",
+              "boolean": "checkbox",
+              "dateFormat": "h:mm:ss a",
+              "editable": false,
+              "field": "",
+              "footer": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "header": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "justify": "auto",
+              "number": "value",
+              "numberFormat": "0,0.##",
+              "progressBar": {
+                "bar": {
+                  "color": "#62A3F6",
+                  "linecap": "round",
+                  "width": 5
+                },
+                "max": 100,
+                "track": {
+                  "color": "#DADADA",
+                  "linecap": "round",
+                  "width": 2
+                },
+                "value": {
+                  "color": "#7D7D7D",
+                  "show": true
+                }
+              },
+              "render": "auto",
+              "resizable": true,
+              "sortable": true,
+              "strictWidth": false,
+              "style": {
+                "classes": ""
+              },
+              "toggleSwitch": {
+                "color": {
+                  "selected": "#2196F3",
+                  "unselected": "#FFFFFF"
+                }
+              },
+              "viewParams": {},
+              "viewPath": "",
+              "visible": true,
+              "width": ""
+            },
+            {
+              "align": "center",
+              "boolean": "checkbox",
+              "dateFormat": "MM/DD/YYYY",
+              "editable": false,
+              "field": "",
+              "footer": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "header": {
+                "align": "center",
+                "justify": "left",
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "justify": "auto",
+              "number": "value",
+              "numberFormat": "0,0.##",
+              "progressBar": {
+                "bar": {
+                  "color": "#62A3F6",
+                  "linecap": "round",
+                  "width": 5
+                },
+                "max": 100,
+                "track": {
+                  "color": "#DADADA",
+                  "linecap": "round",
+                  "width": 2
+                },
+                "value": {
+                  "color": "#7D7D7D",
+                  "show": true
+                }
+              },
+              "render": "auto",
+              "resizable": true,
+              "sortable": true,
+              "strictWidth": false,
+              "style": {
+                "classes": ""
+              },
+              "toggleSwitch": {
+                "color": {
+                  "selected": "#2196F3",
+                  "unselected": "#FFFFFF"
+                }
+              },
+              "viewParams": {},
+              "viewPath": "",
+              "visible": true,
+              "width": ""
+            }
+          ],
+          "data": [
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595349593000
+              },
+              "Production": 49304,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595353193000
+              },
+              "Production": 13435,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595356793000
+              },
+              "Production": 12622,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595360393000
+              },
+              "Production": 0,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595363993000
+              },
+              "Production": 21,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595367593000
+              },
+              "Production": 530,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595371193000
+              },
+              "Production": 11522,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595374793000
+              },
+              "Production": 13301,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595378393000
+              },
+              "Production": 10132,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595381993000
+              },
+              "Production": 0,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595385593000
+              },
+              "Production": 0,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595389193000
+              },
+              "Production": 280,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595392793000
+              },
+              "Production": 694,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595396393000
+              },
+              "Production": 4237,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595399993000
+              },
+              "Production": 9052,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595403593000
+              },
+              "Production": 162,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595407193000
+              },
+              "Production": 9582,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595410793000
+              },
+              "Production": 10865,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595414393000
+              },
+              "Production": 4323,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595417993000
+              },
+              "Production": 0,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595421593000
+              },
+              "Production": 1,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595425193000
+              },
+              "Production": 2,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595428793000
+              },
+              "Production": 183,
+              "Quality": 100,
+              "Waste": 0
+            },
+            {
+              "Hour": {
+                "$": [
+                  "ts",
+                  192,
+                  1595437348176
+                ],
+                "$ts": 1595432393000
+              },
+              "Production": 1025,
+              "Quality": 100,
+              "Waste": 0
+            }
+          ]
+        },
+        "type": "ia.display.table"
+      },
+      {
+        "meta": {
+          "name": "XYChart"
+        },
+        "position": {
+          "basis": "",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.xAxes[0].date.range.max": {
+            "binding": {
+              "config": {
+                "path": "view.params.endDate"
+              },
+              "type": "property"
+            }
+          },
+          "props.xAxes[0].date.range.min": {
+            "binding": {
+              "config": {
+                "path": "view.params.startDate"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "background": {
+            "color": "#D78282",
+            "render": "gradient"
+          },
+          "dataSources": {
+            "Quality": [
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595349593000
+                },
+                "Production": 49304,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595353193000
+                },
+                "Production": 13435,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595356793000
+                },
+                "Production": 12622,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595360393000
+                },
+                "Production": 0,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595363993000
+                },
+                "Production": 21,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595367593000
+                },
+                "Production": 530,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595371193000
+                },
+                "Production": 11522,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595374793000
+                },
+                "Production": 13301,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595378393000
+                },
+                "Production": 10132,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595381993000
+                },
+                "Production": 0,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595385593000
+                },
+                "Production": 0,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595389193000
+                },
+                "Production": 280,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595392793000
+                },
+                "Production": 694,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595396393000
+                },
+                "Production": 4237,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595399993000
+                },
+                "Production": 9052,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595403593000
+                },
+                "Production": 162,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595407193000
+                },
+                "Production": 9582,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595410793000
+                },
+                "Production": 10865,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595414393000
+                },
+                "Production": 4323,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595417993000
+                },
+                "Production": 0,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595421593000
+                },
+                "Production": 1,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595425193000
+                },
+                "Production": 2,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595428793000
+                },
+                "Production": 183,
+                "Quality": 100,
+                "Waste": 0
+              },
+              {
+                "Hour": {
+                  "$": [
+                    "ts",
+                    192,
+                    1595437348176
+                  ],
+                  "$ts": 1595432393000
+                },
+                "Production": 1025,
+                "Quality": 100,
+                "Waste": 0
+              }
+            ]
+          },
+          "legend": {
+            "enabled": false
+          },
+          "series": [
+            {
+              "candlestick": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  }
+                },
+                "high": {
+                  "x": "",
+                  "y": ""
+                },
+                "low": {
+                  "x": "",
+                  "y": ""
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "column": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "#9FCAFF",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "height": null,
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 0,
+                    "width": 1
+                  },
+                  "width": null
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "data": {
+                "source": "Quality",
+                "x": "Hour",
+                "y": "Production"
+              },
+              "defaultState": {
+                "visible": true
+              },
+              "hiddenInLegend": false,
+              "label": {
+                "text": "Producción"
+              },
+              "line": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": false,
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 10,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 10
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 3
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "name": "Produccion",
+              "render": "column",
+              "stepLine": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 10,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 10
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 3
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": "{name}: [bold]{valueY}[/]"
+              },
+              "visible": true,
+              "xAxis": "time",
+              "yAxis": "Production",
+              "zIndex": 0
+            },
+            {
+              "candlestick": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  }
+                },
+                "high": {
+                  "x": "",
+                  "y": ""
+                },
+                "low": {
+                  "x": "",
+                  "y": ""
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "column": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "#8C1313",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "height": null,
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "width": null
+                },
+                "open": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              "data": {
+                "source": "Quality",
+                "x": "Hour",
+                "y": "Waste"
+              },
+              "defaultState": {
+                "visible": true
+              },
+              "hiddenInLegend": true,
+              "label": {
+                "text": "Residu"
+              },
+              "line": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 10,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 10
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "#141414",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "#FC0303",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 3
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "name": "Residuo",
+              "render": "column",
+              "stepLine": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 10,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 10
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 3
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": "{name}: [bold]{valueY}[/]"
+              },
+              "visible": true,
+              "xAxis": "time",
+              "yAxis": "Production",
+              "zIndex": 1
+            },
+            {
+              "candlestick": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  }
+                },
+                "high": {
+                  "x": "",
+                  "y": ""
+                },
+                "low": {
+                  "x": "",
+                  "y": ""
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "column": {
+                "appearance": {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": "",
+                    "min": ""
+                  },
+                  "height": null,
+                  "stacked": false,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "width": null
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "data": {
+                "source": "Quality",
+                "x": "Hour",
+                "y": "Quality"
+              },
+              "defaultState": {
+                "visible": true
+              },
+              "hiddenInLegend": true,
+              "label": {
+                "text": "Calidad"
+              },
+              "line": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": true,
+                      "fill": {
+                        "color": "#CFCFCF2E",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 1,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 1
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "#7E6A6A",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "#D5D5D5",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "name": "Quality",
+              "render": "line",
+              "stepLine": {
+                "appearance": {
+                  "bullets": [
+                    {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "rotation": "",
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "enabled": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": 100,
+                        "min": 2
+                      },
+                      "height": 10,
+                      "label": {
+                        "position": {
+                          "dx": 0,
+                          "dy": 0
+                        },
+                        "text": "{value}"
+                      },
+                      "render": "circle",
+                      "rotation": 0,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tooltip": {
+                        "background": {
+                          "color": "",
+                          "opacity": 1
+                        },
+                        "cornerRadius": 3,
+                        "enabled": true,
+                        "pointerLength": 4,
+                        "text": "{name}: [bold]{valueY}[/]"
+                      },
+                      "width": 10
+                    }
+                  ],
+                  "connect": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 0
+                  },
+                  "minDistance": 0.5,
+                  "stroke": {
+                    "color": "",
+                    "dashArray": "",
+                    "opacity": 1,
+                    "width": 3
+                  },
+                  "tensionX": 1,
+                  "tensionY": 1
+                },
+                "open": {
+                  "x": "",
+                  "y": ""
+                }
+              },
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": "{name}: [bold]{valueY}[/]"
+              },
+              "visible": true,
+              "xAxis": "time",
+              "yAxis": "Percent",
+              "zIndex": 0
+            }
+          ],
+          "style": {
+            "color": "#9C9C9C",
+            "fontSize": "12px"
+          },
+          "title": {
+            "appearance": {
+              "color": "#FFFFFF",
+              "font": {
+                "weight": 600
+              }
+            },
+            "text": "Produccion Hora"
+          },
+          "xAxes": [
+            {
+              "appearance": {
+                "font": {
+                  "size": "",
+                  "weight": 500
+                },
+                "grid": {
+                  "color": "",
+                  "dashArray": "",
+                  "minDistance": 10,
+                  "opacity": 1,
+                  "position": 0.5
+                },
+                "inside": false,
+                "labels": {
+                  "color": "#E5E5E5",
+                  "opacity": 1,
+                  "rotation": 0,
+                  "wrap": true
+                },
+                "opposite": false
+              },
+              "category": {
+                "break": {
+                  "enabled": false,
+                  "endCategory": "",
+                  "size": 0.05,
+                  "startCategory": ""
+                }
+              },
+              "date": {
+                "baseInterval": {
+                  "count": 1,
+                  "enabled": false,
+                  "skipEmptyPeriods": false,
+                  "timeUnit": "hour"
+                },
+                "break": {
+                  "enabled": false,
+                  "endDate": "",
+                  "size": 0.05,
+                  "startDate": ""
+                },
+                "format": "H",
+                "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                "range": {
+                  "useStrict": false
+                }
+              },
+              "inversed": false,
+              "label": {
+                "color": "#FCFCFC",
+                "enabled": true,
+                "text": "Hora"
+              },
+              "name": "time",
+              "render": "date",
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": ""
+              },
+              "value": {
+                "break": {
+                  "enabled": false,
+                  "endValue": 100,
+                  "size": 0.05,
+                  "startValue": 0
+                },
+                "format": "#,###.##",
+                "logarithmic": false,
+                "range": {
+                  "max": "",
+                  "min": "",
+                  "useStrict": false
+                }
+              },
+              "visible": true
+            }
+          ],
+          "yAxes": [
+            {
+              "appearance": {
+                "font": {
+                  "size": "",
+                  "weight": 500
+                },
+                "grid": {
+                  "color": "",
+                  "dashArray": "4,4",
+                  "minDistance": null,
+                  "opacity": 1,
+                  "position": 0.5
+                },
+                "inside": false,
+                "labels": {
+                  "color": "#C3C3C3",
+                  "opacity": 1,
+                  "rotation": 0,
+                  "wrap": true
+                },
+                "opposite": true
+              },
+              "category": {
+                "break": {
+                  "enabled": false,
+                  "endCategory": "",
+                  "size": 0.05,
+                  "startCategory": ""
+                }
+              },
+              "date": {
+                "baseInterval": {
+                  "count": 1,
+                  "enabled": false,
+                  "skipEmptyPeriods": false,
+                  "timeUnit": "hour"
+                },
+                "break": {
+                  "enabled": false,
+                  "endDate": "",
+                  "size": 0.05,
+                  "startDate": ""
+                },
+                "format": "M/d/yyyy",
+                "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                "range": {
+                  "max": "",
+                  "min": "",
+                  "useStrict": false
+                }
+              },
+              "inversed": false,
+              "label": {
+                "color": "#717171",
+                "enabled": true,
+                "text": "Calidad (%)"
+              },
+              "name": "Percent",
+              "render": "value",
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": ""
+              },
+              "value": {
+                "break": {
+                  "enabled": false,
+                  "endValue": 100,
+                  "size": 0.05,
+                  "startValue": 0
+                },
+                "format": "###.##",
+                "logarithmic": false,
+                "range": {
+                  "max": 100,
+                  "min": 0,
+                  "useStrict": false
+                }
+              },
+              "visible": true
+            },
+            {
+              "appearance": {
+                "font": {
+                  "size": "",
+                  "weight": 500
+                },
+                "grid": {
+                  "color": "",
+                  "dashArray": "4,4",
+                  "minDistance": null,
+                  "opacity": 1,
+                  "position": 0.5
+                },
+                "inside": false,
+                "labels": {
+                  "color": "#C3C3C3",
+                  "opacity": 1
+                },
+                "opposite": false
+              },
+              "category": {
+                "break": {
+                  "enabled": false,
+                  "endCategory": "",
+                  "size": 0.05,
+                  "startCategory": ""
+                }
+              },
+              "date": {
+                "baseInterval": {
+                  "count": 1,
+                  "enabled": false,
+                  "skipEmptyPeriods": false,
+                  "timeUnit": "hour"
+                },
+                "break": {
+                  "enabled": false,
+                  "endDate": "",
+                  "size": 0.05,
+                  "startDate": ""
+                },
+                "format": "M/d/yyyy",
+                "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                "range": {
+                  "max": "",
+                  "min": "",
+                  "useStrict": false
+                }
+              },
+              "inversed": false,
+              "label": {
+                "color": "#717171",
+                "enabled": true,
+                "text": "Metros"
+              },
+              "name": "Production",
+              "render": "value",
+              "tooltip": {
+                "background": {
+                  "color": "",
+                  "opacity": 1
+                },
+                "cornerRadius": 3,
+                "enabled": true,
+                "pointerLength": 4,
+                "text": ""
+              },
+              "value": {
+                "break": {
+                  "enabled": false,
+                  "endValue": 100,
+                  "size": 0.05,
+                  "startValue": 0
+                },
+                "format": "###.##%",
+                "logarithmic": false,
+                "range": {
+                  "max": "",
+                  "min": "",
+                  "useStrict": false
+                }
+              },
+              "visible": true
+            }
+          ]
+        },
+        "scripts": {
+          "customMethods": [],
+          "messageHandlers": [
+            {
+              "messageType": "refresh",
+              "pageScope": true,
+              "script": "\t# implement your handler here\n\tanalysis_setting \u003d system.mes.analysis.createMESAnalysisSettings(\"quality_setting\")\n\tdatapoints \u003d [\n\t\t\t\t\"Hour Interval\",\n\t\t\t\t\"OEE Outfeed Count\",\n\t\t\t\t\"OEE Reject Count\",\n\t\t\t\t\"OEE Quality\"\n\t\t\t\t]\n\tanalysis_setting.setDataPoints(datapoints)\n\tanalysis_setting.addParameter(\u0027eqPath\u0027)\n\tanalysis_setting.setFilterExpression(\"Equipment Path \u003d @eqPath\")\n\tanalysis_setting.setGroupBy(\"Hour Interval\")\n\t \n\tstart_date \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\tend_date \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\tparams \u003d {\u0027eqPath\u0027:self.view.params.eqPath}\n\tdata \u003d  system.mes.analysis.executeAnalysis(start_date, end_date, analysis_setting, params).getDataset()\n\tpyData \u003d system.dataset.toPyDataSet(data)\n\tdic \u003d []\n\tfor row in pyData:\n\t\ttemp \u003d {\u0027Hour\u0027: row[\u0027Hour Interval\u0027],u\u0027Production\u0027:row[\u0027OEE Outfeed Count\u0027],\u0027Waste\u0027:row[\u0027OEE Reject Count\u0027],\u0027Quality\u0027:(row[\u0027OEE Quality\u0027])*100}\n\t\tdic.append(temp)\n\tself.props.dataSources.Quality \u003d dic\n\tself.getSibling(\"Table\").props.data \u003d dic",
+              "sessionScope": false,
+              "viewScope": false
+            }
+          ]
+        },
+        "type": "ia.chart.xy"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#2B384B",
+        "classes": "Cards/Card_Transparent",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

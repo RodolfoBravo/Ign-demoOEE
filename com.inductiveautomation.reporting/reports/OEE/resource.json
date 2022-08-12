@@ -1,0 +1,16 @@
+{
+  "scope": "A",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "data.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "javier.fernandez",
+      "timestamp": "2020-12-18T00:20:41Z"
+    },
+    "lastModificationSignature": "a881a4bd94a9bf266f98903628300aae10c2b01b12a0da258e1a54121dc9d280"
+  }
+}

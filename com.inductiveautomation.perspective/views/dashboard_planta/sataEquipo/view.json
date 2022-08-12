@@ -1,0 +1,349 @@
+{
+  "custom": {
+    "defaultPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Shift/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Live Analysis/General/"
+  },
+  "params": {
+    "endDate": "2020-6-25 0:00:00",
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2",
+    "startDate": "2020-6-24 0:00:00"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "session.custom.equipo"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "session.custom.equipo"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.endDate": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 329,
+      "width": 749
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "21px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "20px",
+                "textDecoration": ""
+              },
+              "text": "Planta:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "41.8px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "session.custom.planta"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if({value} \u003d \"1100_\", \"Minipak\", \"Polybol\")",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "20px",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_3"
+            },
+            "position": {
+              "basis": "41px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.defaultPath}"
+                    },
+                    "tagPath": "{1}Current Shift"
+                  },
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "18px",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "78px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "18px",
+                    "textAlign": "start"
+                  },
+                  "text": "Ubicación:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_1"
+                },
+                "position": {
+                  "basis": "104.6px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "18px",
+                    "textAlign": "start"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "306px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "16px"
+                  },
+                  "text": "Bogota"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_1"
+            },
+            "position": {
+              "basis": "27px"
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "312.9px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "14px",
+                    "textAlign": "start"
+                  },
+                  "text": "Total de alarmas:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_1"
+                },
+                "position": {
+                  "basis": "37px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "18px",
+                    "textAlign": "start"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "240px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#FFFFFF",
+                    "fontSize": "14px"
+                  },
+                  "text": "15 alarmas"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "25px"
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "296.1px",
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            }
+          ],
+          "height": 224
+        },
+        "props": {
+          "alignContent": "flex-start",
+          "direction": "column",
+          "style": {
+            "classes": "Card_Transparent",
+            "color": "#E0E0E0",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "breakpoints": [
+        {
+          "minWidth": 0,
+          "name": "sm"
+        },
+        {
+          "minWidth": 560,
+          "name": "md"
+        },
+        {
+          "minWidth": 996,
+          "name": "lg"
+        }
+      ]
+    },
+    "type": "ia.container.column"
+  }
+}

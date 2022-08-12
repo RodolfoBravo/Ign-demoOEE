@@ -1,0 +1,209 @@
+{
+  "custom": {},
+  "params": {
+    "area": "1100_EXTRUSION"
+  },
+  "propConfig": {
+    "params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 700,
+      "width": 950
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer"
+            },
+            "position": {
+              "basis": "12px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "Pages/Main",
+                "color": "#FEFAFA",
+                "fontSize": "28px",
+                "fontWeight": "bold",
+                "lineHeight": "3",
+                "textAlign": "center",
+                "textIndent": "-50px"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "params": {
+                      "planta": "{/root/FlexContainer/Icon_Back.custom.planta}"
+                    },
+                    "view": "Planning/Navigation/AreaSelection"
+                  },
+                  "scope": "C",
+                  "type": "nav"
+                }
+              }
+            },
+            "meta": {
+              "name": "Icon_Back"
+            },
+            "position": {
+              "basis": "50px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "custom.planta": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.area"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "split({value}, \"_\")[0,0] + \"_\"",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "color": "#FFFFFF",
+              "path": "material/arrow_back_ios",
+              "style": {
+                "classes": "Pages/Main"
+              }
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "950px",
+              "grow": 1
+            },
+            "props": {
+              "alignVertical": "center",
+              "style": {
+                "classes": "Pages/Main",
+                "color": "#FEFAFA",
+                "fontSize": "28px",
+                "fontWeight": "bold",
+                "textAlign": "center",
+                "textIndent": "-50px"
+              },
+              "text": "Seleccionar Equipo"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "85px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "85px"
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "view.params.area"
+              },
+              "transforms": [
+                {
+                  "expression": "if(split({value}, \u0027_\u0027)[0,0] \u003d \u00271100\u0027, \u0027Minipak\u0027, if(split({value}, \u0027_\u0027)[0,0] \u003d \u00272100\u0027, \u0027Polybol\u0027, \u0027BAD\u0027) ) + \" \u003e \" + split({value}, \u0027_\u0027)[1,0]",
+                  "type": "expression"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "alignVertical": "center",
+          "style": {
+            "fontSize": "18px",
+            "letterSpacing": "2px",
+            "textAlign": "center",
+            "textTransform": "uppercase"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "custom": {
+          "refresh": false
+        },
+        "meta": {
+          "name": "FlexRepeater"
+        },
+        "position": {
+          "basis": "500px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.instances": {
+            "binding": {
+              "config": {
+                "path": "view.params.area"
+              },
+              "transforms": [
+                {
+                  "code": "\t#planta \u003d value + \u0027*\u0027\n\tarea \u003d value \n\tif value and area !\u003d \u0027*\u0027 and area !\u003d \u0027\u0027:\n\t\tfilter \u003d system.mes.object.filter.createFilter()\n\t\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t\tfilter.setMESObjectNamePattern(area)\n\t\tlist \u003d system.mes.searchMESObjects(filter)\n\t\tarea_obj \u003d list.get(0).getMESObject()\n\t\tequipos \u003d area_obj.getChildCollection()\n\t\toptions \u003d []\n\t\tfor elem in equipos:\n\t\t\tequipo \u003d system.mes.loadMESObject(elem)\n\t\t\ttemp \u003d {\u0027equipo\u0027:equipo.getName(), \u0027area\u0027:area}\n\t\t\toptions.append(temp)\n\t\treturn options\n\telse:\n\t\treturn self.props.instances\n\t\n\t#return value",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "alignContent": "flex-start",
+          "alignItems": "center",
+          "justify": "center",
+          "path": "Planning/Navigation/Button_Lines",
+          "wrap": "wrap"
+        },
+        "type": "ia.display.flex-repeater"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "basis": "50px"
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

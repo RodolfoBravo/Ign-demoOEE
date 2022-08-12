@@ -1,0 +1,1077 @@
+{
+  "custom": {
+    "changeProperty": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO22020-07-01 00:00:002020-07-02 00:00:00"
+  },
+  "params": {
+    "endDate": "2020-07-02 00:00:00",
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2",
+    "startDate": "2020-07-01 00:00:00"
+  },
+  "propConfig": {
+    "custom.changeProperty": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.eqPath}+{view.params.startDate}+{view.params.endDate}"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "params.endDate": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 562,
+      "width": 792
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "XYChart"
+            },
+            "position": {
+              "basis": "50.6%"
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "if({.../FlexContainer/ToggleSwitch.props.selected}\u003dfalse,true,false)"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.dataSources.example": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.changeProperty"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\tName \u003d \u0027_equipo_perdidas\u0027\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(Name)\n\t\tend \u003d system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : self.session.custom.equipo}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tpareto \u003d []\n\t\tfor j in range(data.rowCount):\n\t\t\tif data.getValueAt(j,1) !\u003d0:\n\t\t\t\tpareto.append(data.getValueAt(j,1))\n\t\tporcentaje \u003d sum(pareto)\n\t\t\t\t\n\t\tlist \u003d []\n\t\tfor i in range(data.rowCount):\n\t\t\tlist.append( {\u0027datetime\u0027: data.getValueAt(i,0), \u0027Razon\u0027: data.getValueAt(i,2), \u0027Tiempo\u0027: data.getValueAt(i,1), \u0027porcentaje\u0027: ((data.getValueAt(i,1))*100)/porcentaje} )\n\t\treturn list\n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\treturn [{\u0027datetime\u0027:date,\u0027perdidas\u0027:0}]",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "background": {
+                "opacity": 0,
+                "render": "color"
+              },
+              "cursor": {
+                "lineX": {
+                  "stroke": {
+                    "color": "#E8E8E8"
+                  }
+                }
+              },
+              "dataSources": {},
+              "legend": {
+                "labels": {
+                  "font": {
+                    "color": "#FFFFFF"
+                  }
+                }
+              },
+              "series": [
+                {
+                  "candlestick": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      }
+                    },
+                    "high": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "low": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "column": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "#93C9F0",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "height": null,
+                      "stacked": false,
+                      "stroke": {
+                        "color": "#1C1C1C00",
+                        "opacity": 0,
+                        "width": 1
+                      },
+                      "width": null
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "data": {
+                    "source": "example",
+                    "x": "Razon",
+                    "y": "Tiempo"
+                  },
+                  "defaultState": {
+                    "visible": true
+                  },
+                  "hiddenInLegend": false,
+                  "label": {
+                    "text": "Perdida"
+                  },
+                  "line": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": false,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "name": "process temp",
+                  "render": "column",
+                  "stepLine": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "#9DBCD3",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  },
+                  "visible": true,
+                  "xAxis": "time",
+                  "yAxis": "process temp",
+                  "zIndex": 0
+                },
+                {
+                  "candlestick": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      }
+                    },
+                    "high": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "low": {
+                      "x": "",
+                      "y": ""
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "column": {
+                    "appearance": {
+                      "deriveFieldsFromData": {
+                        "fill": {
+                          "color": "",
+                          "opacity": ""
+                        },
+                        "stroke": {
+                          "color": "",
+                          "opacity": "",
+                          "width": ""
+                        }
+                      },
+                      "fill": {
+                        "color": "",
+                        "opacity": 1
+                      },
+                      "heatRules": {
+                        "dataField": "",
+                        "enabled": false,
+                        "max": "",
+                        "min": ""
+                      },
+                      "height": null,
+                      "stacked": false,
+                      "stroke": {
+                        "color": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "width": null
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "data": {
+                    "source": "example",
+                    "x": "Razon",
+                    "y": "porcentaje"
+                  },
+                  "defaultState": {
+                    "visible": true
+                  },
+                  "hiddenInLegend": false,
+                  "label": {
+                    "text": "Expected"
+                  },
+                  "line": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 2,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 2
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "#FFBC23",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "#E9C512",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 1
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "name": "output temp",
+                  "render": "line",
+                  "stepLine": {
+                    "appearance": {
+                      "bullets": [
+                        {
+                          "deriveFieldsFromData": {
+                            "fill": {
+                              "color": "",
+                              "opacity": ""
+                            },
+                            "rotation": "",
+                            "stroke": {
+                              "color": "",
+                              "opacity": "",
+                              "width": ""
+                            }
+                          },
+                          "enabled": true,
+                          "fill": {
+                            "color": "",
+                            "opacity": 1
+                          },
+                          "heatRules": {
+                            "dataField": "",
+                            "enabled": false,
+                            "max": 100,
+                            "min": 2
+                          },
+                          "height": 10,
+                          "label": {
+                            "position": {
+                              "dx": 0,
+                              "dy": 0
+                            },
+                            "text": "{value}"
+                          },
+                          "render": "circle",
+                          "rotation": 0,
+                          "stroke": {
+                            "color": "",
+                            "opacity": 1,
+                            "width": 1
+                          },
+                          "tooltip": {
+                            "background": {
+                              "color": "",
+                              "opacity": 1
+                            },
+                            "cornerRadius": 3,
+                            "enabled": true,
+                            "pointerLength": 4,
+                            "text": "{name}: [bold]{valueY}[/]"
+                          },
+                          "width": 10
+                        }
+                      ],
+                      "connect": true,
+                      "fill": {
+                        "color": "",
+                        "opacity": 0
+                      },
+                      "minDistance": 0.5,
+                      "stroke": {
+                        "color": "",
+                        "dashArray": "",
+                        "opacity": 1,
+                        "width": 3
+                      },
+                      "tensionX": 1,
+                      "tensionY": 1
+                    },
+                    "open": {
+                      "x": "",
+                      "y": ""
+                    }
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  },
+                  "visible": false,
+                  "xAxis": "time",
+                  "yAxis": "output temp",
+                  "zIndex": 0
+                }
+              ],
+              "title": {
+                "appearance": {
+                  "color": "#C0C0C005"
+                }
+              },
+              "xAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "",
+                      "dashArray": "",
+                      "minDistance": 60,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#FFFFFF",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "hh",
+                    "inputFormat": "hh:mm",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "",
+                    "enabled": true,
+                    "text": ""
+                  },
+                  "name": "time",
+                  "render": "category",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                }
+              ],
+              "yAxes": [
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "",
+                      "dashArray": "",
+                      "minDistance": null,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "#EEEEEE",
+                      "opacity": 1,
+                      "rotation": 0,
+                      "wrap": true
+                    },
+                    "opposite": false
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d/yyyy HH:mm:ss",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "#DFDBDB",
+                    "enabled": true,
+                    "text": "Pz"
+                  },
+                  "name": "process temp",
+                  "render": "value",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": true
+                },
+                {
+                  "appearance": {
+                    "font": {
+                      "size": "",
+                      "weight": 500
+                    },
+                    "grid": {
+                      "color": "",
+                      "dashArray": "4,4",
+                      "minDistance": null,
+                      "opacity": 1,
+                      "position": 0.5
+                    },
+                    "inside": false,
+                    "labels": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "opposite": true
+                  },
+                  "category": {
+                    "break": {
+                      "enabled": false,
+                      "endCategory": "",
+                      "size": 0.05,
+                      "startCategory": ""
+                    }
+                  },
+                  "date": {
+                    "baseInterval": {
+                      "count": 1,
+                      "enabled": false,
+                      "skipEmptyPeriods": false,
+                      "timeUnit": "hour"
+                    },
+                    "break": {
+                      "enabled": false,
+                      "endDate": "",
+                      "size": 0.05,
+                      "startDate": ""
+                    },
+                    "format": "M/d/yyyy",
+                    "inputFormat": "yyyy-MM-dd kk:mm:ss",
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "inversed": false,
+                  "label": {
+                    "color": "",
+                    "enabled": true,
+                    "text": "Output Temp"
+                  },
+                  "name": "output temp",
+                  "render": "value",
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "pointerLength": 4,
+                    "text": ""
+                  },
+                  "value": {
+                    "break": {
+                      "enabled": false,
+                      "endValue": 100,
+                      "size": 0.05,
+                      "startValue": 0
+                    },
+                    "format": "#,###.##",
+                    "logarithmic": false,
+                    "range": {
+                      "max": "",
+                      "min": "",
+                      "useStrict": false
+                    }
+                  },
+                  "visible": false
+                }
+              ]
+            },
+            "type": "ia.chart.xy"
+          },
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "if({.../FlexContainer/ToggleSwitch.props.selected}\u003dfalse,true,false)"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.changeProperty"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\tName \u003d \u0027_equipo_perdidas\u0027\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(Name)\n\t\tend \u003d system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : self.session.custom.equipo}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\t\t\t\t\n\t\tlist \u003d []\n\t\tfor i in range(data.rowCount):\n\t\t\tlist.append( {\u0027datetime\u0027: data.getValueAt(i,0),  \u0027Rechazos\u0027: data.getValueAt(i,1), \u0027Produccion\u0027: data.getValueAt(i,2), \u0027Tiempo planeado\u0027: data.getValueAt(i,3)} )\n\t\treturn list\n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\treturn [{\u0027datetime\u0027:date,\u0027perdidas\u0027:0}]",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Blues"
+              },
+              "series": [
+                {
+                  "name": "Boiler"
+                }
+              ]
+            },
+            "type": "ia.chart.timeseries"
+          },
+          {
+            "meta": {
+              "name": "Table"
+            },
+            "position": {
+              "basis": "791.9px"
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "if({.../FlexContainer/ToggleSwitch.props.selected}\u003dfalse,false,true)"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.data": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.changeProperty"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\tName \u003d \u0027_equipo_perdidas\u0027\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(Name)\n\t\tend \u003d system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : self.view.params.eqPath}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tlist1 \u003d []\n\t\tfor i in range(data.rowCount):\n\t\t\tlist1.append( [data.getValueAt(i,2), data.getValueAt(i,3), data.getValueAt(i,1), data.getValueAt(i,4), data.getValueAt(i,5)])\n\t\t\n\t\theaders \u003d [\u0027Razon\u0027, \u0027Produccion\u0027, \u0027Rechazados\u0027, \u0027Tiempos planeados\u0027, \u0027Tiempo No planeados\u0027]\n\t\tds \u003d system.dataset.toDataSet(headers, list1)\n\t\treturn  ds\n\texcept:\n\t\tdate \u003d system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.display.table"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "560px",
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 2,
+              "rowIndex": 0,
+              "span": 12
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 12
+            }
+          ],
+          "height": 407
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "ToggleSwitch"
+            },
+            "position": {
+              "basis": "186px"
+            },
+            "props": {
+              "label": {
+                "text": "Tabla"
+              },
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "24px"
+              }
+            },
+            "type": "ia.input.toggle-switch"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "64px",
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 0.5,
+              "rowIndex": 0,
+              "span": 7
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 1.5,
+              "rowIndex": 0,
+              "span": 11
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 0.5,
+              "rowIndex": 0,
+              "span": 12
+            }
+          ],
+          "height": 60
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "breakpoints": [
+        {
+          "minWidth": 0,
+          "name": "sm"
+        },
+        {
+          "minWidth": 560,
+          "name": "md"
+        },
+        {
+          "minWidth": 996,
+          "name": "lg"
+        }
+      ],
+      "style": {
+        "backgroundColor": "#2B384B",
+        "classes": "Cards/Card_Transparent"
+      }
+    },
+    "type": "ia.container.column"
+  }
+}

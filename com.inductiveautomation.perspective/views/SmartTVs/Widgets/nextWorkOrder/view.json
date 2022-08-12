@@ -1,0 +1,622 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/2100_LAMINADO/LAM1/OEE/",
+    "ot": "000001385416",
+    "query": [
+      {
+        "Siguiente:": "000001385416"
+      },
+      {
+        "Siguiente:": "000001386722"
+      },
+      {
+        "Siguiente:": "000001386362"
+      },
+      {
+        "Siguiente:": "000001385413"
+      },
+      {
+        "Siguiente:": "000001386723"
+      },
+      {
+        "Siguiente:": "000001385753"
+      },
+      {
+        "Siguiente:": "000001386729"
+      },
+      {
+        "Siguiente:": "000001386382"
+      },
+      {
+        "Siguiente:": "000001386728"
+      }
+    ],
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/2100_LAMINADO/LAM1/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_LAMINADO\\LAM1"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.ot": {
+      "binding": {
+        "config": {
+          "path": "view.custom.query"
+        },
+        "transforms": [
+          {
+            "code": "\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\t\n\t\n\t\n\tif len(value) \u003e 0:\n\t\tot \u003d str(value[0]).split(\"\\\"\")[3]\n\t\treturn ot# rmv_zeros( ot )\n\telse:\t\n\t\treturn \"Sin Orden Programada\"\n\t\n\t",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.query": {
+      "binding": {
+        "config": {
+          "expression": "now(300000)+{view.params.eqPath}"
+        },
+        "transforms": [
+          {
+            "code": "\tlistDD \u003d []\n\t#listDD.append({\u0027value\u0027:\u0027Sin Orden\u0027,\u0027label\u0027:\u0027Sin Orden\u0027})\n\teqPath \u003d self.params.eqPath\n\tdate \u003d system.date.setTime(system.date.addDays(system.date.now(),-10),0,0,0)\n\tendDate \u003d system.date.addMonths(date,1)\n\twoName \u003d \"*\"\t\n\twoFilter \u003d system.mes.workorder.createMESWorkOrderFilter()\n\t#woFilter.setWorkOrderNameFilter(woName)\n\t#woFilter.setClosedBeginDate(date)\n\t#woFilter.setDueEndDate(date)\n\t#woFilter.setClosedEndDate(endDate)\n\t#woFilter.getReturnClosed()\n\twoFilter.setReturnClosed(False)\n\twoFilter.setEquipmentPathFilter(eqPath)\n\tresults \u003d system.mes.workorder.getMESWorkOrders(woFilter)\n\t\n\tfor result in results:\n\t\twoObj \u003d system.mes.workorder.getMESWorkOrder(result.getName())\n\t\tisClosed \u003d woObj.isClosed()\n\t\tif not isClosed:\n\t\t\ttemp \u003d {\u0027Siguiente:\u0027:result.getName()}\n\t\t\tlistDD.append(temp)\n\t\n\treturn listDD\n\t",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 220,
+      "width": 558
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer 6"
+            },
+            "position": {
+              "basis": "10%",
+              "display": false
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Secundary",
+                "color": "#BBBBBB"
+              },
+              "text": "Siguiente Orden de Trabajo:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Spacer 7"
+            },
+            "position": {
+              "basis": "13%",
+              "display": false
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_small"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "83.5%",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary",
+                    "fontWeight": "bold",
+                    "textAlign": "left",
+                    "textIndent": "15px"
+                  },
+                  "text": "Siguiente Producción:"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Next Title"
+            },
+            "position": {
+              "basis": "12%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Orden de Trabajo:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "10%",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.ot"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t    new_str \u003d string\n\t    while len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t        new_str \u003d new_str[1:]\n\t    return new_str\n\t\n\tif value !\u003d \"Sin Orden Programada\":\n\t\treturn rmv_zeros(value)\n\telse:\t\n\t\treturn value",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Orden"
+            },
+            "position": {
+              "basis": "12%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Material:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\ttry:\n\t\treturn rmv_zeros(value.getValueAt(0,\"Material\"))\n\texcept:\n\t\treturn \"\"\n\n\t",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Material"
+            },
+            "position": {
+              "basis": "13%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_small",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Ficha:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\ttry:\n\t\treturn rmv_zeros(value.getValueAt(0,\"Ficha\"))\n\texcept:\n\t\treturn \"\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "color": "#FFFFFF",
+                    "fontSize": "16px",
+                    "fontStyle": "italic"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Referencia"
+            },
+            "position": {
+              "basis": "10%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Denominación:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tdef rmv_zeros(string):\n\t\tnew_str \u003d string\n\t\twhile len(new_str) \u003e 0 and new_str[0] \u003d\u003d \u00270\u0027:\n\t\t\tnew_str \u003d new_str[1:]\n\t\treturn new_str\n\t\n\ttry:\n\t\treturn value.getValueAt(0,\"Denominacion\")\n\texcept:\n\t\treturn \"\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "alignVertical": "top",
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "14px",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Referencia_0"
+            },
+            "position": {
+              "basis": "15%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Cantidad Programada:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\treturn value.getValueAt(0,\"cantidad_programada\")\n\texcept:\n\t\treturn \"\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Cant Prog"
+            },
+            "position": {
+              "basis": "15%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "40%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Secundary"
+                  },
+                  "text": "Tiempo de Producción:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "parameters": {
+                          "ot": "{view.custom.ot}"
+                        },
+                        "queryPath": "ot_areas/general_adicional"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\tf_inicio \u003d value.getValueAt(0,\"f_inicio\")\n\t\tf_fin \u003d value.getValueAt(0,\"f_fin\")\n\t\t\n\t\tseconds \u003d system.date.secondsBetween(f_inicio, f_fin)\n\t\t\n\t\tseconds \u003d seconds % (24 * 3600) \n\t\thour \u003d seconds // 3600\n\t\tseconds %\u003d 3600\n\t\tminutes \u003d seconds // 60\n\t\tseconds %\u003d 60\n\t\t\n\t\treturn \"%02d:%02d:%02d\" % (hour, minutes, seconds)\n\texcept:\n\t\treturn \"\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "query"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "16px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Cant Prod"
+            },
+            "position": {
+              "basis": "15%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_workorder"
+        },
+        "position": {
+          "basis": "45%",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Cards/Card_TV",
+            "overflow": "hidden",
+            "paddingBottom": "2px",
+            "paddingLeft": "2px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

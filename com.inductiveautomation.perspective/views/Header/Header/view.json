@@ -1,0 +1,522 @@
+{
+  "custom": {},
+  "params": {
+    "params": {
+      "area": "1100_ROTOGRABADO",
+      "equipo": "RO7",
+      "planta": "1100_"
+    },
+    "size": "medium"
+  },
+  "propConfig": {
+    "params.params": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.params.equipo": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.params.planta": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.size": {
+      "paramDirection": "input"
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 58
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "page": "/"
+              },
+              "scope": "C",
+              "type": "nav"
+            }
+          }
+        },
+        "meta": {
+          "name": "Image"
+        },
+        "position": {
+          "basis": "80px"
+        },
+        "props": {
+          "fit": {
+            "mode": "contain"
+          },
+          "source": "/system/images/Icons/minpol-logo.png"
+        },
+        "type": "ia.display.image"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Spacer Start"
+        },
+        "position": {
+          "basis": "16px",
+          "shrink": 0
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "id": "menu",
+                "type": "toggle"
+              },
+              "scope": "C",
+              "type": "dock"
+            }
+          }
+        },
+        "meta": {
+          "name": "Menu Dock"
+        },
+        "position": {
+          "basis": "24px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.size} !\u003d \"large\""
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "color": "#FFFFFF",
+          "path": "material/menu",
+          "style": {
+            "classes": "Header/Icon",
+            "marginRight": "10px"
+          }
+        },
+        "type": "ia.display.icon"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Filler_1"
+        },
+        "position": {
+          "basis": "10px",
+          "grow": 1
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_Planta"
+        },
+        "position": {
+          "basis": "256px",
+          "display": false,
+          "grow": 1
+        },
+        "propConfig": {
+          "props.value": {
+            "onChange": {
+              "enabled": null,
+              "script": "\t#self.session.custom.planta \u003d self.props.value\n\tprint \u0027hola\u0027"
+            }
+          }
+        },
+        "props": {
+          "options": [
+            {
+              "label": "MINIPAK",
+              "value": "1100_"
+            },
+            {
+              "label": "POLYBOL",
+              "value": "2100_"
+            }
+          ],
+          "value": "2100_"
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Filler_2"
+        },
+        "position": {
+          "basis": "10px",
+          "grow": 1
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_Area"
+        },
+        "position": {
+          "basis": "350px",
+          "display": false,
+          "grow": 1
+        },
+        "propConfig": {
+          "props.options": {
+            "binding": {
+              "config": {
+                "path": "../Dropdown_Planta.props.value"
+              },
+              "transforms": [
+                {
+                  "code": "\tplanta \u003d value + \u0027*\u0027\n\tfilter \u003d system.mes.object.filter.createFilter()\n\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\tfilter.setMESObjectNamePattern(planta)\n\tlist \u003d system.mes.searchMESObjects(filter)\n\toptions \u003d []\n\t#options.append({\u0027value\u0027:\u0027Sin Orden\u0027,\u0027label\u0027:\u0027Sin Orden\u0027})\n\tfor item in list:\n\t\ttemp \u003d {\u0027value\u0027:item.getName(),\u0027label\u0027:item.getName().split(\"_\")[1]}\n\t\toptions.append(temp)\n\treturn options",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          },
+          "props.value": {
+            "onChange": {
+              "enabled": null,
+              "script": "\t#self.session.custom.area \u003d self.props.value\n\tprint \u0027hola\u0027"
+            }
+          }
+        },
+        "props": {
+          "value": "2100_ENTUBADO"
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Filler"
+        },
+        "position": {
+          "basis": "10px",
+          "grow": 1
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_equipo"
+        },
+        "position": {
+          "basis": "256px",
+          "display": false,
+          "grow": 1
+        },
+        "propConfig": {
+          "props.options": {
+            "binding": {
+              "config": {
+                "path": "../Dropdown_Area.props.value"
+              },
+              "transforms": [
+                {
+                  "code": "\tarea \u003d value\n\tif area \u003d\u003d \u0027\u0027:\n\t\treturn []\n\telse:\n\t\t#filter \u003d system.mes.object.filter.createFilter()\n\t\t#filter.setMESObjectTypeName(\u0027Area\u0027)\n\t\t#filter.setMESObjectNamePattern(area)\n\t\t#list \u003d system.mes.searchMESObjects(filter)\n\t\t#area_obj \u003d list.get(0).getMESObject()\n\t\t#equipos \u003d area_obj.getChildCollection()\n\t\tmesObject \u003d system.mes.loadMESObject(area, \u0027Area\u0027) #clase seeleccionada \n\t\tif mesObject !\u003d None:\n\t\t\tequipos \u003d mesObject.getChildCollection().getList()\n\t\toptions \u003d []\n\t\t#for elem in equipos:\n\t\t#\tequipo \u003d system.mes.loadMESObject(elem)\n\t\tfor equipo in equipos: # se recorre la lista de equipos para armar el dataset del template repeater\n\t\t\ttry:\n\t\t\t\tlineObj \u003d system.mes.loadMESObject(equipo.getName(), \u0027Line\u0027)\n\t\t\t\teqPath \u003d lineObj.getEquipmentPath()\n\t\t\t\ttemp \u003d {\u0027value\u0027:eqPath,\u0027label\u0027:equipo.getName()}\n\t\t\t\toptions.append(temp)\n\t\t\texcept:\n\t\t\t\tpass\n\t\treturn options",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          },
+          "props.value": {
+            "onChange": {
+              "enabled": null,
+              "script": "\t#self.session.custom.equipo \u003d self.props.value\n\tprint \u0027hola\u0027"
+            }
+          }
+        },
+        "props": {
+          "value": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1"
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Filler_0"
+        },
+        "position": {
+          "basis": "10px",
+          "grow": 1
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tif self.session.props.auth.authenticated:\n\t\tsystem.perspective.logout()\n\telse:\n\t\tsystem.perspective.login()"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "User"
+        },
+        "position": {
+          "basis": "30px",
+          "shrink": 0
+        },
+        "props": {
+          "color": "#FFFFFF",
+          "path": "material/person",
+          "style": {
+            "classes": "Header/Icon"
+          }
+        },
+        "type": "ia.display.icon"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tif self.session.props.auth.authenticated:\n\t\tsystem.perspective.logout()\n\telse:\n\t\tsystem.perspective.login()"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "hasDelegate": true,
+          "name": "Sign In"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.size} !\u003d \"small\""
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "session.props.auth.user.userName"
+              },
+              "transforms": [
+                {
+                  "expression": "if({value} \u003d null || len({value}) \u003d 0, \"Iniciar Sesión\", {value})",
+                  "type": "expression"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "cursor": "pointer",
+            "marginLeft": "4px"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Spacer 1"
+        },
+        "position": {
+          "basis": "10px",
+          "shrink": 0
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "page": "/alarms"
+              },
+              "scope": "C",
+              "type": "nav"
+            }
+          }
+        },
+        "meta": {
+          "name": "Alarm Icon"
+        },
+        "position": {
+          "basis": "26px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "path": "../Alarms.custom.numAlarms"
+              },
+              "transforms": [
+                {
+                  "expression": "if({value} \u003e 0, \"Header/Alarm_Active\", \"Header/Icon\")",
+                  "type": "expression"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "color": "#FFFFFF",
+          "path": "material/alarm"
+        },
+        "type": "ia.display.icon"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "page": "/alarms"
+              },
+              "scope": "C",
+              "type": "nav"
+            }
+          }
+        },
+        "meta": {
+          "hasDelegate": true,
+          "name": "Alarms"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "custom.numAlarms": {
+            "binding": {
+              "config": {
+                "expression": "now(2000)"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn len(system.alarm.queryStatus(state\u003d[\"ActiveUnacked\"]))",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.size} !\u003d \"small\""
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "path": "../Alarms.custom.numAlarms"
+              },
+              "transforms": [
+                {
+                  "expression": "if({value} \u003e 0, \"Header/Alarm_Active\", \"\")",
+                  "type": "expression"
+                }
+              ],
+              "type": "property"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "this.custom.numAlarms"
+              },
+              "transforms": [
+                {
+                  "expression": "numberFormat({value}, \"#,##0\") + \" alarma\" + if({value} \u003e 1 || {value} \u003d 0, \"s\", \"\")",
+                  "type": "expression"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "cursor": "pointer",
+            "marginLeft": "6px"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "hasDelegate": true,
+          "name": "Spacer End"
+        },
+        "position": {
+          "basis": "16px",
+          "shrink": 0
+        },
+        "props": {
+          "text": " "
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "alignItems": "center",
+      "style": {
+        "backgroundColor": "#000000",
+        "classes": "Header/Header",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

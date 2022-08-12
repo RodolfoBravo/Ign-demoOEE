@@ -1,0 +1,17 @@
+{
+  "scope": "C",
+  "documentation": "",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "data.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "giovanny.tomazzolli",
+      "timestamp": "2020-09-29T19:20:14Z"
+    },
+    "lastModificationSignature": "3f47520d71e7d50d34d3e503e410eaf125945d5f235cf6dbb2474302a8399c28"
+  }
+}

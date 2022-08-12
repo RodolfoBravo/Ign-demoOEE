@@ -1,0 +1,1270 @@
+{
+  "custom": {},
+  "params": {
+    "availability": 0,
+    "children": "areas",
+    "downCount": 0,
+    "eqPathCoded": "1100_area__machine",
+    "isMachine": false,
+    "itemCode": "1100_",
+    "name": "cargando...",
+    "oee": 0,
+    "parent": "area",
+    "performance": 0,
+    "production": 0,
+    "quality": 0,
+    "stateName": "Operando",
+    "stateValue": 1,
+    "util": 0
+  },
+  "propConfig": {
+    "params.availability": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.children": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.downCount": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPathCoded": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.isMachine": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.itemCode": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.name": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.oee": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.parent": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.performance": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.production": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.quality": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.stateName": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.stateValue": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.util": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 175,
+      "width": 600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "16%",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "view.params.name"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": "36px",
+            "marginTop": "5px",
+            "textAlign": "left",
+            "textIndent": "10px",
+            "textTransform": "uppercase"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "EmbeddedView Gauge"
+                },
+                "position": {
+                  "basis": "100%"
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.oee"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "fontColor": "#FFFFFF",
+                    "fontSize": "70px"
+                  },
+                  "path": "page/Embedded/Gauge"
+                },
+                "type": "ia.display.view"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Gauge"
+            },
+            "position": {
+              "basis": "30%"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "20px",
+                          "grow": 1
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.util"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "{value}+\"%\"",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#FFFFFF",
+                            "fontSize": "38px",
+                            "fontWeight": "normal",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Desc"
+                        },
+                        "position": {
+                          "basis": "20px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Pages/DescriptionLabel"
+                          },
+                          "text": "% de Utilización"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Util"
+                    },
+                    "position": {
+                      "basis": "200px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "20px",
+                          "grow": 1
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.downCount"
+                              },
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#FFFFFF",
+                            "fontSize": "38px",
+                            "fontWeight": "normal",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Desc"
+                        },
+                        "position": {
+                          "basis": "20px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Pages/DescriptionLabel"
+                          },
+                          "text": "Equipos deshabilitados"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Down Count"
+                    },
+                    "position": {
+                      "basis": "200px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Top Row Parent"
+                },
+                "position": {
+                  "basis": "55%"
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.isMachine"
+                      },
+                      "transforms": [
+                        {
+                          "fallback": null,
+                          "inputType": "scalar",
+                          "mappings": [
+                            {
+                              "input": true,
+                              "output": false
+                            },
+                            {
+                              "input": false,
+                              "output": true
+                            }
+                          ],
+                          "outputType": "scalar",
+                          "type": "map"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "20px",
+                          "grow": 1
+                        },
+                        "propConfig": {
+                          "props.style.classes": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.stateValue"
+                              },
+                              "transforms": [
+                                {
+                                  "fallback": "Cards/Label_Bad",
+                                  "inputType": "scalar",
+                                  "mappings": [
+                                    {
+                                      "input": 1,
+                                      "output": "Cards/Label_OK"
+                                    },
+                                    {
+                                      "input": 4,
+                                      "output": "Cards/Label_Warning"
+                                    },
+                                    {
+                                      "input": 2,
+                                      "output": "Cards/Label_Normal"
+                                    },
+                                    {
+                                      "input": 0,
+                                      "output": "Cards/Label_Normal"
+                                    }
+                                  ],
+                                  "outputType": "scalar",
+                                  "type": "map"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          },
+                          "props.style.fontSize": {
+                            "binding": {
+                              "config": {
+                                "path": "this.props.text"
+                              },
+                              "transforms": [
+                                {
+                                  "code": "\ttry:\n\t\ttxtSz \u003d len(value)\n\t\t\n\t\tif txtSz \u003c 10:\n\t\t\treturn \"25px\"\n\t\telse:\n\t\t\treturn \"18px\"\n\texcept:\n\t\treturn \"25px\"",
+                                  "type": "script"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          },
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.stateName"
+                              },
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "fontWeight": "normal",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Desc"
+                        },
+                        "position": {
+                          "basis": "20px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Pages/DescriptionLabel"
+                          },
+                          "text": "Estado"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer State"
+                    },
+                    "position": {
+                      "basis": "200px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "20px",
+                          "grow": 1
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.production"
+                              },
+                              "transforms": [
+                                {
+                                  "formatType": "numeric",
+                                  "formatValue": "number",
+                                  "type": "format"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#FFFFFF",
+                            "fontSize": "36px",
+                            "fontWeight": "normal",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Desc"
+                        },
+                        "position": {
+                          "basis": "20px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Pages/DescriptionLabel"
+                          },
+                          "text": "Producción"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Production"
+                    },
+                    "position": {
+                      "basis": "200px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Top Row Child"
+                },
+                "position": {
+                  "basis": "45%"
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.isMachine"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "Spacer"
+                },
+                "position": {
+                  "basis": "10%"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "SVG Availability"
+                        },
+                        "position": {
+                          "basis": "30%"
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "d": "M436.374,215.974c-19.585-69.973-74.265-124.653-144.238-144.238c17.607-13.211,21.171-38.193,7.961-55.8    C292.539,5.863,280.665-0.045,268.072,0h-64c-22.012-0.08-39.92,17.7-40,39.711c-0.046,12.593,5.863,24.467,15.936,32.025    C69.384,102.7,4.807,217.478,35.77,328.102C66.733,438.726,181.512,503.303,292.136,472.34    C402.76,441.377,467.337,326.598,436.374,215.974z M204.072,16h64c13.255,0,24,10.745,24,24s-10.745,24-24,24h-64    c-13.255,0-24-10.745-24-24S190.817,16,204.072,16z M236.072,464c-106.039,0-192-85.961-192-192s85.961-192,192-192    s192,85.961,192,192C427.949,377.988,342.06,463.877,236.072,464z",
+                                      "name": "path",
+                                      "type": "path"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "d": "M68.072,32c-22.091,0-40,17.909-40,40c0.026,22.08,17.92,39.974,40,40c22.091,0,40-17.909,40-40S90.163,32,68.072,32z     M68.072,96c-13.255,0-24-10.745-24-24s10.745-24,24-24s24,10.745,24,24S81.327,96,68.072,96z",
+                                      "name": "path",
+                                      "type": "path"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "d": "M412.072,32c-22.091,0-40,17.909-40,40c0.026,22.08,17.92,39.974,40,40c22.091,0,40-17.909,40-40S434.163,32,412.072,32z     M412.072,96c-13.255,0-24-10.745-24-24s10.745-24,24-24s24,10.745,24,24S425.327,96,412.072,96z",
+                                      "name": "path",
+                                      "type": "path"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "d": "M236.072,96v16c85.217,0.097,155.442,66.894,159.8,152H258.6c-4.418-12.497-18.131-19.046-30.627-14.627    c-12.497,4.418-19.046,18.131-14.627,30.627s18.131,19.046,30.627,14.627c6.835-2.416,12.211-7.793,14.627-14.627h145.472    c4.418,0,8-3.582,8-8C411.962,174.844,333.228,96.11,236.072,96z M236.072,280c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8    S240.49,280,236.072,280z",
+                                      "name": "path",
+                                      "type": "path"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "height": "48",
+                                      "name": "rect",
+                                      "transform": "matrix(0.7071 -0.7071 0.7071 0.7071 -170.0565 359.6867)",
+                                      "type": "rect",
+                                      "width": "16",
+                                      "x": "341.184",
+                                      "y": "361.135"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "height": "48",
+                                      "name": "rect",
+                                      "type": "rect",
+                                      "width": "16",
+                                      "x": "228.072",
+                                      "y": "408"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "height": "16",
+                                      "name": "rect",
+                                      "transform": "matrix(0.7071 -0.7071 0.7071 0.7071 -236.3388 199.6943)",
+                                      "type": "rect",
+                                      "width": "48",
+                                      "x": "98.883",
+                                      "y": "377.133"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "height": "16",
+                                      "name": "rect",
+                                      "type": "rect",
+                                      "width": "48",
+                                      "x": "52.072",
+                                      "y": "264"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "elements": [
+                                    {
+                                      "height": "48",
+                                      "name": "rect",
+                                      "transform": "matrix(0.7071 -0.7071 0.7071 0.7071 -76.3353 133.4551)",
+                                      "type": "rect",
+                                      "width": "16",
+                                      "x": "114.938",
+                                      "y": "134.879"
+                                    }
+                                  ],
+                                  "name": "group",
+                                  "type": "group"
+                                }
+                              ],
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            },
+                            {
+                              "name": "group",
+                              "type": "group"
+                            }
+                          ],
+                          "style": {
+                            "classes": "Pages/Icon"
+                          },
+                          "viewBox": "0 0 480.091 480.091"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Colon"
+                        },
+                        "position": {
+                          "basis": "10%"
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#454545",
+                            "textAlign": "center"
+                          },
+                          "text": ":"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Value"
+                        },
+                        "position": {
+                          "basis": "55%"
+                        },
+                        "propConfig": {
+                          "props.style.color": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.availability"
+                              },
+                              "transforms": [
+                                {
+                                  "fallback": "#4DC4FF",
+                                  "inputType": "range",
+                                  "mappings": [
+                                    {
+                                      "input": {
+                                        "max": 40,
+                                        "min": 0
+                                      },
+                                      "output": "#EE4D4D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 84,
+                                        "min": 41
+                                      },
+                                      "output": "#FFC44D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 100,
+                                        "min": 85
+                                      },
+                                      "output": "#8BC94D"
+                                    }
+                                  ],
+                                  "outputType": "scalar",
+                                  "type": "map"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          },
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.availability"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "{value}+\"%\"",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "fontSize": "32px",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Availability"
+                    },
+                    "position": {
+                      "basis": "33%"
+                    },
+                    "props": {
+                      "justify": "center",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "SVG Performance"
+                        },
+                        "position": {
+                          "basis": "30%"
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "d": "m32 2a30 30 0 1 0 30 30 30.037 30.037 0 0 0 -30-30zm0 58a28 28 0 1 1 28-28 28.031 28.031 0 0 1 -28 28z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m39 47h-14a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0 -1-1zm-1 8h-12v-6h12z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m32 7a25.022 25.022 0 0 0 -25 25 1 1 0 0 0 1 1h8a1 1 0 0 0 1-1 14.994 14.994 0 0 1 24.49-11.61l-6.49 5.3a7.04 7.04 0 1 0 3.31 3.31l5.3-6.49a14.923 14.923 0 0 1 3.39 9.49 1 1 0 0 0 1 1h8a1 1 0 0 0 1-1 25.022 25.022 0 0 0 -25-25zm-16.97 24h-6.01a22.939 22.939 0 0 1 2.58-9.62l5.22 3.01a16.742 16.742 0 0 0 -1.79 6.61zm2.79-8.34-5.21-3.01a23.066 23.066 0 0 1 7.04-7.04l3 5.2a17.162 17.162 0 0 0 -4.83 4.85zm13.18-7.61a16.883 16.883 0 0 0 -6.61 1.76l-3.01-5.21a22.939 22.939 0 0 1 9.62-2.58zm1 21.95a5 5 0 0 1 0-10 5.416 5.416 0 0 1 1.21.15l-3.26 2.66a.462.462 0 0 0 -.07.07 3 3 0 1 0 4.24 4.24.462.462 0 0 0 .07-.07l2.66-3.26a5.416 5.416 0 0 1 .15 1.21 5 5 0 0 1 -5 5zm.68-4.26a1.041 1.041 0 0 1 -1.39-.03.99.99 0 0 1 -.29-.71 1.014 1.014 0 0 1 .26-.68l7.7-6.28zm.32-17.69v-6.03a22.939 22.939 0 0 1 9.62 2.58l-3.01 5.21a16.883 16.883 0 0 0 -6.61-1.76zm13.18 7.61a16.765 16.765 0 0 0 -1.29-1.72l1.88-2.31a.994.994 0 0 0 -1.4-1.4l-2.32 1.89a17.876 17.876 0 0 0 -1.7-1.31l3-5.2a23.066 23.066 0 0 1 7.04 7.04zm2.79 8.34a16.742 16.742 0 0 0 -1.79-6.61l5.22-3.01a22.939 22.939 0 0 1 2.58 9.62z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m44 39a3 3 0 1 0 3 3 3 3 0 0 0 -3-3zm0 4a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m52 39a3 3 0 1 0 3 3 3 3 0 0 0 -3-3zm0 4a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m20 39a3 3 0 1 0 3 3 3 3 0 0 0 -3-3zm0 4a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m12 39a3 3 0 1 0 3 3 3 3 0 0 0 -3-3zm0 4a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m25 41h2v2h-2z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m29 41h5v2h-5z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "m36 41h2v2h-2z",
+                                  "name": "path",
+                                  "type": "path"
+                                }
+                              ],
+                              "name": "speedometer",
+                              "type": "group"
+                            }
+                          ],
+                          "style": {
+                            "classes": "Pages/Icon"
+                          },
+                          "viewBox": "0 0 64 64"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Colon"
+                        },
+                        "position": {
+                          "basis": "10%"
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#454545",
+                            "textAlign": "center"
+                          },
+                          "text": ":"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Value"
+                        },
+                        "position": {
+                          "basis": "55%"
+                        },
+                        "propConfig": {
+                          "props.style.color": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.performance"
+                              },
+                              "transforms": [
+                                {
+                                  "fallback": "#4DC4FF",
+                                  "inputType": "range",
+                                  "mappings": [
+                                    {
+                                      "input": {
+                                        "max": 40,
+                                        "min": 0
+                                      },
+                                      "output": "#EE4D4D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 84,
+                                        "min": 41
+                                      },
+                                      "output": "#FFC44D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 100,
+                                        "min": 85
+                                      },
+                                      "output": "#8BC94D"
+                                    }
+                                  ],
+                                  "outputType": "scalar",
+                                  "type": "map"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          },
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.performance"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "{value}+\"%\"",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "fontSize": "32px",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Performance"
+                    },
+                    "position": {
+                      "basis": "33%"
+                    },
+                    "props": {
+                      "justify": "center",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "SVG Quality"
+                        },
+                        "position": {
+                          "basis": "30%"
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "d": "M46,28A16.005,16.005,0,0,0,30.53,40h-3.2L24,37.5V35.16A10.024,10.024,0,0,0,29.95,27H30a3.009,3.009,0,0,0,3-3V23a3.009,3.009,0,0,0-3-3v-.28A6.981,6.981,0,0,0,33,14V7a1,1,0,0,0-1-1H16a9.014,9.014,0,0,0-9,9v2a4.008,4.008,0,0,0,1.73,3.29A3,3,0,0,0,7,23v1a3.009,3.009,0,0,0,3,3h.05A10.024,10.024,0,0,0,16,35.16V37.5L12.67,40H7a5,5,0,0,0-5,5V59a3.009,3.009,0,0,0,3,3H35a3.009,3.009,0,0,0,3-3V57.84A15.994,15.994,0,1,0,46,28ZM31,23v1a1,1,0,0,1-1,1V22A1,1,0,0,1,31,23ZM10,25a1,1,0,0,1-1-1V23a1,1,0,0,1,1-1Zm0-7v.72A2,2,0,0,1,9,17V15a7.008,7.008,0,0,1,7-7H31v6a4.971,4.971,0,0,1-1.28,3.32.942.942,0,0,0-.46-.28L23.62,15.5a.983.983,0,0,0-1.11.44,4.485,4.485,0,0,1-1.12,1.27,5.479,5.479,0,0,1-2.28.99A7.362,7.362,0,0,0,20,15.09,1,1,0,0,0,19,14H18a1.006,1.006,0,0,0-.39.08l-7,3A1,1,0,0,0,10,18Zm2,8V18.66l5.79-2.48a2.818,2.818,0,0,1-.52,1.14,5.038,5.038,0,0,1-.52.45,1.389,1.389,0,0,0-.7,1.53,1.332,1.332,0,0,0,.95.86,7.2,7.2,0,0,0,5.6-1.36,6.336,6.336,0,0,0,1.18-1.19L28,18.76V26a8,8,0,0,1-16,0Zm5.6,12.8A1.014,1.014,0,0,0,18,38V35.8a10.1,10.1,0,0,0,4,0V38a1.014,1.014,0,0,0,.4.8l2.78,2.09L20,43.85l-5.18-2.96ZM36,59a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V45a3.009,3.009,0,0,1,3-3h5.73l6.77,3.87a1.044,1.044,0,0,0,1,0L27.27,42h2.87A16.515,16.515,0,0,0,30,44a15.81,15.81,0,0,0,2.85,9.08l-.83,3.7a1.008,1.008,0,0,0,1.33,1.16l2.65-1Zm10-1a13.838,13.838,0,0,1-8.8-3.12,1.026,1.026,0,0,0-.63-.22,1.12,1.12,0,0,0-.35.06l-1.84.7.52-2.34a.982.982,0,0,0-.18-.81A13.868,13.868,0,0,1,32,44,14,14,0,1,1,46,58Z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "M13,48H7a1,1,0,0,0-1,1v6a1,1,0,0,0,.445.832l3,2a1,1,0,0,0,1.11,0l3-2A1,1,0,0,0,14,55V49A1,1,0,0,0,13,48Zm-1,6.465L10,55.8,8,54.465V50h4Z",
+                                  "name": "path",
+                                  "type": "path"
+                                },
+                                {
+                                  "d": "M44.873,46.713l-5.318-3.545-1.11,1.664,6,4a1,1,0,0,0,1.262-.125l10-10-1.414-1.414Z",
+                                  "name": "path",
+                                  "type": "path"
+                                }
+                              ],
+                              "name": "check",
+                              "type": "group"
+                            }
+                          ],
+                          "style": {
+                            "classes": "Pages/Icon"
+                          },
+                          "viewBox": "0 0 64 64"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Colon"
+                        },
+                        "position": {
+                          "basis": "10%"
+                        },
+                        "props": {
+                          "style": {
+                            "color": "#454545",
+                            "textAlign": "center"
+                          },
+                          "text": ":"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label Value"
+                        },
+                        "position": {
+                          "basis": "55%"
+                        },
+                        "propConfig": {
+                          "props.style.color": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.quality"
+                              },
+                              "transforms": [
+                                {
+                                  "fallback": "#4DC4FF",
+                                  "inputType": "range",
+                                  "mappings": [
+                                    {
+                                      "input": {
+                                        "max": 40,
+                                        "min": 0
+                                      },
+                                      "output": "#EE4D4D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 84,
+                                        "min": 41
+                                      },
+                                      "output": "#FFC44D"
+                                    },
+                                    {
+                                      "input": {
+                                        "max": 100,
+                                        "min": 85
+                                      },
+                                      "output": "#8BC94D"
+                                    }
+                                  ],
+                                  "outputType": "scalar",
+                                  "type": "map"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          },
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "path": "view.params.quality"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "{value}+\"%\"",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "property"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "fontSize": "32px",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Quality"
+                    },
+                    "position": {
+                      "basis": "33%"
+                    },
+                    "props": {
+                      "justify": "center",
+                      "style": {
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Bottom Row"
+                },
+                "position": {
+                  "basis": "35%"
+                },
+                "props": {
+                  "justify": "center"
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Info"
+            },
+            "position": {
+              "basis": "70%",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "83%",
+          "grow": 1
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.isMachine:\n\t\t# Navigate to Carrousel View\n\t\tmachinePage \u003d \"/maquina/\" + self.view.params.eqPathCoded\n\t\tsystem.perspective.navigate(machinePage)\n\t\t\n\t\n\telse: # Drill Down\n\t\tchildren \u003d self.view.params.children\n\t\t\n\t\tif children \u003d\u003d \u0027areas\u0027:\n\t\t\tnextView \u003d \u0027Navigation/Area Selection\u0027\n\t\t\tparams \u003d {\t\u0027plant\u0027: self.view.params.itemCode\n\t\t\t\t\t\t# Also load areas and their parameters\n\t\t\t}\n\t\telif children \u003d\u003d \u0027machines\u0027:\n\t\t\tnextView \u003d \u0027Navigation/Machine Selection\u0027\n\t\t\tparams \u003d {\t\u0027plant\u0027: self.view.params.parent,\n\t\t\t\t\t\t\u0027area\u0027: self.view.params.itemCode\n\t\t\t\t\t\t# Also load areas and their parameters\n\t\t\t}\n\t\t\n\t\tsystem.perspective.navigate(view\u003dnextView, params\u003dparams)"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "classes": "Cards/Card_Transparent"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

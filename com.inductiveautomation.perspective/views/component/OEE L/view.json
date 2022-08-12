@@ -1,0 +1,1278 @@
+{
+  "custom": {
+    "low": 50,
+    "medium": 80
+  },
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1595349958131
+      ],
+      "$ts": 1595262321000
+    },
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_ENTUBADO\\ENT1",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1595349953083
+      ],
+      "$ts": 1593620724000
+    }
+  },
+  "propConfig": {
+    "custom.low": {
+      "persistent": true
+    },
+    "custom.medium": {
+      "persistent": true
+    },
+    "params.endDate": {
+      "onChange": {
+        "enabled": null,
+        "script": "\teqPath \u003d self.params.eqPath\n\tself.params.eqPath \u003d eqPath"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "onChange": {
+        "enabled": null,
+        "script": "\teqPath \u003d self.params.eqPath\n\tself.params.eqPath \u003d eqPath"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 377
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "32px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#DB9CF1",
+                    "fontSize": "25px",
+                    "textAlign": "center"
+                  },
+                  "text": "OEE"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "SimpleGauge"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "propConfig": {
+                      "props.arc.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "if ( {value} \u003c\u003d {view.custom.low}, \"#\"+\"B84A45\",\r\n\tif ( {value} \u003e {view.custom.low} \u0026\u0026 {value} \u003c\u003d {view.custom.medium}, \"#\"+\"E4B34B\",\r\n\t\tif ( {value}\u003e{view.custom.medium}, \"#\"+\"439A2D\",\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      },
+                      "props.arc.cornerRadius": {
+                        "binding": {
+                          "config": {
+                            "expression": "{this.props.arc.width}/2"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.arcBackground.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.arc.color"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tdato \u003d (\"{0:.1f}\".format(100*pyData[0][\u0027OEE\u0027]))\n\t\treturn float(dato)\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "arc": {
+                        "width": 15
+                      },
+                      "arcBackground": {},
+                      "endAngle": 630,
+                      "label": {
+                        "units": "%",
+                        "visible": false
+                      },
+                      "startAngle": 270
+                    },
+                    "type": "ia.chart.simple-gauge"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%",
+                      "x": "0px",
+                      "y": "0px"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "../SimpleGauge.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "{value}+\" %\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F9F9F9",
+                        "fontSize": "24px",
+                        "textAlign": "center",
+                        "textIndent": "0px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "basis": "200px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "32px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#78B778",
+                    "fontSize": "25px",
+                    "textAlign": "center"
+                  },
+                  "text": "Disponibilidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "SimpleGauge"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "propConfig": {
+                      "props.arc.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "if ( {value} \u003c\u003d {view.custom.low}, \"#\"+\"B84A45\",\r\n\tif ( {value} \u003e {view.custom.low} \u0026\u0026 {value} \u003c\u003d {view.custom.medium}, \"#\"+\"E4B34B\",\r\n\t\tif ( {value}\u003e{view.custom.medium}, \"#\"+\"439A2D\",\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      },
+                      "props.arc.cornerRadius": {
+                        "binding": {
+                          "config": {
+                            "expression": "{this.props.arc.width}/2"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.arcBackground.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.arc.color"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tdato \u003d (\"{0:.1f}\".format(100*pyData[0][\u0027OEE Availability\u0027]))\n\t\treturn float(dato)\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "arc": {
+                        "width": 15
+                      },
+                      "arcBackground": {},
+                      "label": {
+                        "units": "%",
+                        "visible": false
+                      },
+                      "style": {
+                        "classes": []
+                      }
+                    },
+                    "type": "ia.chart.simple-gauge"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%",
+                      "x": "0px",
+                      "y": "10px"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "../SimpleGauge.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "{value}+\" %\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F9F9F9",
+                        "fontSize": "24px",
+                        "textAlign": "center",
+                        "textIndent": "0px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "basis": "180px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.coord"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontSize": "14px",
+                        "textAlign": "right"
+                      },
+                      "text": "T. Prod.:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tseconds \u003d pyData[0][\u0027Runtime\u0027] * 60.0\n\t\t\n\t\t#parse\n\t\tmin, sec \u003d divmod(seconds, 60)\n\t\thour, min \u003d divmod(min, 60)\n\t\t\n\t\treturn \"%d:%02d:%02d\" % (hour, min, sec) \n\t\t\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "27px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontSize": "14px",
+                        "textAlign": "right"
+                      },
+                      "text": "T. Muerto Planeado:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tseconds \u003d pyData[0][\u0027Planned Downtime\u0027] * 60.0\n\t\t\n\t\t#parse\n\t\tmin, sec \u003d divmod(seconds, 60)\n\t\thour, min \u003d divmod(min, 60)\n\t\t\n\t\treturn \"%d:%02d:%02d\" % (hour, min, sec) \n\t\t\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_0"
+                },
+                "position": {
+                  "basis": "53px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontSize": "14px",
+                        "textAlign": "right"
+                      },
+                      "text": "T. Muerto No Planeado:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tseconds \u003d pyData[0][\u0027Unplanned Downtime\u0027] * 60.0\n\t\t\n\t\t#parse\n\t\tmin, sec \u003d divmod(seconds, 60)\n\t\thour, min \u003d divmod(min, 60)\n\t\t\n\t\treturn \"%d:%02d:%02d\" % (hour, min, sec) \n\t\t\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_1"
+                },
+                "position": {
+                  "basis": "52px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_0"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "32px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#78A5B7",
+                    "fontSize": "25px",
+                    "textAlign": "center"
+                  },
+                  "text": "Eficiencia"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "SimpleGauge"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "propConfig": {
+                      "props.arc.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "if ( {value} \u003c\u003d {view.custom.low}, \"#\"+\"B84A45\",\r\n\tif ( {value} \u003e {view.custom.low} \u0026\u0026 {value} \u003c\u003d {view.custom.medium}, \"#\"+\"E4B34B\",\r\n\t\tif ( {value}\u003e{view.custom.medium}, \"#\"+\"439A2D\",\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      },
+                      "props.arc.cornerRadius": {
+                        "binding": {
+                          "config": {
+                            "expression": "{this.props.arc.width}/2"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.arcBackground.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.arc.color"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tdato \u003d (\"{0:.1f}\".format(100*pyData[0][\u0027OEE Performance\u0027]))\n\t\treturn float(dato)\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "arc": {
+                        "width": 15
+                      },
+                      "arcBackground": {},
+                      "label": {
+                        "units": "%",
+                        "visible": false
+                      },
+                      "style": {
+                        "classes": []
+                      }
+                    },
+                    "type": "ia.chart.simple-gauge"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%",
+                      "x": "0px",
+                      "y": "10px"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "../SimpleGauge.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "{value}+\" %\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F9F9F9",
+                        "fontSize": "24px",
+                        "textAlign": "center",
+                        "textIndent": "0px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "basis": "180px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.coord"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      },
+                      "text": "Objetivo:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tcount \u003d pyData[0][\u0027Outfeed Standard Count\u0027] \n\t\t\t\t\n\t\treturn \u0027{:,}\u0027.format(count)\n\t\t\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "25px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      },
+                      "text": "Producción:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tcount \u003d pyData[0][\u0027OEE Outfeed Count\u0027] \n\t\t\t\t\n\t\treturn \u0027{:,}\u0027.format(count)\n\t\t\n\texcept:\n\t\treturn 0\n\t\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_0"
+                },
+                "position": {
+                  "basis": "43px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_1"
+                },
+                "position": {
+                  "basis": "40px"
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_1"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "32px"
+                },
+                "props": {
+                  "style": {
+                    "color": "#B7AA78",
+                    "fontSize": "25px",
+                    "textAlign": "center"
+                  },
+                  "text": "Calidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "SimpleGauge"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%"
+                    },
+                    "propConfig": {
+                      "props.arc.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "if ( {value} \u003c\u003d {view.custom.low}, \"#\"+\"B84A45\",\r\n\tif ( {value} \u003e {view.custom.low} \u0026\u0026 {value} \u003c\u003d {view.custom.medium}, \"#\"+\"E4B34B\",\r\n\t\tif ( {value}\u003e{view.custom.medium}, \"#\"+\"439A2D\",\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      },
+                      "props.arc.cornerRadius": {
+                        "binding": {
+                          "config": {
+                            "expression": "{this.props.arc.width}/2"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.arcBackground.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.arc.color"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tdato \u003d (\"{0:.1f}\".format(100*pyData[0][\u0027OEE Quality\u0027]))\n\t\treturn float(dato)\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "arc": {
+                        "width": 15
+                      },
+                      "arcBackground": {},
+                      "label": {
+                        "units": "%",
+                        "visible": false
+                      },
+                      "style": {
+                        "classes": []
+                      }
+                    },
+                    "type": "ia.chart.simple-gauge"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "height": "100%",
+                      "width": "100%",
+                      "x": "0px",
+                      "y": "10px"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "../SimpleGauge.props.value"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "{value}+\" %\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F9F9F9",
+                        "fontSize": "24px",
+                        "textAlign": "center",
+                        "textIndent": "0px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "CoordinateContainer"
+                },
+                "position": {
+                  "basis": "180px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.coord"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      },
+                      "text": "Salida:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tcount \u003d pyData[0][\u0027OEE Outfeed Count\u0027] \n\t\t\t\t\n\t\treturn \u0027{:,}\u0027.format(count)\n\t\t\n\texcept:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "25px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      },
+                      "text": "Rechazos:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tcount \u003d pyData[0][\u0027OEE Reject Count\u0027] \n\t\t\t\t\n\t\treturn \u0027{:,}\u0027.format(count)\n\t\t\n\texcept:\n\t\treturn 0\n\t\t",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_0"
+                },
+                "position": {
+                  "basis": "43px",
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "textAlign": "right"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "34px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "color": "#F1F1F1",
+                        "fontWeight": "bold",
+                        "textIndent": "5px"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_1"
+                },
+                "position": {
+                  "basis": "40px"
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_2"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "290px",
+          "grow": 1
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

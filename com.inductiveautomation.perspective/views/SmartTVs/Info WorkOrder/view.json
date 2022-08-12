@@ -1,0 +1,358 @@
+{
+  "custom": {
+    "defaultPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/Shift/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO4"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 458,
+      "width": 825
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Spacer 2"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "props": {
+          "style": {
+            "color": "#BBBBBB",
+            "fontSize": "24px"
+          },
+          "text": "Orden de Trabajo:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "10%",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.tagPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttagPath \u003d value + \"Work Order\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "top",
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "30px"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Orden"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 3"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "props": {
+          "style": {
+            "classes": "BigLabels/Secundary",
+            "color": "#BBBBBB"
+          },
+          "text": "Material"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "97px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.tagPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttagPath \u003d value + \"Product Code\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "top",
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "30px"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Material"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 4"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "props": {
+          "style": {
+            "classes": "BigLabels/Secundary",
+            "color": "#BBBBBB"
+          },
+          "text": "Ficha:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "97px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.tagPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttagPath \u003d value + \"Product Code\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+                      "type": "script"
+                    },
+                    {
+                      "code": "\tobj \u003d system.mes.loadMESObject(value, \"MaterialDef\")\n\treturn obj.getDescription()",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "top",
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "30px",
+                "fontStyle": "italic"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Referencia"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 5"
+        },
+        "position": {
+          "basis": "10%"
+        },
+        "props": {
+          "style": {
+            "classes": "BigLabels/Secundary",
+            "color": "#BBBBBB"
+          },
+          "text": "Denominación:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "97px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.tagPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttagPath \u003d value + \"Product Code\"\n\ttagValue \u003d system.tag.read(tagPath).value\n\treturn tagValue",
+                      "type": "script"
+                    },
+                    {
+                      "code": "\tobj \u003d system.mes.loadMESObject(value, \"MaterialDef\")\n\treturn obj.getDescription()",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "top",
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "30px",
+                "fontStyle": "italic"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Referencia_0"
+        },
+        "position": {
+          "basis": "34.9%"
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

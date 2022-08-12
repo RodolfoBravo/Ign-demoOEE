@@ -1,0 +1,45 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "height": 121,
+          "width": 478,
+          "x": 183,
+          "y": 208
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if(indexOf(\u00272100_EXTRUSION: EF8\u0027,\u00271100_\u0027)!\u003d-1,\u0027MINIPAK\u0027,\r\nif(indexOf(\u00272100_EXTRUSION: EF8\u0027,\u00272100_\u0027)!\u003d-1,\u0027POLYBOL\u0027,\r\n\u0027\u0027))"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FA0B0B"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#F5F5F5"
+      }
+    },
+    "type": "ia.container.coord"
+  }
+}

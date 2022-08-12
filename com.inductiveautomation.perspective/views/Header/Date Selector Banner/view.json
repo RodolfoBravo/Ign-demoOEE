@@ -1,0 +1,557 @@
+{
+  "custom": {},
+  "params": {
+    "bgColor": "#FFFFFF",
+    "dateRangeIncrement": 1,
+    "dateRangeIndex": 0,
+    "dateRangePeriodIndex": 0,
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1595267323849
+      ],
+      "$ts": 1595329200849
+    },
+    "fgColor": "#000000",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1595267323849
+      ],
+      "$ts": 1595242800849
+    }
+  },
+  "propConfig": {
+    "params.bgColor": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.dateRangeIncrement": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.dateRangeIndex": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.dateRangePeriodIndex": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.endDate": {
+      "paramDirection": "output",
+      "persistent": true
+    },
+    "params.fgColor": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "output",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 41,
+      "width": 900
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Top Spacer"
+        },
+        "position": {
+          "basis": "5px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "69px"
+            },
+            "propConfig": {
+              "props.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fgColor"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "material/date_range"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\t# Get selected Value\n\tindex \u003d self.props.value\n\t\n\t# Initiate Calendar object\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 6 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\tcal_end \u003d Calendar.getInstance()\n\t\n\t# Adjust calendar accordingly\n\tif index \u003d\u003d 0:#Current day\n\t\tstart_date \u003d start_day\n\t\tcal_end.setTime(start_day)\t\t\t\n\t\tcal_end.add(Calendar.DATE,1)\t\t\t\n\t\t\n\telif index \u003d\u003d 1:#yesterday\n\t\tcal_start.add(Calendar.DATE, -1) # subtract 1 day\t\t \n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end.setTime(start_date)\n\t\tcal_end.add(Calendar.DATE,1)\t\n\n\telif index \u003d\u003d 2: #Current Week\n\t\tdaynumber \u003d cal_start.get(Calendar.DAY_OF_WEEK) - 1\n\t\tcal_start.add(Calendar.DATE, - daynumber + 1) # subtract to get first day of week\n\t\tstart_date \u003d cal_start.getTime()\t\t\n\t\tcal_end.setTime(start_date)\t\t\n\t\tcal_end.add(Calendar.DATE, + 7)\n\t\t\t\n\telif index \u003d\u003d 3: #Last Week\n\t\tdaynumber \u003d cal_start.get(Calendar.DAY_OF_WEEK) - 1\n\t\tcal_start.add(Calendar.DATE, - daynumber - 6) # subtract to get first day of last week\n\t\tstart_date \u003d cal_start.getTime()\t\n\t\tcal_end.setTime(start_date)\t\t\n\t\tcal_end.add(Calendar.DATE, + 7)\n\n\telif index \u003d\u003d 4:#Current month\t\t\t\n\t\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\t\tstart_date \u003d cal_start.getTime() \n\t\tcal_end \u003d Calendar.getInstance()\n\t\tcal_end.setTime(start_date)\t\n\t\tcal_end.add(Calendar.MONTH, + 1)\t\t\t\t\n\t\tend_date \u003d cal_end.getTime()\n\n\telif index \u003d\u003d 5: #LAST MONTH \n\t\tcal_start.add(Calendar.MONTH, -1)\n\t\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\t\n\t\tstart_date \u003d cal_start.getTime() \n\t\tcal_end.setTime(start_day)\n\t\tcal_start.add(Calendar.MONTH, 1)\t\n\t\tcal_end.set(Calendar.DAY_OF_MONTH, 1)\n\t\t\t\n\telif index \u003d\u003d 6:#Current year to date\t\n\t\tcal_start.set(Calendar.MONTH, 0)\n\t\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end.setTime(start_day)\n\t\tcal_end.add(Calendar.DATE, +1) # add 1 day \n\telif index \u003d\u003d 7:#Shift 1\n\t\tcal_start \u003d Calendar.getInstance()\n\t\tcal_start.set(Calendar.HOUR_OF_DAY, 6 ) \n\t\tcal_start.set(Calendar.MINUTE, 0 )\n\t\tcal_start.set(Calendar.SECOND, 0 )\n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end \u003d Calendar.getInstance()\t\n\t\tcal_end.set(Calendar.HOUR_OF_DAY, 14 )\n\t\tcal_end.set(Calendar.MINUTE, 0 )\n\t\tcal_end.set(Calendar.SECOND, 0 )\n\t\t\n\telif index \u003d\u003d 8:#Shift 2\n\t\tcal_start \u003d Calendar.getInstance()\n\t\tcal_start.set(Calendar.HOUR_OF_DAY, 14 ) \n\t\tcal_start.set(Calendar.MINUTE, 0 )\n\t\tcal_start.set(Calendar.SECOND, 0 )\n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end \u003d Calendar.getInstance()\t\n\t\tcal_end.set(Calendar.HOUR_OF_DAY, 22 )\n\t\tcal_end.set(Calendar.MINUTE, 0 )\n\t\tcal_end.set(Calendar.SECOND, 0 )\n\t\t\n\telif index \u003d\u003d 9:#Shift 3\n\t\tcal_start \u003d Calendar.getInstance()\n\t\tcal_start.set(Calendar.HOUR_OF_DAY, 22 ) \n\t\tcal_start.set(Calendar.MINUTE, 0 )\n\t\tcal_start.set(Calendar.SECOND, 0 )\n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end \u003d Calendar.getInstance()\t\n\t\tcal_end.set(Calendar.HOUR_OF_DAY, 6 )\n\t\tcal_end.set(Calendar.MINUTE, 0 )\n\t\tcal_end.set(Calendar.SECOND, 0 )\n\t\tcal_end.add(Calendar.DATE,1)\n\t\n\telif index \u003d\u003d -1: # Custom date range // Do nothing\n\t\tprint \"Custom\"\n\t\t\n\telse: # Set date range to current month\n\t\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\t\tstart_date \u003d cal_start.getTime()\n\t\tcal_end.setTime(start_day)\t\t\n\t\tcal_end.set(cal_end.get(Calendar.YEAR), cal_end.get(Calendar.MONTH) +1, 1)\n\t\n\tend_date \u003d cal_end.getTime()\n\t\n\t# Assign calendar dates (if not Custom(-1))\n\tif index !\u003d -1:\n\t\tself.view.params.startDate \u003d start_date\n\t\tself.view.params.endDate \u003d end_date\n\t"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Dropdown dateRange"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.style.backgroundColor": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.bgColor"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.value": {
+                    "binding": {
+                      "config": {
+                        "bidirectional": true,
+                        "path": "view.params.dateRangeIndex"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "Hoy",
+                      "value": 0
+                    },
+                    {
+                      "label": "Ayer",
+                      "value": 1
+                    },
+                    {
+                      "label": "Esta Semana",
+                      "value": 2
+                    },
+                    {
+                      "label": "Semana Pasada",
+                      "value": 3
+                    },
+                    {
+                      "label": "Este Mes",
+                      "value": 4
+                    },
+                    {
+                      "label": "Mes Pasado",
+                      "value": 5
+                    },
+                    {
+                      "label": "Año a la fecha",
+                      "value": 6
+                    },
+                    {
+                      "label": "Turno 1",
+                      "value": 7
+                    },
+                    {
+                      "label": "Turno 2",
+                      "value": 8
+                    },
+                    {
+                      "label": "Turno 3",
+                      "value": 9
+                    },
+                    {
+                      "label": "Custom",
+                      "value": -1
+                    }
+                  ],
+                  "placeholder": {
+                    "text": "Seleccionar..."
+                  },
+                  "search": {
+                    "noResultsText": "Sin resultados"
+                  }
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer DD Range"
+            },
+            "position": {
+              "basis": "150px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Label From"
+            },
+            "position": {
+              "basis": "35px"
+            },
+            "propConfig": {
+              "props.style.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fgColor"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "fontSize": "13px",
+                "textAlign": "right"
+              },
+              "text": "De:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tif self.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value \u003d -1\n\t\t"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "DateTimeInput startDate"
+            },
+            "position": {
+              "basis": "170px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.params.startDate"
+                  },
+                  "type": "property"
+                },
+                "onChange": {
+                  "enabled": false,
+                  "script": "\tif self.getSibling(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.getSibling(\"Dropdown dateRange\").props.value \u003d -1"
+                }
+              }
+            },
+            "props": {
+              "formattedValue": "Jul 20, 2020 6:00 AM",
+              "formattedValues": {
+                "date": "Jul 20, 2020",
+                "datetime": "Jul 20, 2020 6:00 AM",
+                "time": "6:00 AM"
+              }
+            },
+            "type": "ia.input.date-time-input"
+          },
+          {
+            "meta": {
+              "name": "Label To"
+            },
+            "position": {
+              "basis": "25px"
+            },
+            "propConfig": {
+              "props.style.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fgColor"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "fontSize": "13px",
+                "textAlign": "right"
+              },
+              "text": "A:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tif self.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value \u003d -1"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "DateTimeInput endDate"
+            },
+            "position": {
+              "basis": "170px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.params.endDate"
+                  },
+                  "type": "property"
+                },
+                "onChange": {
+                  "enabled": false,
+                  "script": "\tif self.getSibling(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.getSibling(\"Dropdown dateRange\").props.value \u003d -1"
+                }
+              }
+            },
+            "props": {
+              "formattedValue": "Jul 21, 2020 6:00 AM",
+              "formattedValues": {
+                "date": "Jul 21, 2020",
+                "datetime": "Jul 21, 2020 6:00 AM",
+                "time": "6:00 AM"
+              }
+            },
+            "type": "ia.input.date-time-input"
+          },
+          {
+            "meta": {
+              "name": "Spacer 0"
+            },
+            "position": {
+              "basis": "15px",
+              "grow": 1
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\timport system\n\t\n\tstartDate \u003d self.view.params.startDate\n\tendDate \u003d self.view.params.endDate\n\tnumber \u003d 0-abs( self.getSibling(\"NumericEntryField Increment\").props.value )\n\t#field \u003d event.source.parent.getComponent(\u0027dd_Period\u0027).selectedStringValue\n\t\n\t#startDate, endDate \u003d event.source.parent.changeDateRange(startDate, endDate, number, field)\n\t\n\tperiod \u003d self.parent.getChild(\"CoordinateContainer DD Period\").getChild(\"Dropdown Increment Period\").props.value\n\t\t\n\tif period \u003d\u003d 0: # Days\n\t\tstartDate \u003d system.date.addDays(startDate, number)\n\t\tendDate \u003d system.date.addDays(endDate, number)\n\telif period \u003d\u003d 1: # Weeks\n\t\tstartDate \u003d system.date.addWeeks(startDate, number)\n\t\tendDate \u003d system.date.addWeeks(endDate, number)\n\telif period \u003d\u003d 2: # Months\n\t\tstartDate \u003d system.date.addMonths(startDate, number)\n\t\tendDate \u003d system.date.addMonths(endDate, number)\n\telif period \u003d\u003d 3: # Years\n\t\tstartDate \u003d system.date.addYears(startDate, number)\n\t\tendDate \u003d system.date.addYears(endDate, number)\n\t\n\tself.view.params.startDate \u003d startDate\n\tself.view.params.endDate \u003d endDate \n\t\n\tif self.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value \u003d -1"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Icon Decrement"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "propConfig": {
+              "props.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fgColor"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "material/navigate_before"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\timport system\n\t\n\tstartDate \u003d self.view.params.startDate\n\tendDate \u003d self.view.params.endDate\n\tnumber \u003d self.getSibling(\"NumericEntryField Increment\").props.value\n\t#field \u003d event.source.parent.getComponent(\u0027dd_Period\u0027).selectedStringValue\n\t\n\t#startDate, endDate \u003d event.source.parent.changeDateRange(startDate, endDate, number, field)\n\t\n\tperiod \u003d self.parent.getChild(\"CoordinateContainer DD Period\").getChild(\"Dropdown Increment Period\").props.value \n\t\n\tif period \u003d\u003d 0: # Days\n\t\tstartDate \u003d system.date.addDays(startDate, number)\n\t\tendDate \u003d system.date.addDays(endDate, number)\n\telif period \u003d\u003d 1: # Weeks\n\t\tstartDate \u003d system.date.addWeeks(startDate, number)\n\t\tendDate \u003d system.date.addWeeks(endDate, number)\n\telif period \u003d\u003d 2: # Months\n\t\tstartDate \u003d system.date.addMonths(startDate, number)\n\t\tendDate \u003d system.date.addMonths(endDate, number)\n\telif period \u003d\u003d 3: # Years\n\t\tstartDate \u003d system.date.addYears(startDate, number)\n\t\tendDate \u003d system.date.addYears(endDate, number)\n\t\n\tself.view.params.startDate \u003d startDate\n\tself.view.params.endDate \u003d endDate\n\t\n\tif self.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value !\u003d -1:\n\t\tself.parent.getChild(\"CoordinateContainer DD Range\").getChild(\"Dropdown dateRange\").props.value \u003d -1"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Icon Increment"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "propConfig": {
+              "props.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fgColor"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "material/navigate_next"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "NumericEntryField Increment"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "propConfig": {
+              "props.style.backgroundColor": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.bgColor"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.params.dateRangeIncrement"
+                  },
+                  "enabled": false,
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "format": "0,0",
+              "inputBounds": {
+                "minimum": 0
+              },
+              "value": 1
+            },
+            "type": "ia.input.numeric-entry-field"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown Increment Period"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.style.backgroundColor": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.bgColor"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.value": {
+                    "binding": {
+                      "config": {
+                        "bidirectional": true,
+                        "path": "view.params.dateRangePeriodIndex"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "Día(s)",
+                      "value": 0
+                    },
+                    {
+                      "label": "Semana(s)",
+                      "value": 1
+                    },
+                    {
+                      "label": "Mes(es)",
+                      "value": 2
+                    },
+                    {
+                      "label": "Año(s)",
+                      "value": 3
+                    }
+                  ],
+                  "placeholder": {
+                    "text": "Seleccionar..."
+                  },
+                  "search": {
+                    "noResultsText": "Sin resultados"
+                  }
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer DD Period"
+            },
+            "position": {
+              "basis": "100px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Spacer 1"
+            },
+            "position": {
+              "basis": "9px"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Banner"
+        },
+        "position": {
+          "basis": "32px",
+          "grow": 1
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Bottom Spacer"
+        },
+        "position": {
+          "basis": "5px"
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

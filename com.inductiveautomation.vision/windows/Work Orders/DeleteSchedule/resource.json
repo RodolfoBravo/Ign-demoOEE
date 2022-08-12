@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "sergio.feria",
+      "timestamp": "2020-09-17T09:46:05Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "area_sel,areas,otsProg_db,refresh,table,updating_gantt,updating_table",
+    "lastModificationSignature": "00c374ac56fe95a5032429514161c5f5e89f45a15924d92d87c90f0d1f0d8e14"
+  }
+}

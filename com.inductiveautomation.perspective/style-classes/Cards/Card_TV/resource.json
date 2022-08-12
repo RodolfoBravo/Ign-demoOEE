@@ -1,0 +1,16 @@
+{
+  "scope": "G",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "style.json"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "sergio.feria",
+      "timestamp": "2020-08-14T20:33:40Z"
+    },
+    "lastModificationSignature": "4d6b025fccc04d57cb94dbcd4df473891c194b98a9808de4f691a39f048396e9"
+  }
+}

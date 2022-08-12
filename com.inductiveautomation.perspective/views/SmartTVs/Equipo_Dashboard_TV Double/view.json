@@ -1,0 +1,104 @@
+{
+  "custom": {},
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO6",
+    "eqPath0": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO6",
+    "eqPath1": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO4",
+    "refresh": null
+  },
+  "propConfig": {
+    "params.eqPath0": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath1": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.refresh": {
+      "binding": {
+        "config": {
+          "expression": "{session.props.host}"
+        },
+        "transforms": [
+          {
+            "code": "\thost \u003d value\n\tip \u003d system.db.runPrepQuery(\u0027SELECT eqPath,eqPath2 FROM smarttvs_config where hostname \u003d ?\u0027,[host])\n\tif ip.getRowCount() !\u003d0:\n\t\teqPath \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath\u0027]\n\t\teqPath2 \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath2\u0027]\n\telse:\n\t\teqPath \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\1100_ROTOGRABADO\\\\RO6\u0027\n\t\teqPath2 \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\1100_ROTOGRABADO\\\\RO4\u0027\n\t\n\tif eqPath2 \u003d\u003d \u0027\u0027 or eqPath2 \u003d\u003d None:\n\t\teqPath2 \u003d eqPath\n\t\n\tself.params.eqPath0 \u003d eqPath\n\tself.params.eqPath1 \u003d eqPath2\n\t\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)\n\treturn host",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      },
+      "paramDirection": "inout",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 608,
+      "width": 1080
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "EmbeddedView Left"
+        },
+        "position": {
+          "basis": "50%"
+        },
+        "propConfig": {
+          "props.params.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath0"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "path": "SmartTVs/Equipo_Dashboard_TV Simplified",
+          "style": {
+            "classes": "Card_Transparent"
+          }
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "EmbeddedView Right"
+        },
+        "position": {
+          "basis": "50%"
+        },
+        "propConfig": {
+          "props.params.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath1"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "path": "SmartTVs/Equipo_Dashboard_TV Simplified",
+          "style": {
+            "classes": "Card_Transparent"
+          }
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

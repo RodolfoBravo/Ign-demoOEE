@@ -1,0 +1,853 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1598400910634
+      ],
+      "$ts": 1598400910634
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1598400910634
+      ],
+      "$ts": 1598314510634
+    }
+  },
+  "params": {
+    "area": "1100_rotograbado",
+    "plant": "1100_"
+  },
+  "permissions": {
+    "securityLevels": [
+      {
+        "children": [],
+        "name": "Authenticated"
+      }
+    ],
+    "type": "AllOf"
+  },
+  "propConfig": {
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "expression": "now(900000) // Every 15 mins"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "path": "view.custom.endDate"
+        },
+        "transforms": [
+          {
+            "code": "\treturn system.date.addDays(value, -1) # One day before / last 24 h",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.plant": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 652,
+      "width": 907
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "events": {
+                  "dom": {
+                    "onClick": {
+                      "config": {
+                        "params": {
+                          "plant": "{view.params.plant}"
+                        },
+                        "view": "Navigation/Area Selection"
+                      },
+                      "scope": "C",
+                      "type": "nav"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "67px"
+                },
+                "props": {
+                  "path": "material/navigate_before"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "167px"
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.area"
+                      },
+                      "transforms": [
+                        {
+                          "expression": "if (split({value},\"_\")[0,0] \u003d \"1100\", \"MPK\", \"PLB\") + \" / \"\r\n+ upper(split({value},\"_\")[1,0])",
+                          "type": "expression"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "BigLabels/Primary_small",
+                    "fontSize": "18px"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "55px",
+              "shrink": 0
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "50px"
+                },
+                "props": {
+                  "alignVertical": "bottom",
+                  "style": {
+                    "fontSize": "14px",
+                    "fontWeight": "lighter",
+                    "textAlign": "center"
+                  },
+                  "text": "OEE"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "EmbeddedView"
+                },
+                "position": {
+                  "basis": "320px"
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "path": "..../FlexContainer Panel.custom.analysis"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\t\n\t\treturn int(round( value.getValueAt(0, \"OEE\") *100 ))\n\texcept:\n\t\treturn 0",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "fontColor": "#FFFFFF"
+                  },
+                  "path": "page/Embedded/Gauge"
+                },
+                "type": "ia.display.view"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer OEE"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "28px"
+                },
+                "props": {
+                  "alignVertical": "bottom",
+                  "style": {
+                    "fontSize": "14px",
+                    "fontWeight": "lighter",
+                    "letterSpacing": "1px",
+                    "textAlign": "center",
+                    "textTransform": "uppercase"
+                  },
+                  "text": "Disponibilidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "EmbeddedView"
+                    },
+                    "position": {
+                      "basis": "110px"
+                    },
+                    "propConfig": {
+                      "props.params.value": {
+                        "binding": {
+                          "config": {
+                            "path": "...../FlexContainer Panel.custom.analysis"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Availability\") *100 ))\n\texcept:\n\t\treturn 0",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "params": {
+                        "fontColor": "#FFFFFF"
+                      },
+                      "path": "page/Embedded/Gauge"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "60%"
+                            },
+                            "props": {
+                              "text": "T. Prod:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "40%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": "24:00"
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_0"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "60%"
+                            },
+                            "props": {
+                              "text": "T. Muerto Planificado:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "40%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": "24:00"
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_2"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "60%"
+                            },
+                            "props": {
+                              "text": "T. Muerto No Planificado:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "40%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": "24:00"
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_3"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Infos"
+                    },
+                    "position": {
+                      "basis": "139px",
+                      "display": false,
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "justify": "center"
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "82px",
+                  "grow": 1
+                },
+                "props": {
+                  "justify": "center"
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Disponibilidad"
+            },
+            "position": {
+              "basis": "160px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "28px"
+                },
+                "props": {
+                  "alignVertical": "bottom",
+                  "style": {
+                    "fontSize": "14px",
+                    "fontWeight": "lighter",
+                    "letterSpacing": "1px",
+                    "textAlign": "center",
+                    "textTransform": "uppercase"
+                  },
+                  "text": "Eficiencia"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "EmbeddedView"
+                    },
+                    "position": {
+                      "basis": "110px"
+                    },
+                    "propConfig": {
+                      "props.params.value": {
+                        "binding": {
+                          "config": {
+                            "path": "...../FlexContainer Panel.custom.analysis"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Performance\") *100 ))\n\texcept:\n\t\treturn 0",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "params": {
+                        "fontColor": "#FFFFFF"
+                      },
+                      "path": "page/Embedded/Gauge"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "text": "Objetivo:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": 123456
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_0"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "text": "Producción:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": 123456
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_2"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Infos"
+                    },
+                    "position": {
+                      "basis": "139px",
+                      "display": false,
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "justify": "center"
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "82px",
+                  "grow": 1
+                },
+                "props": {
+                  "justify": "center"
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Eficiencia"
+            },
+            "position": {
+              "basis": "160px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "marginTop": "10px"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "28px"
+                },
+                "props": {
+                  "alignVertical": "bottom",
+                  "style": {
+                    "fontSize": "14px",
+                    "fontWeight": "lighter",
+                    "letterSpacing": "1px",
+                    "textAlign": "center",
+                    "textTransform": "uppercase"
+                  },
+                  "text": "Calidad"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "EmbeddedView"
+                    },
+                    "position": {
+                      "basis": "110px"
+                    },
+                    "propConfig": {
+                      "props.params.value": {
+                        "binding": {
+                          "config": {
+                            "path": "...../FlexContainer Panel.custom.analysis"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Quality\") *100 ))\n\texcept:\n\t\treturn 0",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "params": {
+                        "fontColor": "#FFFFFF"
+                      },
+                      "path": "page/Embedded/Gauge"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "text": "Salida:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": 123456
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_0"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "text": "Rechazos:"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "Label_0"
+                            },
+                            "position": {
+                              "basis": "50%"
+                            },
+                            "props": {
+                              "style": {
+                                "fontWeight": "bold",
+                                "textAlign": "center"
+                              },
+                              "text": 123456
+                            },
+                            "type": "ia.display.label"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Label_2"
+                        },
+                        "position": {
+                          "basis": "50px"
+                        },
+                        "type": "ia.container.flex"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Infos"
+                    },
+                    "position": {
+                      "basis": "139px",
+                      "display": false,
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "justify": "center"
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "82px",
+                  "grow": 1
+                },
+                "props": {
+                  "justify": "center"
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Calidad"
+            },
+            "position": {
+              "basis": "160px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "marginTop": "10px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Panel"
+        },
+        "position": {
+          "basis": "320px"
+        },
+        "propConfig": {
+          "custom.analysis": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.startDate}+{view.custom.endDate}+{view.params.area}+{view.params.plant}"
+              },
+              "transforms": [
+                {
+                  "code": "\t#\ttry:\n\tarea \u003d self.view.params.area\n\tfilter \u003d system.mes.object.filter.createFilter()\n\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\tfilter.setMESObjectNamePattern(area)\n\tlistOfAreas \u003d system.mes.searchMESObjects(filter)\n\t\n\tareaCode \u003d listOfAreas[0].getName()\n\t\n\tareaPath \u003d \"MINIPAK_POLYBOL\\\\Colombia\\\\\" + areaCode + \"\\\\*\"\n\t\t\t\n\t# Execute Analysis\n\tanalysisName \u003d \"_oee_area\"\n\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\tend \u003d self.view.custom.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\tstart \u003d self.view.custom.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\tparams \u003d {\u0027areaPath\u0027 : areaPath}\n\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\tdata \u003d result.getDataset()\n\t# Get OEE Data\n#\toee \u003d int(round( data.getValueAt(0, \"OEE\") *100 ))\n#\tavailability \u003d int(round( data.getValueAt(0, \"OEE Availability\") *100 ))\n#\tperformance \u003d int(round( data.getValueAt(0, \"OEE Performance\") *100 ))\n#\tquality \u003d int(round( data.getValueAt(0, \"OEE Quality\") *100 ))\n\t\n\treturn data",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "FlexRepeater"
+        },
+        "position": {
+          "basis": "500px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.instances": {
+            "binding": {
+              "config": {
+                "path": "view.params.area"
+              },
+              "transforms": [
+                {
+                  "code": "\tareaObj \u003d system.mes.loadMESObject(value, \u0027Area\u0027)\n\tif areaObj !\u003d None:\n\t\tmachinesInArea \u003d areaObj.getChildCollection().getList()\t\n\t\n\tmachines \u003d []\n\tfor machine in machinesInArea: # for each machine in the area:\n\t\t# Get machines\u0027s basic info\n\t\teqName \u003d machine.getName()\n\t\teqObj \u003d system.mes.loadMESObject(eqName, \u0027Line\u0027)\n\t\teqPath \u003d eqObj.getEquipmentPath()\n\t\t\n\t\t# Execute analysis \n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.custom.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.custom.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : eqPath}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\t# Get OEE data\n\t\toee \u003d int(round( data.getValueAt(0, \"OEE\") *100 ))\n\t\tavailability \u003d int(round( data.getValueAt(0, \"OEE Availability\") *100 ))\n\t\tperformance \u003d int(round( data.getValueAt(0, \"OEE Performance\") *100 ))\n\t\tquality \u003d int(round( data.getValueAt(0, \"OEE Quality\") *100 ))\n\t\tproduction \u003d int(round( data.getValueAt(0, \"OEE Outfeed Count\") ))\n\t\t\n\t\t# Get current State Name \u0026 Value\n\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(eqPath)\n\t\tstateName \u003d system.tag.read( tagPath +\"Line State Name\").value\n\t\tif stateName \u003d\u003d None:\n\t\t\tstateName \u003d \u0027\u003cN/A\u003e\u0027\n\t\tstateValue \u003d system.tag.read( tagPath +\"Line State Value\").value\n\t\t\n\t\t# Configure Widget\n\t\tmachineParams \u003d {\t\u0027name\u0027: eqName, \n\t\t\t\t\t\t\t\u0027stateName\u0027: stateName,\n\t\t\t\t\t\t\t\u0027stateValue\u0027: stateValue,\n\t\t\t\t\t\t\t\u0027production\u0027: production,\n\t\t\t\t\t\t\t\u0027oee\u0027: oee,\n\t\t\t\t\t\t\t\u0027availability\u0027: availability,\n\t\t\t\t\t\t\t\u0027performance\u0027: performance,\n\t\t\t\t\t\t\t\u0027quality\u0027: quality,\n\t\t\t\t\t\t\t\u0027isMachine\u0027: bool(1),\n\t\t\t\t\t\t\t\u0027eqPathCoded\u0027: self.view.params.area+\"__\"+eqName\n\t\t}\n\t\tmachines.append( machineParams )\n\t\t\n\treturn machines",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "path": "page/Embedded/Widget",
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.flex-repeater"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#1A3143"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-08-04T16:47:53Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "dic_hijos,ot_codigo,ot_info,ot_padre,pedido,posicion,tabla_extra",
+    "lastModificationSignature": "8eed37b3e9af3fe3090f2abae9e76db8b46d6317c962ddac8595125648ee4510"
+  }
+}

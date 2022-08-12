@@ -1,0 +1,602 @@
+{
+  "custom": {
+    "stateDuration": 8.016666666666667,
+    "stdTime": 0,
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO5/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO5"
+  },
+  "propConfig": {
+    "custom.stateDuration": {
+      "binding": {
+        "config": {
+          "fallbackDelay": 2.5,
+          "mode": "indirect",
+          "references": {
+            "1": "{view.custom.tagPath}"
+          },
+          "tagPath": "{1}State Duration"
+        },
+        "transforms": [
+          {
+            "code": "\tstateType \u003d system.tag.read( self.view.custom.tagPath+\"Line State Type\" ).value\n\tif stateType \u003d\u003d \"Planned Downtime\" or stateType \u003d\u003d \"Unplanned Downtime\":\n\t\treturn value\n\telse:\n\t\treturn 0\n\t",
+            "type": "script"
+          }
+        ],
+        "type": "tag"
+      },
+      "persistent": true
+    },
+    "custom.stdTime": {
+      "binding": {
+        "config": {
+          "fallbackDelay": 2.5,
+          "mode": "indirect",
+          "references": {
+            "1": "{view.custom.tagPath}"
+          },
+          "tagPath": "{1}Line Downtime Reason"
+        },
+        "transforms": [
+          {
+            "fallback": 0,
+            "inputType": "scalar",
+            "mappings": [
+              {
+                "input": "Aprobación Pedido Repetición",
+                "output": 30
+              },
+              {
+                "input": "Aprobación Pedido Nuevo",
+                "output": 60
+              },
+              {
+                "input": "Muestras Desarrollos Huella",
+                "output": 30
+              },
+              {
+                "input": "Pruebas de Laboratorio",
+                "output": 10
+              },
+              {
+                "input": "Charla Capacitación",
+                "output": 30
+              },
+              {
+                "input": "Limpieza Orden y Aseo",
+                "output": 30
+              },
+              {
+                "input": "Mantenimiento Preventivo",
+                "output": 100
+              },
+              {
+                "input": "Refrigerio",
+                "output": 30
+              },
+              {
+                "input": "Preacondicionamiento",
+                "output": 30
+              },
+              {
+                "input": "Lavado y Reemplazo de Accesorios",
+                "output": 30
+              },
+              {
+                "input": "Cambio Cuchillas y Sellos",
+                "output": 10
+              },
+              {
+                "input": "Cambio de Piezas de Formato",
+                "output": 7
+              },
+              {
+                "input": "Cambio de Tintas",
+                "output": 20
+              },
+              {
+                "input": "Ajuste de Prensada y Registro",
+                "output": 30
+              },
+              {
+                "input": "Ajuste Colores Pantone",
+                "output": 15
+              },
+              {
+                "input": "Ajuste Colores Process",
+                "output": 15
+              },
+              {
+                "input": "Medición de Calidad",
+                "output": 15
+              },
+              {
+                "input": "Cambio de Cara Impresa (Cara Dorso)",
+                "output": 60
+              }
+            ],
+            "outputType": "scalar",
+            "type": "map"
+          }
+        ],
+        "type": "tag"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 187,
+      "width": 304
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "70%"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.tagPath}"
+                    },
+                    "tagPath": "{1}Line Downtime Reason"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value \u003d\u003d \"\":\n\t\treturn \"Paro Sin Justificar\"\n\telse:\n\t\treturn value",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Primary_medium",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "18px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "BigLabels/Secundary",
+                "textAlign": "center"
+              },
+              "text": "Causa de Parada"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_8"
+        },
+        "position": {
+          "basis": "20%"
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "backgroundColor": "#192434",
+            "classes": "Cards/Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "20%"
+                },
+                "props": {
+                  "color": "#3ACE1C",
+                  "path": "material/alarm_on"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.stdTime"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "//dateFormat(setTime(now(60000),0,{value},0),\u0027HH:mm:ss\u0027)\r\ndateFormat(setTime(now(60000),0,{value},0),\u0027HH\u0027) + \"h \" + \r\ndateFormat(setTime(now(60000),0,{value},0),\u0027mm\u0027) + \"m\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "fontSize": "20px",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "18px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "fontSize": "12px",
+                        "textAlign": "center"
+                      },
+                      "text": "Tiempo Standard"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_8"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_running"
+            },
+            "position": {
+              "basis": "33%"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "20%"
+                },
+                "props": {
+                  "color": "#AB2C2C",
+                  "path": "material/timer"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_2"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "custom.pdt": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.tagPath}"
+                            },
+                            "tagPath": "{1}Planned Downtime"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "custom.upd": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.tagPath}"
+                            },
+                            "tagPath": "{1}Unplanned Downtime"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.tagPath}"
+                            },
+                            "tagPath": "{1}State Duration"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\tstateType \u003d system.tag.read( self.view.custom.tagPath+\"Line State Type\" ).value\n\tif stateType \u003d\u003d \"Planned Downtime\" or stateType \u003d\u003d \"Unplanned Downtime\":\n\t\treturn value\n\telse:\n\t\treturn 0\n\t",
+                              "type": "script"
+                            },
+                            {
+                              "expression": "dateFormat(setTime(now(60000),0,{value},0),\u0027HH\u0027) + \"h \" + \r\ndateFormat(setTime(now(60000),0,{value},0),\u0027mm\u0027) + \"m\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "fontSize": "20px",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "22px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "fontSize": "12px",
+                        "textAlign": "center"
+                      },
+                      "text": "Tiempo Real"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_3"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_downtime"
+            },
+            "position": {
+              "basis": "33%"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "20%"
+                },
+                "props": {
+                  "color": "#E4A356",
+                  "path": "material/restore"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.style.color": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.stdTime}-{view.custom.stateDuration}"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\tif value \u003c 0:\n\t\treturn \"#EE4545\"\n\telse:\n\t\treturn \"#FFFFFF\"",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "expr"
+                        }
+                      },
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "expression": "abs({view.custom.stdTime}-{view.custom.stateDuration})"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "dateFormat(setTime(now(60000),0,{value},0),\u0027HH\u0027) + \"h \" + \r\ndateFormat(setTime(now(60000),0,{value},0),\u0027mm\u0027) + \"m\"",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "fontSize": "20px",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "10px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "fontSize": "12px",
+                        "textAlign": "center"
+                      },
+                      "text": "Tiempo Regresivo"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_7"
+                },
+                "position": {
+                  "basis": "33%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_changeover"
+            },
+            "position": {
+              "basis": "33%"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_times"
+        },
+        "position": {
+          "basis": "80%",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "backgroundColor": "#192434",
+            "color": "#FFFFFF",
+            "margin": "5px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

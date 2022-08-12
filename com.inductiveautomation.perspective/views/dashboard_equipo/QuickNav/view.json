@@ -1,0 +1,340 @@
+{
+  "custom": {},
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1"
+  },
+  "propConfig": {
+    "params.eqPath": {
+      "binding": {
+        "config": {
+          "bidirectional": true,
+          "path": "/root/FlexContainer Equipo/CoordinateContainer/Dropdown.props.value"
+        },
+        "type": "property"
+      },
+      "paramDirection": "output",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 51
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Spacer 4"
+        },
+        "position": {
+          "basis": "15px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Icon"
+        },
+        "position": {
+          "basis": "30px"
+        },
+        "props": {
+          "color": "#FFFFFF",
+          "path": "material/near_me"
+        },
+        "type": "ia.display.icon"
+      },
+      {
+        "meta": {
+          "name": "Spacer 0"
+        },
+        "position": {
+          "basis": "50px"
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": "12px",
+            "textAlign": "right"
+          },
+          "text": "Planta:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer Top"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "Minipak",
+                      "value": "1100_"
+                    },
+                    {
+                      "label": "Polybol",
+                      "value": "2100_"
+                    }
+                  ],
+                  "placeholder": {
+                    "text": "Seleccionar..."
+                  },
+                  "value": "1100_"
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "75px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Label Bottom"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Planta"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 1"
+        },
+        "position": {
+          "basis": "50px"
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": "12px",
+            "textAlign": "right"
+          },
+          "text": "Area:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer Top"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.options": {
+                    "binding": {
+                      "config": {
+                        "path": "..../FlexContainer Planta/CoordinateContainer/Dropdown.props.value"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\tplanta \u003d value + \u0027*\u0027\n\t\tfilter \u003d system.mes.object.filter.createFilter()\n\t\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t\tfilter.setMESObjectNamePattern(planta)\n\t\tlist \u003d system.mes.searchMESObjects(filter)\n\t\toptions \u003d []\n\t\tfor item in list:\n\t\t\ttemp \u003d {\u0027value\u0027:item.getName(),\u0027label\u0027:item.getName().split(\"_\")[1]}\n\t\t\toptions.append(temp)\n\t\treturn options\n\texcept:\n\t\treturn []",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    },
+                    "onChange": {
+                      "enabled": null,
+                      "script": "\tself.props.value \u003d \u0027\u0027"
+                    }
+                  }
+                },
+                "props": {
+                  "placeholder": {
+                    "text": "Seleccionar..."
+                  },
+                  "value": "1100_GOFRADO"
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "75px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Label Bottom"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Area"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 2"
+        },
+        "position": {
+          "basis": "50px"
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": "12px",
+            "textAlign": "right"
+          },
+          "text": "Equipo:"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer Top"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "height": "100%",
+                  "width": "100%"
+                },
+                "propConfig": {
+                  "props.options": {
+                    "binding": {
+                      "config": {
+                        "path": "..../FlexContainer Area/CoordinateContainer/Dropdown.props.value"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tarea \u003d value\n\tif area \u003d\u003d \u0027\u0027:\n\t\treturn []\n\telse:\n\t\t#filter \u003d system.mes.object.filter.createFilter()\n\t\t#filter.setMESObjectTypeName(\u0027Area\u0027)\n\t\t#filter.setMESObjectNamePattern(area)\n\t\t#list \u003d system.mes.searchMESObjects(filter)\n\t\t#area_obj \u003d list.get(0).getMESObject()\n\t\t#equipos \u003d area_obj.getChildCollection()\n\t\tmesObject \u003d system.mes.loadMESObject(area, \u0027Area\u0027) #clase seeleccionada \n\t\tif mesObject !\u003d None:\n\t\t\tequipos \u003d mesObject.getChildCollection().getList()\n\t\toptions \u003d []\n\t\t#for elem in equipos:\n\t\t#\tequipo \u003d system.mes.loadMESObject(elem)\n\t\tfor equipo in equipos: # se recorre la lista de equipos para armar el dataset del template repeater\n\t\t\ttry:\n\t\t\t\tlineObj \u003d system.mes.loadMESObject(equipo.getName(), \u0027Line\u0027)\n\t\t\t\teqPath \u003d lineObj.getEquipmentPath()\n\t\t\t\ttemp \u003d {\u0027value\u0027:eqPath,\u0027label\u0027:equipo.getName()}\n\t\t\t\toptions.append(temp)\n\t\t\texcept:\n\t\t\t\tpass\n\t\treturn options",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "placeholder": {
+                    "text": "Seleccionar..."
+                  },
+                  "value": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1"
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "CoordinateContainer"
+            },
+            "position": {
+              "basis": "75px"
+            },
+            "type": "ia.container.coord"
+          },
+          {
+            "meta": {
+              "name": "Label Bottom"
+            },
+            "position": {
+              "basis": "15px"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Equipo"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer 3"
+        },
+        "position": {
+          "basis": "15px"
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.flex"
+  }
+}

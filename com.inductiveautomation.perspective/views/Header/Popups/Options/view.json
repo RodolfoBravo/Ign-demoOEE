@@ -1,0 +1,288 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 55,
+      "width": 200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "22px",
+              "shrink": 0
+            },
+            "props": {
+              "path": "material/wb_sunny",
+              "style": {
+                "backgroundColor": "unset",
+                "classes": "Title_Text",
+                "marginLeft": "10px"
+              }
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "hasDelegate": true,
+              "name": "Label"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "session.props.theme"
+                  },
+                  "transforms": [
+                    {
+                      "fallback": null,
+                      "inputType": "scalar",
+                      "mappings": [
+                        {
+                          "input": "light",
+                          "output": "Light Theme"
+                        },
+                        {
+                          "input": "dark",
+                          "output": "Dark Theme"
+                        }
+                      ],
+                      "outputType": "scalar",
+                      "type": "map"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "center",
+              "style": {
+                "backgroundColor": "unset",
+                "classes": "Title_Text"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": [
+              {
+                "config": {
+                  "draggable": false,
+                  "id": "theme-popup",
+                  "modal": false,
+                  "overlayDismiss": true,
+                  "position": {
+                    "right": 10,
+                    "top": 70
+                  },
+                  "resizable": false,
+                  "showCloseIcon": false,
+                  "type": "toggle",
+                  "viewPath": "Header/Popups/Theme"
+                },
+                "scope": "C",
+                "type": "popup"
+              },
+              {
+                "config": {
+                  "draggable": true,
+                  "id": "options-popup",
+                  "modal": false,
+                  "overlayDismiss": false,
+                  "resizable": true,
+                  "showCloseIcon": true,
+                  "type": "close",
+                  "viewPath": ""
+                },
+                "scope": "C",
+                "type": "popup"
+              }
+            ]
+          }
+        },
+        "meta": {
+          "name": "Theme",
+          "visible": false
+        },
+        "position": {
+          "basis": "0px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "backgroundColor": "unset",
+            "classes": "Title Title_Header",
+            "cursor": "pointer"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "22px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "path": "../Label.custom.numAlarms"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if({value} \u003e 0, \"Title_Text Header_Alarm_Active_Dark\", \"Title_Text\")",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "material/alarm",
+              "style": {
+                "backgroundColor": "unset",
+                "marginLeft": "10px"
+              }
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "hasDelegate": true,
+              "name": "Label"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "custom.numAlarms": {
+                "binding": {
+                  "config": {
+                    "expression": "now(2000)"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\treturn len(system.alarm.queryStatus(state\u003d[\"ActiveUnacked\"]))",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.numAlarms"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if({value} \u003e 0, \"Title_Text Header_Alarm_Active_Dark\", \"Title_Text\")",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.numAlarms"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "numberFormat({value}, \"#,##0\") + \" alarm\" + if({value} \u003e 1 || {value} \u003d 0, \"s\", \"\")",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignVertical": "center",
+              "style": {
+                "backgroundColor": "unset"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": [
+              {
+                "config": {
+                  "draggable": false,
+                  "id": "alarm-popup",
+                  "modal": false,
+                  "overlayDismiss": true,
+                  "position": {
+                    "height": 350,
+                    "right": 10,
+                    "top": 50,
+                    "width": 350
+                  },
+                  "resizable": true,
+                  "showCloseIcon": false,
+                  "type": "toggle",
+                  "viewPath": "Features/Alarming/Status/Status Table/Popup"
+                },
+                "scope": "C",
+                "type": "popup"
+              },
+              {
+                "config": {
+                  "id": "options-popup",
+                  "type": "close"
+                },
+                "scope": "C",
+                "type": "popup"
+              }
+            ]
+          }
+        },
+        "meta": {
+          "name": "Alarms"
+        },
+        "position": {
+          "basis": "54px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "backgroundColor": "unset",
+            "classes": "Title",
+            "cursor": "pointer"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

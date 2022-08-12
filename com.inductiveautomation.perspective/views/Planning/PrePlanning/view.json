@@ -1,0 +1,481 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        0,
+        1593464890391
+      ],
+      "$ts": 1593536400000
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        0,
+        1593464888120
+      ],
+      "$ts": 1591030800000
+    }
+  },
+  "params": {
+    "area": "1100_EXTRUSION",
+    "equipo": "CILCOBR1",
+    "planta": 1100
+  },
+  "propConfig": {
+    "custom.endDate": {
+      "persistent": true
+    },
+    "custom.startDate": {
+      "persistent": true
+    },
+    "params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.equipo": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.planta": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Spacer"
+            },
+            "position": {
+              "basis": "12px"
+            },
+            "props": {
+              "style": {
+                "classes": "Pages/Main",
+                "color": "#FEFAFA",
+                "fontSize": "28px",
+                "fontWeight": "bold",
+                "lineHeight": "3",
+                "textAlign": "center",
+                "textIndent": "-50px"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "params": {
+                      "area": "{view.params.area}"
+                    },
+                    "view": "Planning/Navigation/LineSelection"
+                  },
+                  "scope": "C",
+                  "type": "nav"
+                }
+              }
+            },
+            "meta": {
+              "name": "Icon_Back"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "propConfig": {
+              "custom.planta": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.area"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "split({value}, \"_\")[0,0] + \"_\"",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "color": "#FFFFFF",
+              "path": "material/arrow_back_ios",
+              "style": {
+                "classes": "Pages/Main"
+              }
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "50%",
+                  "grow": 1
+                },
+                "props": {
+                  "alignVertical": "bottom",
+                  "style": {
+                    "classes": "Pages/Main",
+                    "color": "#FEFAFA",
+                    "fontSize": "20px",
+                    "fontWeight": "bold",
+                    "lineHeight": "1.5",
+                    "textAlign": "center",
+                    "textIndent": "-50px"
+                  },
+                  "text": "Preplaneación"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "50%",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.area"
+                      },
+                      "transforms": [
+                        {
+                          "expression": "if(split({value}, \u0027_\u0027)[0,0] \u003d \u00271100\u0027, \u0027Minipak\u0027, if(split({value}, \u0027_\u0027)[0,0] \u003d \u00272100\u0027, \u0027Polybol\u0027, \u0027BAD\u0027) ) + \" \u003e \" + split({value}, \u0027_\u0027)[1,0] + \" \u003e \" + {view.params.equipo}",
+                          "type": "expression"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "Pages/Main",
+                    "color": "#FEFAFA",
+                    "fontSize": "18px",
+                    "fontWeight": "lighter",
+                    "textAlign": "center",
+                    "textIndent": "-50px",
+                    "textTransform": "uppercase"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_Ribbon"
+        },
+        "position": {
+          "basis": "8%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Spacer"
+        },
+        "position": {
+          "basis": "7px",
+          "display": false
+        },
+        "props": {
+          "style": {
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "textIndent": "10px"
+              },
+              "text": "Filtrar por fecha:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "50px"
+                },
+                "props": {
+                  "style": {
+                    "textAlign": "right"
+                  },
+                  "text": "De:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DateTimeInput"
+                },
+                "position": {
+                  "basis": "170px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.value": {
+                    "binding": {
+                      "config": {
+                        "bidirectional": true,
+                        "path": "view.custom.startDate"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "formattedValue": "Jun 1, 2020 12:00 PM",
+                  "formattedValues": {
+                    "date": "Jun 1, 2020",
+                    "datetime": "Jun 1, 2020 12:00 PM",
+                    "time": "12:00 PM"
+                  }
+                },
+                "type": "ia.input.date-time-input"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "15px"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_startDate"
+            },
+            "position": {
+              "basis": "412px"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "50px"
+                },
+                "props": {
+                  "style": {
+                    "textAlign": "right"
+                  },
+                  "text": "A:"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DateTimeInput"
+                },
+                "position": {
+                  "basis": "170px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.value": {
+                    "binding": {
+                      "config": {
+                        "bidirectional": true,
+                        "path": "view.custom.endDate"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "formattedValue": "Jun 30, 2020 12:00 PM",
+                  "formattedValues": {
+                    "date": "Jun 30, 2020",
+                    "datetime": "Jun 30, 2020 12:00 PM",
+                    "time": "12:00 PM"
+                  }
+                },
+                "type": "ia.input.date-time-input"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "15px"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_endDate"
+            },
+            "position": {
+              "basis": "412px"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "30px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView_S"
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.path": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.area"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "\"Planning/Templates/\" + {value} + \"_COL\"",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_L"
+            },
+            "position": {
+              "size": "large"
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.equipo": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.equipo"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.path": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.area"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "\"Planning/Templates/\" + {value}",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "BreakpointContainer"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "props": {
+          "breakpoint": 750
+        },
+        "type": "ia.container.breakpt"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

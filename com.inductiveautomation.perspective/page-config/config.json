@@ -1,0 +1,103 @@
+{
+  "pages": {
+    "/SmartTVs2": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV Simplified2_NC",
+      "title": ""
+    },
+    "/SmartTVsPLB2": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV_PLB_2"
+    },
+    "/SmartTVs3": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV_MPK3"
+    },
+    "/maquina/:eqPathCoded": {
+      "viewPath": "dashboard_equipo/Produccion_Equipo"
+    },
+    "/Dashboard_Area": {
+      "viewPath": "dashboard_Area/Areas",
+      "docks": {
+        "top": [
+          {
+            "viewPath": "Dashboard_Area/Navigation/dashboard_nav",
+            "id": "",
+            "viewParams": {},
+            "size": 150,
+            "resizable": true,
+            "iconUrl": "",
+            "modal": false,
+            "show": "auto",
+            "anchor": "fixed",
+            "content": "push",
+            "autoBreakpoint": 480,
+            "handle": "hide"
+          }
+        ]
+      }
+    },
+    "/SmartTVs": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV_NC"
+    },
+    "/": {
+      "viewPath": "Navigation/Plant Selection"
+    },
+    "/Quality": {
+      "viewPath": "Quality/Quality Area"
+    },
+    "/mantenimiento": {
+      "viewPath": "Mantenimiento/MainDashboard"
+    },
+    "/SmartTVsPLB": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV_PLB"
+    },
+    "/view_1080": {
+      "viewPath": "SmartTVs/Equipo_Dashboard_TV"
+    },
+    "/preplanning": {
+      "viewPath": "Planning/Navigation/PlantSelection"
+    },
+    "/mttompk1": {
+      "viewPath": "SmartTVs/Mtto_MPK"
+    },
+    "/mttompk2": {
+      "viewPath": "SmartTVs/Mtto_MPK (Servicios)"
+    }
+  },
+  "sharedDocks": {
+    "left": [
+      {
+        "viewPath": "Docks/Menu",
+        "id": "Menu",
+        "viewParams": {},
+        "size": 150,
+        "resizable": false,
+        "iconUrl": "",
+        "modal": false,
+        "show": "onDemand",
+        "anchor": "fixed",
+        "content": "cover",
+        "autoBreakpoint": 1500,
+        "handle": "show"
+      }
+    ],
+    "top": [
+      {
+        "viewPath": "Framework/Breakpoint",
+        "id": "",
+        "viewParams": {
+          "path": "Header/Header",
+          "breakpointLarge": "768",
+          "breakpointMedium": "500"
+        },
+        "size": 58,
+        "resizable": false,
+        "iconUrl": "",
+        "modal": false,
+        "show": "visible",
+        "anchor": "fixed",
+        "content": "push",
+        "autoBreakpoint": 480,
+        "handle": "hide"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-08-28T05:05:14Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "myconfig",
+    "lastModificationSignature": "351d1ca89829b22fb3c90eca8d8f4c64165e103ed7aab1e583fd7b7598feca50"
+  }
+}

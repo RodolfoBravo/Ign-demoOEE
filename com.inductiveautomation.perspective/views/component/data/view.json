@@ -1,0 +1,483 @@
+{
+  "custom": {
+    "defaultPath": "MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getDefaultTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 170,
+      "width": 995
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "38px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "24px",
+                "overflowWrap": "normal",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              },
+              "text": "Ordenes de Trabajo"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "4px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#FFAC47"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_2"
+            },
+            "position": {
+              "basis": "21px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "67px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.tagPath}"
+                    },
+                    "tagPath": "{1}Work Order"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value !\u003d None and value !\u003d \"\":\n\t\treturn value\n\telse:\n\t\treturn \"--\" ",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "28px",
+                "lineHeight": "3",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "clip"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "226px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "17px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "38px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "24px",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              },
+              "text": "Metros Producidos"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "4px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#2B9E10"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_2"
+            },
+            "position": {
+              "basis": "20px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "77px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.tagPath}"
+                    },
+                    "tagPath": "{1}/OEE Outfeed Count"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value !\u003d None and value !\u003d \"\":\n\t\treturn \u0027{:,}\u0027.format(value) +\" m\"\n\telse:\n\t\treturn \"--\"",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "30px",
+                "lineHeight": "3",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "clip"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "226px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "basis": "18px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "38px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "24px",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              },
+              "text": "Velocidad"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "4px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#2A68C2"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "114px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.tagPath}"
+                    },
+                    "tagPath": "{1}OEE Outfeed Count"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\truntime \u003d system.tag.read(self.view.custom.tagPath+\"Runtime\").value\n\t\t\n\t\tif value !\u003d None and runtime !\u003d None:\n\t\t\treturn str(round(value/runtime, 1)) +\" m/min\"\n\texcept:\n\t\treturn \"\u003cN/A\u003e\"",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "30px",
+                "lineHeight": "3",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "clip"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_1"
+        },
+        "position": {
+          "basis": "226px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_1"
+        },
+        "position": {
+          "basis": "19px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "38px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "24px",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "ellipsis",
+                "wordWrap": "normal"
+              },
+              "text": "Modo de la maquina"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "4px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#FF4750"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "114px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "indirect",
+                    "references": {
+                      "1": "{view.custom.tagPath}"
+                    },
+                    "tagPath": "{1}Equipment Mode Name"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value !\u003d None:\n\t\treturn value\n\telse:\n\t\treturn \"--\"",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Arial",
+                "fontSize": "40px",
+                "lineHeight": "3",
+                "overflowWrap": "normal",
+                "textAlign": "center",
+                "textOverflow": "clip"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_2"
+        },
+        "position": {
+          "basis": "226px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Card_Transparent",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.flex"
+  }
+}

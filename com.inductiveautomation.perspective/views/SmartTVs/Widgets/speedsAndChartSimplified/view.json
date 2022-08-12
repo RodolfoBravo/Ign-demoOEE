@@ -1,0 +1,256 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/OEE/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 116,
+      "width": 374
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "15%"
+                },
+                "props": {
+                  "color": "#56D2E4",
+                  "path": "material/av_timer"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.defaultPath}"
+                            },
+                            "tagPath": "{1}PLC/Velocidad"
+                          },
+                          "overlayOptOut": true,
+                          "transforms": [
+                            {
+                              "formatType": "numeric",
+                              "formatValue": "integer",
+                              "type": "format"
+                            }
+                          ],
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "18px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Vel. Actual (M/min)"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_actual"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.tagPath}"
+                            },
+                            "tagPath": "{1}Standard Rate"
+                          },
+                          "transforms": [
+                            {
+                              "formatType": "numeric",
+                              "formatValue": "#.#",
+                              "type": "format"
+                            }
+                          ],
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "22px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Vel. Prog (M/min)"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_prog"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_speed_realtime"
+            },
+            "position": {
+              "basis": "40%",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_speed"
+        },
+        "position": {
+          "basis": "100%"
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

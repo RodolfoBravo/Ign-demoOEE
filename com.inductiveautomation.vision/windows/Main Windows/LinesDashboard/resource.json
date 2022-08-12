@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "javier.fernandez",
+      "timestamp": "2020-08-31T16:52:11Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "IDLINE,IDSUBLINE,TotalDowntime,UpdateData,barDataset,dailyProduction,downtimesReasons,endDate,path,selectedDay,startDate,today,unjustifiedDT",
+    "lastModificationSignature": "5f7aba043588105867cc00d1e89d87ed5a1bdeabdc5e2a9a1b27b0330f593007"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 58,
+      "width": 818
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Header Large"
+        },
+        "position": {
+          "size": "large"
+        },
+        "props": {
+          "params": {
+            "menuSize": "large"
+          },
+          "path": "Header/Header"
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "Header BP Medium"
+        },
+        "props": {
+          "path": "Header/Header BP Medium"
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "breakpoint": 900,
+      "style": {
+        "classes": "Header"
+      }
+    },
+    "type": "ia.container.breakpt"
+  }
+}

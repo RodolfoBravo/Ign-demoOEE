@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "sergio.feria",
+      "timestamp": "2020-08-21T14:41:23Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "AuditTableName",
+    "lastModificationSignature": "b487fedf70623191147194155686ca6b7a2a643f6a5489d371b1f1800baeeb72"
+  }
+}

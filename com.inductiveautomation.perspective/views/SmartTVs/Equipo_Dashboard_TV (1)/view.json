@@ -1,0 +1,736 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/OEE/",
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1596744321126
+      ],
+      "$ts": 1596798000000
+    },
+    "refresh": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2",
+    "shiftPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Shift/",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1596744321126
+      ],
+      "$ts": 1596711600000
+    },
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.endDate}"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.refresh": {
+      "binding": {
+        "config": {
+          "expression": "now(180000)"
+        },
+        "transforms": [
+          {
+            "code": "\timport socket\n\tdevice_ip \u003d socket.gethostbyname(socket.gethostname())\n\tdevice_ip \u003d device_ip.replace(\"\u0027\",\"\")\n\teqPath \u003d \u0027MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2\u0027\n\tquery \u003d \u0027select eqPath from smarttvs_config where hostname\u003d ?\u0027\n\tdata \u003d system.db.runPrepQuery(query,[device_ip])\n\tif data.getRowCount() \u003e 0:\n\t\teqPath \u003d system.dataset.toPyDataSet(data)[0][\u0027eqPath\u0027]\n\tself.params.eqPath \u003d eqPath\n\t\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)\n\treturn eqPath",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.shiftPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.endDate": {
+      "binding": {
+        "config": {
+          "expression": "addDays({view.params.startDate},1)"
+        },
+        "type": "expr"
+      }
+    },
+    "params.eqPath": {
+      "paramDirection": "inout",
+      "persistent": true
+    },
+    "params.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))\r\n//setTime(addDays(now(),-1),6,0,0)"
+        },
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1080
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "22%",
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary"
+                      },
+                      "text": "Equipo:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "283px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\teqObj \u003d system.mes.loadMESObjectByEquipmentPath(value)\n\teqName \u003d eqObj.getName()\n\treturn eqName",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "color": "#FFFFFF",
+                        "fontFamily": "Helvetica",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Equipo"
+                },
+                "position": {
+                  "basis": "20%"
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "20%",
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary"
+                      },
+                      "text": "Area:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "10px",
+                      "grow": 1,
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.eqPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\tsplit \u003d value.split(\"\\\\\")[2]\n\tcode \u003d split.split(\"_\")[0]\n\t\n\tif code \u003d\u003d \u00271100\u0027:\n\t\tplanta \u003d \"MINIPAK\"\n\telif code \u003d\u003d \u00272100\u0027:\n\t\tplanta \u003d \"POLYBOL\"\n\telse:\n\t\tplanta \u003d \"-\"\n\t\t\n\tsplit \u003d value.split(\"_\")[2]\n\tarea \u003d split.split(\"\\\\\")[0]\n\treturn planta+\u0027 - \u0027+area\n",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "color": "#FFFFFF",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Planta"
+                },
+                "position": {
+                  "basis": "15%"
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "20%"
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary"
+                      },
+                      "text": "Modo:"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "97px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.style.color": {
+                        "binding": {
+                          "config": {
+                            "path": "this.props.text"
+                          },
+                          "transforms": [
+                            {
+                              "fallback": "\"#FFFFFF\"",
+                              "inputType": "scalar",
+                              "mappings": [
+                                {
+                                  "input": "Producción",
+                                  "output": "\"#\"+{[default]Color Palete/Optimus.value}"
+                                },
+                                {
+                                  "input": "Mantenimiento",
+                                  "output": "\"#\"+{[default]Color Palete/Warning.value}"
+                                },
+                                {
+                                  "input": "Cuadre",
+                                  "output": "\"#\"+{[default]Color Palete/Warning.value}"
+                                }
+                              ],
+                              "outputType": "expression",
+                              "type": "map"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      },
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.tagPath"
+                          },
+                          "transforms": [
+                            {
+                              "code": "\ttry:\n\t\ttagPath \u003d value+\"Equipment Mode Name\"\n\t\ttagVal \u003d system.tag.read(tagPath).value\n\t\treturn tagVal\n\texcept:\n\t\treturn \"\"",
+                              "type": "script"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_small",
+                        "fontFamily": "Helvetica",
+                        "fontWeight": "bold",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer Mode"
+                },
+                "position": {
+                  "basis": "20%"
+                },
+                "props": {
+                  "style": {
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_2"
+            },
+            "position": {
+              "basis": "30%"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "Cards/Card_TV"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Icon"
+                    },
+                    "position": {
+                      "basis": "20%"
+                    },
+                    "props": {
+                      "color": "#3ACE1C",
+                      "path": "material/play_arrow"
+                    },
+                    "type": "ia.display.icon"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "70%"
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "fallbackDelay": 2.5,
+                                "mode": "indirect",
+                                "references": {
+                                  "1": "{view.custom.tagPath}"
+                                },
+                                "tagPath": "{1}Runtime"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "dateFormat(setTime(now(60000),0,{value},0),\u0027HH:mm:ss\u0027)",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "tag"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Primary_medium",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label_1"
+                        },
+                        "position": {
+                          "basis": "18px",
+                          "grow": 1
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Secundary",
+                            "textAlign": "center"
+                          },
+                          "text": "Tiempo Operativo"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer_8"
+                    },
+                    "position": {
+                      "basis": "25%",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "classes": "Cards/Card_Transparent",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_running"
+                },
+                "position": {
+                  "basis": "33%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "Cards/Card_Transparent"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Icon"
+                    },
+                    "position": {
+                      "basis": "20%"
+                    },
+                    "props": {
+                      "color": "#AB2C2C",
+                      "path": "material/stop"
+                    },
+                    "type": "ia.display.icon"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label_2"
+                        },
+                        "position": {
+                          "basis": "70%"
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "fallbackDelay": 2.5,
+                                "mode": "indirect",
+                                "references": {
+                                  "1": "{view.custom.tagPath}"
+                                },
+                                "tagPath": "{1}Unplanned Downtime"
+                              },
+                              "transforms": [
+                                {
+                                  "expression": "dateFormat(setTime(now(60000),0,{value},0),\u0027HH:mm:ss\u0027)",
+                                  "type": "expression"
+                                }
+                              ],
+                              "type": "tag"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Primary_medium",
+                            "textAlign": "center"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label_0"
+                        },
+                        "position": {
+                          "basis": "22px",
+                          "grow": 1
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Secundary",
+                            "textAlign": "center"
+                          },
+                          "text": "Tiempo Muerto"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer_3"
+                    },
+                    "position": {
+                      "basis": "25%",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "classes": "Cards/Card_Transparent",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_downtime"
+                },
+                "position": {
+                  "basis": "33%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "Cards/Card_Transparent"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Icon"
+                    },
+                    "position": {
+                      "basis": "20%"
+                    },
+                    "props": {
+                      "color": "#E4A356",
+                      "path": "material/autorenew"
+                    },
+                    "type": "ia.display.icon"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "70%"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Primary_medium",
+                            "textAlign": "center"
+                          },
+                          "text": "00:00:00"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "Label_0"
+                        },
+                        "position": {
+                          "basis": "10px",
+                          "grow": 1
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "BigLabels/Secundary",
+                            "textAlign": "center"
+                          },
+                          "text": "Tiempo de Cuadre"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer_7"
+                    },
+                    "position": {
+                      "basis": "33%",
+                      "grow": 1
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "classes": "Cards/Card_Transparent",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_changeover"
+                },
+                "position": {
+                  "basis": "33%"
+                },
+                "props": {
+                  "style": {
+                    "classes": "Cards/Card_Transparent"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_times"
+            },
+            "position": {
+              "basis": "30%",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "color": "#FFFFFF",
+                "margin": "5px"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\timport socket\n\tdevice_ip \u003d socket.gethostbyname(socket.gethostname())\n\tdevice_ip \u003d device_ip.replace(\"\u0027\",\"\")\n\teqPath \u003d \u0027MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2\u0027\n\tquery \u003d \u0027select eqPath from smarttvs_config where hostname\u003d ?\u0027\n\tdata \u003d system.db.runPrepQuery(query,[device_ip])\n\tif data.getRowCount() \u003e 0:\n\t\teqPath \u003d system.dataset.toPyDataSet(data)[0][\u0027eqPath\u0027]\n\tself.view.params.eqPath \u003d eqPath\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Button"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "props": {
+              "text": ""
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_left"
+        },
+        "position": {
+          "basis": "25%"
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "custom": {
+      "bool": false,
+      "boolFecha": false
+    },
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

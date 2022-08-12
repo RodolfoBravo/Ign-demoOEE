@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "window.bin",
+    "thumbnail.png"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "admin",
+      "timestamp": "2022-07-13T22:04:30Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "area,areaPath,endDate,eqList,planta,startdate",
+    "lastModificationSignature": "4184de2ce2ba56fe3959bf500a4bdd55143d6926187465008a91b708305f5f11"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-06-04T21:50:02Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "SelectedMenu",
+    "lastModificationSignature": "ff9f4bdabd33dc0d22cdcf4c8b914a08f61aeab4c49c7d9f4429816ee0a3a9ea"
+  }
+}

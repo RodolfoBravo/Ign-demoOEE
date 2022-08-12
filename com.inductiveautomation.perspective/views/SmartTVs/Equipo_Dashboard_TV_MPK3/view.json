@@ -1,0 +1,1958 @@
+{
+  "custom": {
+    "defaultPath": null,
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1598401328893
+      ],
+      "$ts": 1598439600000
+    },
+    "refresh": null,
+    "shiftPath": null,
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1598401328893
+      ],
+      "$ts": 1598353200000
+    },
+    "startOfMonth": {
+      "$": [
+        "ts",
+        192,
+        1598401328893
+      ],
+      "$ts": 1596279600000
+    },
+    "tagPath": null
+  },
+  "params": {
+    "area": "1100_EXTRUSION",
+    "eqPath0": "MINIPAK_POLYBOL\\Colombia\\1100_EXTRUSION\\EF5",
+    "eqPath1": "MINIPAK_POLYBOL\\Colombia\\1100_EXTRUSION\\EF6",
+    "eqPath2": "MINIPAK_POLYBOL\\Colombia\\1100_EXTRUSION\\EF7",
+    "redirect": null
+  },
+  "propConfig": {
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.endDate}"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.refresh": {
+      "binding": {
+        "config": {
+          "expression": "now(180000)"
+        },
+        "enabled": false,
+        "transforms": [
+          {
+            "code": "\timport socket\n\tdevice_ip \u003d socket.gethostbyname(socket.gethostname())\n\tdevice_ip \u003d device_ip.replace(\"\u0027\",\"\")\n\tclientIP \u003d system.tag.read(\u0027[System]Client/Network/IPAddress\u0027).value\n\tself.getChild(\"root\").getChild(\"FlexContainer_Charts\").getChild(\"FlexContainer_Top\").getChild(\"IP\").props.text \u003d clientIP\n\t\n\t\n\teqPath \u003d \u0027MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2\u0027\n\tquery \u003d \u0027select eqPath from smarttvs_config where hostname\u003d ?\u0027\n\tdata \u003d system.db.runPrepQuery(query,[device_ip])\n\tif data.getRowCount() \u003e 0:\n\t\teqPath \u003d system.dataset.toPyDataSet(data)[0][\u0027eqPath\u0027]\n\tself.params.eqPath \u003d eqPath\n\t\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)\n\treturn eqPath",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.startOfMonth": {
+      "binding": {
+        "config": {
+          "expression": "setTime(addDays({view.custom.endDate}, 1-dateExtract({view.custom.endDate}, \"day\")),6,0,0)"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.endDate": {
+      "binding": {
+        "config": {
+          "expression": "addDays({view.params.startDate},1)"
+        },
+        "type": "expr"
+      }
+    },
+    "params.eqPath0": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath1": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath2": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.redirect": {
+      "binding": {
+        "config": {
+          "path": "session.props.host"
+        },
+        "transforms": [
+          {
+            "code": "\thost \u003d value\n\tip \u003d system.db.runPrepQuery(\u0027SELECT eqPath,eqPath2,eqPath3 FROM smarttvs_config where hostname \u003d ?\u0027,[host])\n\tif ip.getRowCount() !\u003d0:\n\t\teqPath \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath\u0027]\n\t\teqPath2 \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath2\u0027]\n\t\teqPath3 \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath3\u0027]\n\telse:\n\t\teqPath \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\1100_EXTRUSION\\\\EF5\u0027\n\t\teqPath2 \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\1100_EXTRUSION\\\\EF6\u0027\n\t\teqPath3 \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\1100_EXTRUSION\\\\EF7\u0027\n\t\n\tif eqPath2 \u003d\u003d \u0027\u0027 or eqPath2 \u003d\u003d None:\n\t\teqPath2 \u003d eqPath\n\t\t\n\tif eqPath3 \u003d\u003d \u0027\u0027 or eqPath3 \u003d\u003d None:\n\t\teqPath3 \u003d eqPath\n\t\n\tself.params.eqPath0 \u003d eqPath\n\tself.params.eqPath1 \u003d eqPath2\n\tself.params.eqPath2 \u003d eqPath3\n\t\n\t#get area\n\tself.params.area \u003d eqPath.split(\"\\\\\")[2]\n\t#system.perspective.sendMessage(\u0027refresh\u0027)\n\treturn host",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "paramDirection": "inout",
+      "persistent": true
+    },
+    "params.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))\r\n//setTime(addDays(now(),-1),6,0,0)"
+        },
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1080
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dashboard"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.widgets[0].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[10].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\t# Obtener area\n\tarea \u003d value.split(\"\\\\\")[2].split(\"_\")[1]\n\t\n\t# Para extrusión, mostrar ambas velocidades (M y Kg)\n\tif area \u003d\u003d \"EXTRUSION\":\n\t\treturn \"SmartTVs/Widgets/speedsMetersAndKg\"\n\telse:\n\t\treturn \"SmartTVs/Widgets/speedsAndChartSimplified\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[2].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[3].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[4].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[5].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[6].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[7].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[8].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[9].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "stretch": {
+                    "columnCount": 12,
+                    "columnGutterSize": 5,
+                    "rowCount": 12,
+                    "rowGutterSize": 5
+                  },
+                  "style": {
+                    "backgroundColor": "#C26A6A00"
+                  },
+                  "widgets": [
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "currentWO",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 13,
+                        "rowStart": 7
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/currentWorkOrder3"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "speeds",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 5,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {}
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "times3",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 13,
+                        "rowStart": 8
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/timesRunStopChange_small"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "woDesempeño",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 8,
+                        "rowStart": 5
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/graphPerformance"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "name",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 7,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/eqNameStateMode_small"
+                    }
+                  ]
+                },
+                "type": "ia.display.dashboard"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_View_0"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "propConfig": {
+              "custom.defaultPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath0"
+                  },
+                  "type": "property"
+                }
+              },
+              "custom.shiftPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.tagPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dashboard"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.widgets[0].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[10].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\t# Obtener area\n\tarea \u003d value.split(\"\\\\\")[2].split(\"_\")[1]\n\t\n\t# Para extrusión, mostrar ambas velocidades (M y Kg)\n\tif area \u003d\u003d \"EXTRUSION\":\n\t\treturn \"SmartTVs/Widgets/speedsMetersAndKg\"\n\telse:\n\t\treturn \"SmartTVs/Widgets/speedsAndChartSimplified\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[2].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[3].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[4].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[5].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[6].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[7].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[8].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[9].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "stretch": {
+                    "columnCount": 12,
+                    "columnGutterSize": 5,
+                    "rowCount": 12,
+                    "rowGutterSize": 5
+                  },
+                  "style": {
+                    "backgroundColor": "#C26A6A00"
+                  },
+                  "widgets": [
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "currentWO",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 13,
+                        "rowStart": 7
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/currentWorkOrder3"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "speeds",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 5,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {}
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "times3",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 13,
+                        "rowStart": 8
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/timesRunStopChange_small"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "woDesempeño",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 8,
+                        "rowStart": 5
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/graphPerformance"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "name",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 7,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/eqNameStateMode_small"
+                    }
+                  ]
+                },
+                "type": "ia.display.dashboard"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_View_1"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "propConfig": {
+              "custom.defaultPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath1"
+                  },
+                  "type": "property"
+                }
+              },
+              "custom.shiftPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.tagPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Top"
+        },
+        "position": {
+          "basis": "50%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dashboard"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.widgets[0].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[10].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[1].viewPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\t# Obtener area\n\tarea \u003d value.split(\"\\\\\")[2].split(\"_\")[1]\n\t\n\t# Para extrusión, mostrar ambas velocidades (M y Kg)\n\tif area \u003d\u003d \"EXTRUSION\":\n\t\treturn \"SmartTVs/Widgets/speedsMetersAndKg\"\n\telse:\n\t\treturn \"SmartTVs/Widgets/speedsAndChartSimplified\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[2].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[3].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[4].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "parent.custom.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[5].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[6].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[7].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[8].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.widgets[9].viewParams.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "stretch": {
+                    "columnCount": 12,
+                    "columnGutterSize": 5,
+                    "rowCount": 12,
+                    "rowGutterSize": 5
+                  },
+                  "style": {
+                    "backgroundColor": "#C26A6A00"
+                  },
+                  "widgets": [
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "currentWO",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 13,
+                        "rowStart": 7
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/currentWorkOrder3"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "speeds",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 5,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {}
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "times3",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 13,
+                        "rowStart": 8
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/timesRunStopChange_small"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "woDesempeño",
+                      "position": {
+                        "columnEnd": 13,
+                        "columnStart": 7,
+                        "rowEnd": 8,
+                        "rowStart": 5
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/graphPerformance"
+                    },
+                    {
+                      "body": {
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "header": {
+                        "enabled": false,
+                        "style": {
+                          "classes": ""
+                        },
+                        "title": ""
+                      },
+                      "isConfigurable": false,
+                      "minSize": {
+                        "columnSpan": 1,
+                        "rowSpan": 1
+                      },
+                      "name": "name",
+                      "position": {
+                        "columnEnd": 7,
+                        "columnStart": 1,
+                        "rowEnd": 7,
+                        "rowStart": 1
+                      },
+                      "style": {
+                        "classes": ""
+                      },
+                      "viewParams": {},
+                      "viewPath": "SmartTVs/Widgets/eqNameStateMode_small"
+                    }
+                  ]
+                },
+                "type": "ia.display.dashboard"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_View_2"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "propConfig": {
+              "custom.defaultPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath2"
+                  },
+                  "type": "property"
+                }
+              },
+              "custom.shiftPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "custom.tagPath": {
+                "binding": {
+                  "config": {
+                    "path": "this.custom.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "167px",
+                      "grow": 1
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.params.area"
+                          },
+                          "transforms": [
+                            {
+                              "expression": "if (split({value},\"_\")[0,0] \u003d \"1100\", \"MPK\", \"PLB\") + \" / \"\r\n+ upper(split({value},\"_\")[1,0])",
+                              "type": "expression"
+                            }
+                          ],
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_small",
+                        "fontSize": "18px",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "55px",
+                  "shrink": 0
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "50px"
+                            },
+                            "props": {
+                              "alignVertical": "bottom",
+                              "style": {
+                                "fontSize": "14px",
+                                "fontWeight": "lighter",
+                                "textAlign": "center"
+                              },
+                              "text": "OEE"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "meta": {
+                              "name": "EmbeddedView"
+                            },
+                            "position": {
+                              "basis": "320px"
+                            },
+                            "propConfig": {
+                              "props.params.value": {
+                                "binding": {
+                                  "config": {
+                                    "path": "....../FlexContainer Panel.custom.analysis"
+                                  },
+                                  "transforms": [
+                                    {
+                                      "code": "\ttry:\t\n\t\treturn int(round( value.getValueAt(0, \"OEE\") *100 ))\n\texcept:\n\t\treturn 0",
+                                      "type": "script"
+                                    }
+                                  ],
+                                  "type": "property"
+                                }
+                              }
+                            },
+                            "props": {
+                              "params": {
+                                "fontColor": "#FFFFFF"
+                              },
+                              "path": "page/Embedded/GaugeSide"
+                            },
+                            "type": "ia.display.view"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer OEE"
+                        },
+                        "position": {
+                          "basis": "50%"
+                        },
+                        "props": {
+                          "direction": "column"
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "28px"
+                            },
+                            "props": {
+                              "alignVertical": "bottom",
+                              "style": {
+                                "fontSize": "14px",
+                                "fontWeight": "lighter",
+                                "letterSpacing": "1px",
+                                "textAlign": "center",
+                                "textTransform": "uppercase"
+                              },
+                              "text": "Disponibilidad"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "children": [
+                              {
+                                "meta": {
+                                  "name": "EmbeddedView"
+                                },
+                                "position": {
+                                  "basis": "210px"
+                                },
+                                "propConfig": {
+                                  "props.params.value": {
+                                    "binding": {
+                                      "config": {
+                                        "path": "......./FlexContainer Panel.custom.analysis"
+                                      },
+                                      "transforms": [
+                                        {
+                                          "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Availability\") *100 ))\n\texcept:\n\t\treturn 0",
+                                          "type": "script"
+                                        }
+                                      ],
+                                      "type": "property"
+                                    }
+                                  }
+                                },
+                                "props": {
+                                  "params": {
+                                    "fontColor": "#FFFFFF"
+                                  },
+                                  "path": "page/Embedded/GaugeSide"
+                                },
+                                "type": "ia.display.view"
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "60%"
+                                        },
+                                        "props": {
+                                          "text": "T. Prod:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "40%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": "24:00"
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_0"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "60%"
+                                        },
+                                        "props": {
+                                          "text": "T. Muerto Planificado:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "40%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": "24:00"
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_2"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "60%"
+                                        },
+                                        "props": {
+                                          "text": "T. Muerto No Planificado:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "40%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": "24:00"
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_3"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  }
+                                ],
+                                "meta": {
+                                  "name": "FlexContainer Infos"
+                                },
+                                "position": {
+                                  "basis": "139px",
+                                  "display": false,
+                                  "grow": 1
+                                },
+                                "props": {
+                                  "direction": "column",
+                                  "justify": "center"
+                                },
+                                "type": "ia.container.flex"
+                              }
+                            ],
+                            "meta": {
+                              "name": "FlexContainer"
+                            },
+                            "position": {
+                              "basis": "82px",
+                              "grow": 1
+                            },
+                            "props": {
+                              "justify": "center"
+                            },
+                            "type": "ia.container.flex"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Disponibilidad"
+                        },
+                        "position": {
+                          "basis": "40%"
+                        },
+                        "props": {
+                          "direction": "column"
+                        },
+                        "type": "ia.container.flex"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Panel"
+                    },
+                    "position": {
+                      "basis": "50%"
+                    },
+                    "props": {
+                      "direction": "column"
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "28px"
+                            },
+                            "props": {
+                              "alignVertical": "bottom",
+                              "style": {
+                                "fontSize": "14px",
+                                "fontWeight": "lighter",
+                                "letterSpacing": "1px",
+                                "textAlign": "center",
+                                "textTransform": "uppercase"
+                              },
+                              "text": "Eficiencia"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "children": [
+                              {
+                                "meta": {
+                                  "name": "EmbeddedView"
+                                },
+                                "position": {
+                                  "basis": "210px"
+                                },
+                                "propConfig": {
+                                  "props.params.value": {
+                                    "binding": {
+                                      "config": {
+                                        "path": "......./FlexContainer Panel.custom.analysis"
+                                      },
+                                      "transforms": [
+                                        {
+                                          "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Performance\") *100 ))\n\texcept:\n\t\treturn 0",
+                                          "type": "script"
+                                        }
+                                      ],
+                                      "type": "property"
+                                    }
+                                  }
+                                },
+                                "props": {
+                                  "params": {
+                                    "fontColor": "#FFFFFF"
+                                  },
+                                  "path": "page/Embedded/GaugeSide"
+                                },
+                                "type": "ia.display.view"
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "text": "Objetivo:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": 123456
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_0"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "text": "Producción:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": 123456
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_2"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  }
+                                ],
+                                "meta": {
+                                  "name": "FlexContainer Infos"
+                                },
+                                "position": {
+                                  "basis": "139px",
+                                  "display": false,
+                                  "grow": 1
+                                },
+                                "props": {
+                                  "direction": "column",
+                                  "justify": "center"
+                                },
+                                "type": "ia.container.flex"
+                              }
+                            ],
+                            "meta": {
+                              "name": "FlexContainer"
+                            },
+                            "position": {
+                              "basis": "82px",
+                              "grow": 1
+                            },
+                            "props": {
+                              "justify": "center"
+                            },
+                            "type": "ia.container.flex"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Eficiencia"
+                        },
+                        "position": {
+                          "basis": "40%"
+                        },
+                        "props": {
+                          "direction": "column",
+                          "style": {
+                            "marginTop": "10px"
+                          }
+                        },
+                        "type": "ia.container.flex"
+                      },
+                      {
+                        "children": [
+                          {
+                            "meta": {
+                              "name": "Label"
+                            },
+                            "position": {
+                              "basis": "28px"
+                            },
+                            "props": {
+                              "alignVertical": "bottom",
+                              "style": {
+                                "fontSize": "14px",
+                                "fontWeight": "lighter",
+                                "letterSpacing": "1px",
+                                "textAlign": "center",
+                                "textTransform": "uppercase"
+                              },
+                              "text": "Calidad"
+                            },
+                            "type": "ia.display.label"
+                          },
+                          {
+                            "children": [
+                              {
+                                "meta": {
+                                  "name": "EmbeddedView"
+                                },
+                                "position": {
+                                  "basis": "210px"
+                                },
+                                "propConfig": {
+                                  "props.params.value": {
+                                    "binding": {
+                                      "config": {
+                                        "path": "......./FlexContainer Panel.custom.analysis"
+                                      },
+                                      "transforms": [
+                                        {
+                                          "code": "\ttry:\n\t\treturn int(round( value.getValueAt(0, \"OEE Quality\") *100 ))\n\texcept:\n\t\treturn 0",
+                                          "type": "script"
+                                        }
+                                      ],
+                                      "type": "property"
+                                    }
+                                  }
+                                },
+                                "props": {
+                                  "params": {
+                                    "fontColor": "#FFFFFF"
+                                  },
+                                  "path": "page/Embedded/GaugeSide"
+                                },
+                                "type": "ia.display.view"
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "text": "Salida:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": 123456
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_0"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "meta": {
+                                          "name": "Label"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "text": "Rechazos:"
+                                        },
+                                        "type": "ia.display.label"
+                                      },
+                                      {
+                                        "meta": {
+                                          "name": "Label_0"
+                                        },
+                                        "position": {
+                                          "basis": "50%"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontWeight": "bold",
+                                            "textAlign": "center"
+                                          },
+                                          "text": 123456
+                                        },
+                                        "type": "ia.display.label"
+                                      }
+                                    ],
+                                    "meta": {
+                                      "name": "FlexContainer Label_2"
+                                    },
+                                    "position": {
+                                      "basis": "50px"
+                                    },
+                                    "type": "ia.container.flex"
+                                  }
+                                ],
+                                "meta": {
+                                  "name": "FlexContainer Infos"
+                                },
+                                "position": {
+                                  "basis": "139px",
+                                  "display": false,
+                                  "grow": 1
+                                },
+                                "props": {
+                                  "direction": "column",
+                                  "justify": "center"
+                                },
+                                "type": "ia.container.flex"
+                              }
+                            ],
+                            "meta": {
+                              "name": "FlexContainer"
+                            },
+                            "position": {
+                              "basis": "82px",
+                              "grow": 1
+                            },
+                            "props": {
+                              "justify": "center"
+                            },
+                            "type": "ia.container.flex"
+                          }
+                        ],
+                        "meta": {
+                          "name": "FlexContainer Calidad"
+                        },
+                        "position": {
+                          "basis": "40%"
+                        },
+                        "props": {
+                          "direction": "column",
+                          "style": {
+                            "marginTop": "10px"
+                          }
+                        },
+                        "type": "ia.container.flex"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer Panel_0"
+                    },
+                    "position": {
+                      "basis": "50%"
+                    },
+                    "props": {
+                      "direction": "column"
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_0"
+                },
+                "position": {
+                  "basis": "200px",
+                  "grow": 1
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer Panel"
+            },
+            "position": {
+              "basis": "50%"
+            },
+            "propConfig": {
+              "custom.analysis": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.startDate}+{view.custom.endDate}+{view.params.area}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\t#\ttry:\n\tarea \u003d self.view.params.area\n\tfilter \u003d system.mes.object.filter.createFilter()\n\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\tfilter.setMESObjectNamePattern(area)\n\tlistOfAreas \u003d system.mes.searchMESObjects(filter)\n\t\n\tareaCode \u003d listOfAreas[0].getName()\n\t\n\tareaPath \u003d \"MINIPAK_POLYBOL\\\\Colombia\\\\\" + areaCode + \"\\\\*\"\n\t\t\t\n\t# Execute Analysis\n\tanalysisName \u003d \"_oee_area\"\n\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\tend \u003d self.view.custom.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\tstart \u003d self.view.custom.startOfMonth #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\tparams \u003d {\u0027areaPath\u0027 : areaPath}\n\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\tdata \u003d result.getDataset()\n\t# Get OEE Data\n#\toee \u003d int(round( data.getValueAt(0, \"OEE\") *100 ))\n#\tavailability \u003d int(round( data.getValueAt(0, \"OEE Availability\") *100 ))\n#\tperformance \u003d int(round( data.getValueAt(0, \"OEE Performance\") *100 ))\n#\tquality \u003d int(round( data.getValueAt(0, \"OEE Quality\") *100 ))\n\t\n\treturn data",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Bottom"
+        },
+        "position": {
+          "basis": "50%"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "custom": {
+      "bool": false,
+      "boolFecha": false
+    },
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,407 @@
+{
+  "custom": {},
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1595280093410
+      ],
+      "$ts": 1595280082000
+    },
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_METALIZADO\\MT1",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1595280090690
+      ],
+      "$ts": 1595193679000
+    }
+  },
+  "propConfig": {
+    "params.endDate": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 434,
+      "width": 299
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "58px"
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "transforms": [
+                {
+                  "code": "\tobj \u003d system.mes.loadMESObjectByEquipmentPath( value )\n\tname \u003d obj.getName()\n\treturn name",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontFamily": "Helvetica",
+            "fontSize": "26px",
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "SimpleGauge"
+            },
+            "position": {
+              "height": "100%",
+              "width": "100%"
+            },
+            "propConfig": {
+              "props.arc.color": {
+                "binding": {
+                  "config": {
+                    "path": "this.props.value"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if ( {value} \u003c\u003d {[default]TargetOEE/Low.value}, \"#\"+{[default]Color Palete/Danger.value},\r\n\tif ( {value} \u003e {[default]TargetOEE/Low.value} \u0026\u0026 {value} \u003c\u003d {[default]TargetOEE/Medium.value}, \"#\"+{[default]Color Palete/Warning.value},\r\n\t\tif ( {value}\u003e{[default]TargetOEE/Medium.value}, \"#\"+{[default]Color Palete/Optimus.value},\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.arc.cornerRadius": {
+                "binding": {
+                  "config": {
+                    "expression": "{this.props.arc.width}/2"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.arcBackground.color": {
+                "binding": {
+                  "config": {
+                    "path": "this.props.value"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if ( {value} \u003c\u003d {[default]TargetOEE/Low.value}, \"#\"+{[default]Color Palete/Danger.value},\r\n\tif ( {value} \u003e {[default]TargetOEE/Low.value} \u0026\u0026 {value} \u003c\u003d {[default]TargetOEE/Medium.value}, \"#\"+{[default]Color Palete/Warning.value},\r\n\t\tif ( {value}\u003e{[default]TargetOEE/Medium.value}, \"#\"+{[default]Color Palete/Optimus.value},\r\n\t\t\t\"#000000\"\r\n\t\t)\r\n\t)\r\n)",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\tanalysisName \u003d \"_equipo_oee\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.params.endDate #system.date.parse(self.view.params.endDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tstart \u003d self.view.params.startDate #system.date.parse(self.view.params.startDate, \"yyyy-MM-dd HH:mm:ss\")\n\t\tparams \u003d {\u0027eqPath\u0027 : value}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\tpyData \u003d system.dataset.toPyDataSet(data)\n\t\tdato \u003d (\"{0:.1f}\".format(100*pyData[0][\u0027OEE\u0027]))\n\t\treturn float(dato)\n\texcept:\n\t\treturn 0\n\t",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "arc": {},
+              "arcBackground": {},
+              "endAngle": 630,
+              "label": {
+                "units": "%",
+                "visible": false
+              },
+              "startAngle": 270,
+              "style": {
+                "classes": []
+              }
+            },
+            "type": "ia.chart.simple-gauge"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "height": "100%",
+              "width": "100%",
+              "x": "0px",
+              "y": "0px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "../SimpleGauge.props.value"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "{value}+\" %\"",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Helvetica",
+                "fontSize": "24px",
+                "textAlign": "center",
+                "textIndent": "0px"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "params": {
+                  "eqPath": "{view.params.eqPath}"
+                },
+                "view": "dashboard_equipo/Produccion_Equipo"
+              },
+              "scope": "C",
+              "type": "nav"
+            }
+          }
+        },
+        "meta": {
+          "name": "CoordinateContainer"
+        },
+        "position": {
+          "basis": "242px",
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "textAlign": "center",
+                "textIndent": "15px"
+              },
+              "text": "D:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "50px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "color": "#42C132",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "fontWeight": "bold",
+                "textAlign": "left",
+                "textIndent": "3px"
+              },
+              "text": "100%"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "textAlign": "center",
+                "textIndent": "15px"
+              },
+              "text": "D:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_3"
+            },
+            "position": {
+              "basis": "50px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "color": "#42C132",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "fontWeight": "bold",
+                "textAlign": "left",
+                "textIndent": "3px"
+              },
+              "text": "100%"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_2"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "textAlign": "center",
+                "textIndent": "15px"
+              },
+              "text": "D:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_4"
+            },
+            "position": {
+              "basis": "50px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "color": "#42C132",
+                "fontFamily": "Helvetica",
+                "fontSize": "17px",
+                "fontWeight": "bold",
+                "textAlign": "left",
+                "textIndent": "3px"
+              },
+              "text": "100%"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "42px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "basis": "20px"
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": "13px",
+            "textAlign": "center"
+          },
+          "text": "Material"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Label_1"
+        },
+        "position": {
+          "basis": "32px"
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "textAlign": "center"
+          },
+          "text": 354685046546
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Label_2"
+        },
+        "position": {
+          "basis": "32px"
+        },
+        "props": {
+          "style": {
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

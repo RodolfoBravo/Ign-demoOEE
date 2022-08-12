@@ -1,0 +1,16 @@
+{
+  "scope": "A",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "data.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "rodolfo.bravo",
+      "timestamp": "2020-06-12T18:21:31Z"
+    },
+    "lastModificationSignature": "a06619f9e56a9e15dd2bd76a29aa7bd29edad7026953d092adbe72b217407027"
+  }
+}

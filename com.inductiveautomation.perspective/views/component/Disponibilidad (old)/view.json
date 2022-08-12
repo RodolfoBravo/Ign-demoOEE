@@ -1,0 +1,111 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 651,
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "EmbeddedView"
+        },
+        "position": {
+          "basis": "328px"
+        },
+        "props": {
+          "params": {
+            "data": {
+              "machine_1": {
+                "events": [
+                  {
+                    "end": 1569549471549,
+                    "mode": "CIP",
+                    "start": 1569000471549
+                  },
+                  {
+                    "end": 1570149471549,
+                    "mode": "Production",
+                    "start": 1570000471549
+                  }
+                ],
+                "name": "Machine 1"
+              },
+              "machine_2": {
+                "events": [
+                  {
+                    "end": 1571549471549,
+                    "mode": "CIP",
+                    "start": 1570000471549
+                  },
+                  {
+                    "end": 1569800471549,
+                    "mode": "Production",
+                    "start": 1568700471549
+                  },
+                  {
+                    "end": 1568679471549,
+                    "mode": "Specified Color Code",
+                    "start": 1568000471549
+                  }
+                ],
+                "name": "Machine 2"
+              }
+            },
+            "exampleData": false,
+            "instanceID": "ModeTimeline",
+            "modes": [
+              {
+                "name": "Production"
+              },
+              {
+                "name": "CIP"
+              },
+              {
+                "color": "#31a131",
+                "name": "Specified Color Code"
+              }
+            ],
+            "range": {
+              "end": 1571149471549,
+              "start": 1567149471549
+            },
+            "update": {
+              "onChange": true
+            }
+          },
+          "path": "component/grafic",
+          "useDefaultViewHeight": true
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "EmbeddedView_0"
+        },
+        "position": {
+          "basis": "213px"
+        },
+        "props": {
+          "path": "component/tabla_disponibilidad"
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#2B384B",
+        "classes": "Card_Transparent",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

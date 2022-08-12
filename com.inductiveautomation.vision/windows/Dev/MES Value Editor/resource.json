@@ -1,0 +1,18 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "giovanny.tomazzolli",
+      "timestamp": "2020-09-24T21:13:43Z"
+    },
+    "xml-format-version": 1,
+    "lastModificationSignature": "b5f6476c4b09afe9b88e85018d104bc455b262542a1cbfe792bbdeb57637bfc6"
+  }
+}

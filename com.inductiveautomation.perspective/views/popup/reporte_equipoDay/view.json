@@ -1,0 +1,30 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "PDFViewer"
+        },
+        "position": {
+          "basis": "575px"
+        },
+        "props": {
+          "page": 1,
+          "pageCount": 2,
+          "source": "JaviReportTest_Machine (2) (1)"
+        },
+        "type": "ia.display.pdf-viewer"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1598029896024
+      ],
+      "$ts": 1598094000000
+    },
+    "key": "value",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1598029896024
+      ],
+      "$ts": 1598007600000
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "path": "/root/Date banner/DateTimeInput.props.value"
+        },
+        "transforms": [
+          {
+            "expression": "addDays(setTIme({value},6,0,0),1)",
+            "type": "expression"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.key": {
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "path": "/root/Date banner/DateTimeInput.props.value"
+        },
+        "transforms": [
+          {
+            "expression": "setTime({value},6,0,0)",
+            "type": "expression"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "width": 938
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "5px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "color": "#B8B8B8",
+              "path": "material/date_range"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "45px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Secundary",
+                "textAlign": "center"
+              },
+              "text": "Fecha:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tsystem.perspective.sendMessage(\u0027refresh\u0027)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              },
+              "system": {
+                "onStartup": {
+                  "config": {
+                    "script": "\tself.props.value \u003d system.date.now()"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "DateTimeInput"
+            },
+            "position": {
+              "basis": "130px"
+            },
+            "props": {
+              "format": "D/MMM/YYYY",
+              "formattedValue": "21/Aug/2020",
+              "formattedValues": {
+                "date": "21/Aug/2020"
+              },
+              "inputProps": {
+                "style": {
+                  "borderStyle": "none",
+                  "borderWidth": "4px"
+                }
+              },
+              "pickerType": "date",
+              "placeholder": "Seleccionar día",
+              "style": {
+                "backgroundColor": "#474D63",
+                "classes": "Cards/Card Cards/Card_Transparent",
+                "color": "#E0E0E0"
+              },
+              "value": {
+                "$": [
+                  "ts",
+                  192,
+                  1598029896023
+                ],
+                "$ts": 1598029896023
+              }
+            },
+            "type": "ia.input.date-time-input"
+          },
+          {
+            "meta": {
+              "name": "Label_2"
+            },
+            "position": {
+              "basis": "45px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Secundary",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Icon_0"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "color": "#C6C6C6",
+              "path": "material/view_module"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "35px"
+            },
+            "props": {
+              "style": {
+                "classes": "Labels/Secundary",
+                "textAlign": "center"
+              },
+              "text": "Area:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.session.custom.area \u003d self.props.value"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Dropdown"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "propConfig": {
+              "props.options": {
+                "binding": {
+                  "config": {
+                    "path": "/root.meta.visible"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tfilter \u003d system.mes.object.filter.createFilter()  \n\tfilter.setEnableStateName(\u0027ENABLED\u0027)\n\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t#filter.setMESObjectNamePattern(\u0027Unload *\u0027)\n\tresults \u003d system.mes.loadMESObjects(filter)\n\tdic \u003d []\n\tfor link in results:\n\t    print link.getName()\n\t    temp \u003d {\u0027value\u0027:link.getName(),\u0027label\u0027:link.getName()}\n\t    dic.append(temp)\n\treturn dic",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "path": "session.custom.area"
+                  },
+                  "type": "property"
+                },
+                "onChange": {
+                  "enabled": null,
+                  "script": "\tsystem.perspective.sendMessage(\u0027refresh\u0027)"
+                }
+              }
+            },
+            "props": {
+              "placeholder": {
+                "color": "#EBEBEB"
+              },
+              "style": {
+                "backgroundColor": "#001757",
+                "color": "#F4F4F4"
+              }
+            },
+            "type": "ia.input.dropdown"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tfilter \u003d system.mes.object.filter.createFilter()  \n\tfilter.setEnableStateName(\u0027ENABLED\u0027)\n\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t#filter.setMESObjectNamePattern(\u0027Unload *\u0027)\n\tresults \u003d system.mes.loadMESObjects(filter)\n\tdic \u003d []\n\tfor link in results:\n\t\tprint link.getName()\n\t\ttemp \u003d {\u0027value\u0027:link.getName(),\u0027label\u0027:link.getName()}\n\t\tdic.append(temp)\n\tself.getSibling(\"Dropdown\").props.options \u003d dic"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Icon_2"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "color": "#C6C6C6",
+              "path": "material/autorenew"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "98px",
+              "grow": 1
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Icon_1"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "color": "#C6C6C6",
+              "path": "material/autorenew"
+            },
+            "type": "ia.display.icon"
+          }
+        ],
+        "meta": {
+          "name": "Date banner"
+        },
+        "position": {
+          "basis": "38px"
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "basis": "5px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "FlexRepeater"
+        },
+        "position": {
+          "basis": "100%",
+          "grow": 1
+        },
+        "props": {
+          "alignContent": "flex-start",
+          "alignItems": "flex-start",
+          "elementPosition": {
+            "basis": "99%",
+            "shrink": 0
+          },
+          "instances": [
+            {
+              "endDate": "2020-08-22 06:00:00",
+              "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_ENTUBADO\\ENT1",
+              "startDate": "2020-08-21 06:00:00"
+            },
+            {
+              "endDate": "2020-08-22 06:00:00",
+              "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_ENTUBADO\\ENT2",
+              "startDate": "2020-08-21 06:00:00"
+            }
+          ],
+          "path": "Quality/Equipment Summary",
+          "useDefaultViewWidth": false,
+          "wrap": "wrap"
+        },
+        "scripts": {
+          "customMethods": [],
+          "messageHandlers": [
+            {
+              "messageType": "refresh",
+              "pageScope": true,
+              "script": "\t# implement your handler here\n\tselectedArea \u003d self.parent.getChild(\"Date banner\").getChild(\"Dropdown\").props.value\n\theader \u003d [\u0027eqPath\u0027,\u0027startDate\u0027,\u0027endDate\u0027]\n\tmachineDataset  \u003d[]\n\tcount \u003d 0\n\tif selectedArea !\u003d \u0027\u0027:\n\t\tmesObject \u003d system.mes.loadMESObject(selectedArea, \u0027Area\u0027) #clase seeleccionada \n\t\tif mesObject !\u003d None:\n\t\t\tchildList \u003d mesObject.getChildCollection().getList() # obtengo los equipos de esa clase\n\t\t\tstartDate \u003d system.date.format(self.view.custom.startDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\t\t\tendDate  \u003d system.date.format(self.view.custom.endDate,\u0027yyyy-MM-dd HH:mm:ss\u0027)\n\t\t\tfor child in childList: # se recorre la lista de equipos para armar el dataset del template repeater\n\t\t\t\tif count \u003c\u003d7:\n\t\t\t\t\ttry:\n\t\t\t\t\t\tlineObj \u003d system.mes.loadMESObject(child.getName(), \u0027Line\u0027) \n\t\t\t\t##Get and print the Equipment Path\n\t\t\t\t\t\teqPath \u003d lineObj.getEquipmentPath()\n\t\t\t\t\t\tmachineDataset.append({\u0027eqPath\u0027:eqPath,\u0027startDate\u0027:startDate,\u0027endDate\u0027:endDate})\n\t\t\t\t\t\tcount +\u003d1\n\t\t\t\t\texcept:\n\t\t\t\t\t\tpass\n\t\tself.props.instances \u003d machineDataset\n\telse:\n\t\tself.props.instances \u003d []",
+              "sessionScope": false,
+              "viewScope": false
+            }
+          ]
+        },
+        "type": "ia.display.flex-repeater"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "justify": "space-evenly",
+      "style": {
+        "backgroundColor": "#0D182D"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

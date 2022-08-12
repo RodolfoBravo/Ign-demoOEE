@@ -1,0 +1,156 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 1013
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "position": {
+              "basis": "260px"
+            },
+            "props": {
+              "params": {
+                "endDate": "2020-6-25 0:00:00",
+                "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2",
+                "startDate": "2020-6-24 0:00:00"
+              },
+              "path": "dashboard_planta/sataEquipo"
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 0,
+              "name": "sm",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 4
+            },
+            {
+              "colIndex": 0,
+              "name": "md",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 4
+            },
+            {
+              "colIndex": 0,
+              "name": "lg",
+              "order": 1,
+              "rowIndex": 0,
+              "span": 3
+            }
+          ],
+          "height": 210
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "position": {
+              "basis": "757.3px"
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "expression": "now(60000)"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "session.custom.planta"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "if({value}\u003d\"1100_\",\"MINIPAK_POLYBOL\\\\Colombia\\\\1100_*\\\\*\",\"MINIPAK_POLYBOL\\\\Colombia\\\\2100_*\\\\*\")",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "expression": "dateArithmetic(now(60000), -24, \"hour\")"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "path": "dashboard_planta/data"
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "breakpoints": [
+            {
+              "colIndex": 5,
+              "name": "sm",
+              "order": 2,
+              "rowIndex": 0,
+              "span": 1
+            },
+            {
+              "colIndex": 4,
+              "name": "md",
+              "order": 2,
+              "rowIndex": 0,
+              "span": 8
+            },
+            {
+              "colIndex": 3,
+              "name": "lg",
+              "order": 2,
+              "rowIndex": 0,
+              "span": 9
+            }
+          ],
+          "height": 209
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#2B384B"
+      }
+    },
+    "type": "ia.container.column"
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "height": 75,
+          "width": 272,
+          "x": 240,
+          "y": 121
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "parent.props.aspectRatio"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "BigLabels/Primary"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "ToggleSwitch"
+        },
+        "position": {
+          "height": 36,
+          "width": 96,
+          "x": 95.01102447509766,
+          "y": 211.01102447509766
+        },
+        "type": "ia.input.toggle-switch"
+      },
+      {
+        "meta": {
+          "name": "Dashboard"
+        },
+        "position": {
+          "height": 698,
+          "width": 1249,
+          "x": -0.9806000000000008,
+          "y": -0.01559999999999917
+        },
+        "props": {
+          "stretch": {
+            "columnCount": 5,
+            "rowCount": 6
+          },
+          "widgets": [
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": true,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 1,
+                "rowSpan": 1
+              },
+              "name": "",
+              "position": {
+                "columnEnd": 2,
+                "columnStart": 1,
+                "rowEnd": 2,
+                "rowStart": 1
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "Mantenimiento/TvWidget"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": true,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 1,
+                "rowSpan": 1
+              },
+              "name": "",
+              "position": {
+                "columnEnd": 3,
+                "columnStart": 2,
+                "rowEnd": 3,
+                "rowStart": 2
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "Mantenimiento/TvWidget"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": true,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 1,
+                "rowSpan": 1
+              },
+              "name": "",
+              "position": {
+                "columnEnd": 5,
+                "columnStart": 5,
+                "rowEnd": 7,
+                "rowStart": 6
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "Mantenimiento/TvWidget"
+            }
+          ]
+        },
+        "type": "ia.display.dashboard"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.coord"
+  }
+}

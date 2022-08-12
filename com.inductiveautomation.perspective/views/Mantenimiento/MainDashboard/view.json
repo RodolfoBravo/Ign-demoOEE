@@ -1,0 +1,438 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "32px"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Small",
+                "paddingLeft": "4px"
+              },
+              "text": "Sistema Generación de Vapor"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "32px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Labels/Tittle"
+                          },
+                          "text": "Caldera Vapor 200 y 300 BPH"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "EmbeddedView"
+                        },
+                        "position": {
+                          "basis": "40px"
+                        },
+                        "props": {
+                          "params": {
+                            "tagPath": "[default]Servicios/Minipak/Alarmas/Baja Presion de Vapor"
+                          },
+                          "path": "Mantenimiento/Indicador"
+                        },
+                        "type": "ia.display.view"
+                      },
+                      {
+                        "meta": {
+                          "name": "EmbeddedView_0"
+                        },
+                        "position": {
+                          "basis": "40px"
+                        },
+                        "props": {
+                          "params": {
+                            "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                          },
+                          "path": "Mantenimiento/Indicador"
+                        },
+                        "type": "ia.display.view"
+                      },
+                      {
+                        "meta": {
+                          "name": "EmbeddedView_1"
+                        },
+                        "position": {
+                          "basis": "40px"
+                        },
+                        "props": {
+                          "params": {
+                            "tagPath": "[default]Servicios/Minipak/Alarmas/Falla Caldera 200BHP"
+                          },
+                          "path": "Mantenimiento/Indicador"
+                        },
+                        "type": "ia.display.view"
+                      },
+                      {
+                        "meta": {
+                          "name": "EmbeddedView_2"
+                        },
+                        "position": {
+                          "basis": "40px"
+                        },
+                        "props": {
+                          "params": {
+                            "tagPath": "[default]Servicios/Minipak/Alarmas/Falla Caldera 300BHP"
+                          },
+                          "path": "Mantenimiento/Indicador"
+                        },
+                        "type": "ia.display.view"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer"
+                    },
+                    "position": {
+                      "basis": "400px"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "classes": "Cards/Card_Small"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "basis": "32px"
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "Labels/Tittle"
+                          },
+                          "text": "Caldera Vapor 200 y 300 BPH"
+                        },
+                        "type": "ia.display.label"
+                      },
+                      {
+                        "meta": {
+                          "name": "EmbeddedView"
+                        },
+                        "position": {
+                          "basis": "40px"
+                        },
+                        "props": {
+                          "params": {
+                            "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                          },
+                          "path": "Mantenimiento/Indicador"
+                        },
+                        "type": "ia.display.view"
+                      }
+                    ],
+                    "meta": {
+                      "name": "FlexContainer_1"
+                    },
+                    "position": {
+                      "basis": "140px"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "classes": "Cards/Card_Small"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "FlexContainer_0"
+                    },
+                    "position": {
+                      "basis": "25px"
+                    },
+                    "type": "ia.container.flex"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "400px"
+                },
+                "props": {
+                  "direction": "column"
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "TimeSeriesChart"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "props": {
+                  "series": [
+                    {
+                      "data": [
+                        {
+                          "Pressure": 12,
+                          "Temperature": 52,
+                          "time": 1560469431423
+                        },
+                        {
+                          "Pressure": 42,
+                          "Temperature": 18,
+                          "time": 1560469432423
+                        },
+                        {
+                          "Pressure": 81,
+                          "Temperature": 26,
+                          "time": 1560469433423
+                        },
+                        {
+                          "Pressure": 11,
+                          "Temperature": 63,
+                          "time": 1560469434423
+                        },
+                        {
+                          "Pressure": 23,
+                          "Temperature": 65,
+                          "time": 1560469435423
+                        },
+                        {
+                          "Pressure": 43,
+                          "Temperature": 12,
+                          "time": 1560469436423
+                        },
+                        {
+                          "Pressure": 71,
+                          "Temperature": 61,
+                          "time": 1560469437423
+                        },
+                        {
+                          "Pressure": 89,
+                          "Temperature": 60,
+                          "time": 1560469438423
+                        },
+                        {
+                          "Pressure": 66,
+                          "Temperature": 58,
+                          "time": 1560469439423
+                        },
+                        {
+                          "Pressure": 33,
+                          "Temperature": 1,
+                          "time": 1560469440423
+                        }
+                      ],
+                      "name": "Boiler"
+                    }
+                  ]
+                },
+                "type": "ia.chart.timeseries"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "264px"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "FlexContainer_0"
+            },
+            "position": {
+              "basis": "200px"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "FlexContainer_1"
+            },
+            "position": {
+              "basis": "200px"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "73.4%"
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "32px"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Small",
+                "paddingLeft": "4px"
+              },
+              "text": "Sistema Generación de Vapor"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "EmbeddedView"
+                    },
+                    "position": {
+                      "basis": "40px"
+                    },
+                    "props": {
+                      "params": {
+                        "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                      },
+                      "path": "Mantenimiento/Indicador"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "meta": {
+                      "name": "EmbeddedView_0"
+                    },
+                    "position": {
+                      "basis": "40px"
+                    },
+                    "props": {
+                      "params": {
+                        "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                      },
+                      "path": "Mantenimiento/Indicador"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "meta": {
+                      "name": "EmbeddedView_1"
+                    },
+                    "position": {
+                      "basis": "40px"
+                    },
+                    "props": {
+                      "params": {
+                        "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                      },
+                      "path": "Mantenimiento/Indicador"
+                    },
+                    "type": "ia.display.view"
+                  },
+                  {
+                    "meta": {
+                      "name": "EmbeddedView_2"
+                    },
+                    "position": {
+                      "basis": "40px"
+                    },
+                    "props": {
+                      "params": {
+                        "tagPath": "[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado"
+                      },
+                      "path": "Mantenimiento/Indicador"
+                    },
+                    "type": "ia.display.view"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer"
+                },
+                "position": {
+                  "basis": "400px"
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Small"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "FlexContainer_0"
+                },
+                "position": {
+                  "basis": "200px"
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.flex"
+  }
+}

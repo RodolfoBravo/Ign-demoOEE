@@ -1,0 +1,124 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1592426073654
+      ],
+      "$ts": 1582826400000
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1592426073654
+      ],
+      "$ts": 1588309200653
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.endDate": {
+      "persistent": true
+    },
+    "custom.startDate": {
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 556,
+      "width": 856
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\t#start_date \u003d self.props.value\n\t#res \u003d system.date.getDayOfMonth(start_date)\n\t#final \u003d system.date.addDays(start_date, -res)\t\t\t\n\t#end_date \u003d self.props.value\n\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t\n\t#Current month\t\t\t\n\t#cal_start.set(Calendar.DAY_OF_MONTH, 1)\n\t#start_date \u003d cal_start.getTime() \n\t##cal_end \u003d Calendar.getInstance()\n\t#cal_end.setTime(start_date)\t\n\t#cal_end.add(Calendar.MONTH, + 1)\t\t\t\t\n\tend_date \u003d self.props.value\n\n\t #LAST MONTH \n\tcal_start.add(Calendar.MONTH, -1)\n\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\t\n\tstart_date \u003d cal_start.getTime() \n\tcal_end.setTime(start_day)\n\tcal_start.add(Calendar.MONTH, 1)\t\n\tcal_end.set(Calendar.DAY_OF_MONTH, 1)\n\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date\n\n\t\n\t"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "DateTimeInput"
+        },
+        "position": {
+          "basis": "30px"
+        },
+        "props": {
+          "formattedValues": {
+            "date": "27 de feb. de 2020 12:00"
+          },
+          "locale": "es",
+          "pickerType": "date",
+          "value": {
+            "$": [
+              "ts",
+              0,
+              1592426073250
+            ],
+            "$ts": 1582826400000
+          }
+        },
+        "type": "ia.input.date-time-input"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tstart_date \u003d start_day\n\tcal_end.setTime(start_day)\t\t\t\n\tcal_end.add(Calendar.DATE,1)\n\tend_date \u003d system.date.addDays(start_date, 1)\t\t\t\n\t\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date\n\n\t"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button"
+        },
+        "position": {
+          "basis": "44px"
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t\n\t#Current month\t\t\t\n\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\tstart_date \u003d cal_start.getTime() \n\tcal_end \u003d Calendar.getInstance()\n\tcal_end.setTime(start_date)\t\n\tcal_end.add(Calendar.MONTH, + 1)\t\t\t\t\n\tend_date \u003d start_day\n\n\t #LAST MONTH \n\t#cal_start.add(Calendar.MONTH, -1)\n\t#cal_start.set(Calendar.DAY_OF_MONTH, 1)\t\n\t#start_date \u003d cal_start.getTime() \n\t#cal_end.setTime(start_day)\n\t#cal_start.add(Calendar.MONTH, 1)\t\n\t#cal_end.set(Calendar.DAY_OF_MONTH, 1)\n\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button_0"
+        },
+        "position": {
+          "basis": "44px"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "color": "#B8B8B8",
+              "path": "material/place"
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Dropdown"
+            },
+            "position": {
+              "basis": "256px"
+            },
+            "type": "ia.input.dropdown"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "44px"
+        },
+        "props": {
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "position": {
+              "basis": "195px"
+            },
+            "props": {
+              "path": "Quality/Gauge",
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              },
+              "useDefaultViewHeight": true
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "173px"
+        },
+        "props": {
+          "style": {
+            "classes": "Cards/Card_Transparent"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "classes": "Pages/Main"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

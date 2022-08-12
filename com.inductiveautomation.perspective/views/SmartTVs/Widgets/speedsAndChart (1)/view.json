@@ -1,0 +1,975 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/OEE/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO2/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 360,
+      "width": 374
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "15%"
+                },
+                "props": {
+                  "color": "#56D2E4",
+                  "path": "material/av_timer"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.defaultPath}"
+                            },
+                            "tagPath": "{1}PLC/Velocidad"
+                          },
+                          "overlayOptOut": true,
+                          "transforms": [
+                            {
+                              "formatType": "numeric",
+                              "formatValue": "integer",
+                              "type": "format"
+                            }
+                          ],
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_1"
+                    },
+                    "position": {
+                      "basis": "18px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Vel. Actual (M/min)"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_actual"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "basis": "70%"
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "fallbackDelay": 2.5,
+                            "mode": "indirect",
+                            "references": {
+                              "1": "{view.custom.tagPath}"
+                            },
+                            "tagPath": "{1}Standard Rate"
+                          },
+                          "transforms": [
+                            {
+                              "formatType": "numeric",
+                              "formatValue": "#.#",
+                              "type": "format"
+                            }
+                          ],
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Primary_medium",
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Label_0"
+                    },
+                    "position": {
+                      "basis": "22px",
+                      "grow": 1
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "BigLabels/Secundary",
+                        "textAlign": "center"
+                      },
+                      "text": "Vel. Prog (M/min)"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "FlexContainer_prog"
+                },
+                "position": {
+                  "basis": "25%",
+                  "grow": 1
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "classes": "Cards/Card_Transparent",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_speed_realtime"
+            },
+            "position": {
+              "basis": "40%"
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "custom": {
+                  "historyData": {
+                    "$": [
+                      "ds",
+                      192,
+                      1597435145270
+                    ],
+                    "$columns": [
+                      {
+                        "data": [
+                          1597406345194,
+                          1597406489194,
+                          1597406633194,
+                          1597406777194,
+                          1597406921194,
+                          1597407065194,
+                          1597407209194,
+                          1597407353194,
+                          1597407497194,
+                          1597407641194,
+                          1597407785194,
+                          1597407929194,
+                          1597408073194,
+                          1597408217194,
+                          1597408361194,
+                          1597408505194,
+                          1597408649194,
+                          1597408793194,
+                          1597408937194,
+                          1597409081194,
+                          1597409225194,
+                          1597409369194,
+                          1597409513194,
+                          1597409657194,
+                          1597409801194,
+                          1597409945194,
+                          1597410089194,
+                          1597410233194,
+                          1597410377194,
+                          1597410521194,
+                          1597410665194,
+                          1597410809194,
+                          1597410953194,
+                          1597411097194,
+                          1597411241194,
+                          1597411385194,
+                          1597411529194,
+                          1597411673194,
+                          1597411817194,
+                          1597411961194,
+                          1597412105194,
+                          1597412249194,
+                          1597412393194,
+                          1597412537194,
+                          1597412681194,
+                          1597412825194,
+                          1597412969194,
+                          1597413113194,
+                          1597413257194,
+                          1597413401194,
+                          1597413545194,
+                          1597413689194,
+                          1597413833194,
+                          1597413977194,
+                          1597414121194,
+                          1597414265194,
+                          1597414409194,
+                          1597414553194,
+                          1597414697194,
+                          1597414841194,
+                          1597414985194,
+                          1597415129194,
+                          1597415273194,
+                          1597415417194,
+                          1597415561194,
+                          1597415705194,
+                          1597415849194,
+                          1597415993194,
+                          1597416137194,
+                          1597416281194,
+                          1597416425194,
+                          1597416569194,
+                          1597416713194,
+                          1597416857194,
+                          1597417001194,
+                          1597417145194,
+                          1597417289194,
+                          1597417433194,
+                          1597417577194,
+                          1597417721194,
+                          1597417865194,
+                          1597418009194,
+                          1597418153194,
+                          1597418297194,
+                          1597418441194,
+                          1597418585194,
+                          1597418729194,
+                          1597418873194,
+                          1597419017194,
+                          1597419161194,
+                          1597419305194,
+                          1597419449194,
+                          1597419593194,
+                          1597419737194,
+                          1597419881194,
+                          1597420025194,
+                          1597420169194,
+                          1597420313194,
+                          1597420457194,
+                          1597420601194,
+                          1597420745194,
+                          1597420889194,
+                          1597421033194,
+                          1597421177194,
+                          1597421321194,
+                          1597421465194,
+                          1597421609194,
+                          1597421753194,
+                          1597421897194,
+                          1597422041194,
+                          1597422185194,
+                          1597422329194,
+                          1597422473194,
+                          1597422617194,
+                          1597422761194,
+                          1597422905194,
+                          1597423049194,
+                          1597423193194,
+                          1597423337194,
+                          1597423481194,
+                          1597423625194,
+                          1597423769194,
+                          1597423913194,
+                          1597424057194,
+                          1597424201194,
+                          1597424345194,
+                          1597424489194,
+                          1597424633194,
+                          1597424777194,
+                          1597424921194,
+                          1597425065194,
+                          1597425209194,
+                          1597425353194,
+                          1597425497194,
+                          1597425641194,
+                          1597425785194,
+                          1597425929194,
+                          1597426073194,
+                          1597426217194,
+                          1597426361194,
+                          1597426505194,
+                          1597426649194,
+                          1597426793194,
+                          1597426937194,
+                          1597427081194,
+                          1597427225194,
+                          1597427369194,
+                          1597427513194,
+                          1597427657194,
+                          1597427801194,
+                          1597427945194,
+                          1597428089194,
+                          1597428233194,
+                          1597428377194,
+                          1597428521194,
+                          1597428665194,
+                          1597428809194,
+                          1597428953194,
+                          1597429097194,
+                          1597429241194,
+                          1597429385194,
+                          1597429529194,
+                          1597429673194,
+                          1597429817194,
+                          1597429961194,
+                          1597430105194,
+                          1597430249194,
+                          1597430393194,
+                          1597430537194,
+                          1597430681194,
+                          1597430825194,
+                          1597430969194,
+                          1597431113194,
+                          1597431257194,
+                          1597431401194,
+                          1597431545194,
+                          1597431689194,
+                          1597431833194,
+                          1597431977194,
+                          1597432121194,
+                          1597432265194,
+                          1597432409194,
+                          1597432553194,
+                          1597432697194,
+                          1597432841194,
+                          1597432985194,
+                          1597433129194,
+                          1597433273194,
+                          1597433417194,
+                          1597433561194,
+                          1597433705194,
+                          1597433849194,
+                          1597433993194,
+                          1597434137194,
+                          1597434281194,
+                          1597434425194,
+                          1597434569194,
+                          1597434713194,
+                          1597434857194,
+                          1597435001194
+                        ],
+                        "name": "t_stamp",
+                        "type": "Date"
+                      },
+                      {
+                        "data": [
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          2.769577953129748,
+                          1.4574805423104928,
+                          0.6535177859701444,
+                          2.4206373941407335,
+                          0.02152325414951566,
+                          0.018476371350345713,
+                          0.015429488551175761,
+                          0.012382605752005815,
+                          0.009335722952835867,
+                          0.006288840153665919,
+                          0.003241957354495971,
+                          7.686798192228124,
+                          23.44836149127236,
+                          11.345690681877196,
+                          0,
+                          49.80662382272386,
+                          10.527423688994787,
+                          0.054635873433752896,
+                          0.00012203020529686325,
+                          1.619684221257159,
+                          12.351149906214493,
+                          17.414413703297875,
+                          17.165476893480715,
+                          16.889848365559576,
+                          35.60097769320186,
+                          41.89531796179876,
+                          0,
+                          0,
+                          0,
+                          0.033573076472265644,
+                          35.685463341042094,
+                          101.63702500003185,
+                          122.46972650958985,
+                          137.66744865230237,
+                          167.84939907800236,
+                          187.86197387473797,
+                          194.6817380790619,
+                          194.85637841861134,
+                          194.9443370169763,
+                          194.9626733810728,
+                          194.99036792450735,
+                          195.04883044929937,
+                          195.1460583712332,
+                          195.1785577033956,
+                          195.1687368091053,
+                          195.2282676812857,
+                          197.38549938189072,
+                          227.18732260759074,
+                          231.47592848493701,
+                          231.50408938091084,
+                          231.56573413887688,
+                          231.54314399789334,
+                          231.48675749987856,
+                          231.51405018031392,
+                          231.5339578987942,
+                          231.47277909945768,
+                          231.50909619820456,
+                          231.52233800683106,
+                          231.5131085757881,
+                          231.57153453455825,
+                          231.6733458789349,
+                          231.79333257338533,
+                          231.80982366494848,
+                          231.7869712654751,
+                          231.84635670859294,
+                          231.94396700951685,
+                          231.8885512059739,
+                          231.8710472077292,
+                          231.95369802545028,
+                          232.02903475835336,
+                          231.9600675859889,
+                          234.0101819943082,
+                          251.75893120201127,
+                          251.87093713297824,
+                          251.93043744146385,
+                          251.89785600491433,
+                          251.94950961761822,
+                          251.97909776226808,
+                          251.98842566954238,
+                          252.05748484489612,
+                          252.1467912380933,
+                          252.19264326828323,
+                          252.17303419076708,
+                          252.1763878921965,
+                          252.19192873586744,
+                          252.10697289028806,
+                          252.14594070210362,
+                          252.153740167227,
+                          252.05674530148585,
+                          252.06195818729682,
+                          252.00041770930972,
+                          251.9014933226242,
+                          251.99692260649712,
+                          252.1086825999084,
+                          252.22147870734483,
+                          252.20202547447735,
+                          252.26034242041854,
+                          252.42613191504086,
+                          252.26416527703142,
+                          252.28821494732836,
+                          252.33093902869308,
+                          252.29825869803662,
+                          252.4732383797604,
+                          252.51580882361,
+                          252.52470671150616,
+                          252.44105526587035,
+                          252.40151766243523,
+                          252.34912139782972,
+                          252.38275853353827,
+                          252.30404938804432,
+                          252.3230823502159,
+                          252.3825846319838,
+                          52.47724157507331,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0.20966366309175802,
+                          158.69377055079417,
+                          252.39066374924204,
+                          252.26605766639355,
+                          252.3168158360741,
+                          252.23068069796608,
+                          252.2946808922378,
+                          252.28917261159617,
+                          252.29506074988188,
+                          252.27219797805304,
+                          252.28316193520158,
+                          252.22599447400287,
+                          252.3540594599865,
+                          252.2136760025258,
+                          252.31654252692658,
+                          252.302818186375,
+                          252.38910796875783,
+                          252.28467521749255,
+                          252.32335941617518,
+                          252.22854437116197,
+                          252.29655357006195,
+                          252.28235430750544,
+                          252.22754224263502,
+                          252.30450368147697,
+                          252.2251929511103,
+                          252.17003385205547,
+                          252.25280927766573,
+                          252.3325430928323,
+                          252.34345097026545,
+                          252.31369045363294,
+                          252.37531931999487,
+                          52.756697349618264,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          10.570114587699436,
+                          32.3039020676574,
+                          23.881563745384998
+                        ],
+                        "name": "Velocidad",
+                        "type": "Double"
+                      }
+                    ]
+                  }
+                },
+                "meta": {
+                  "name": "TimeSeriesChart"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "custom.historyData": {
+                    "binding": {
+                      "config": {
+                        "expression": "now(180000)+{view.params.eqPath}"
+                      },
+                      "enabled": false,
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\tpath \u003d (self.view.custom.defaultPath)+\u0027PLC/Velocidad.value\u0027\n\t\tendDates \u003d system.date.now()\n\t\tstartDates \u003d system.date.addHours(endDates,-8)\n\t\tdata \u003d system.tag.queryTagHistory(paths \u003d [path],startDate \u003d startDates,endDate \u003d endDates)\n\t\t#data \u003dsystem.tag.queryTagHistory(paths\u003d[path], startDate\u003dstartDates, endDate\u003dendDates, returnSize\u003d-1)\n\t\tdata \u003dsystem.tag.queryTagHistory(paths\u003d[path],rangeHours\u003d-8,returnSize\u003d200,aggregationMode\u003d\"Average\", returnFormat\u003d\u0027Wide\u0027,columnNames\u003d[\"t_stamp\",\"Velocidad\"])\n\t\treturn data\n\texcept:\n\t\theaders \u003d [\"\",\"\"]\n\t\tdata \u003d []\n\t\treturn system.dataset.toDataSet(headers, data)",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "expr"
+                    }
+                  },
+                  "props.series[0].data": {
+                    "binding": {
+                      "config": {
+                        "path": "this.custom.historyData"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "defaultStyles": {
+                    "colorScheme": "Paired",
+                    "muted": {
+                      "fill": {
+                        "opacity": 0.2
+                      }
+                    },
+                    "normal": {
+                      "fill": {
+                        "opacity": 0.1
+                      },
+                      "stroke": {
+                        "width": 2
+                      }
+                    }
+                  },
+                  "legend": {
+                    "style": {
+                      "fontSize": "2vh"
+                    }
+                  },
+                  "plots": [
+                    {
+                      "axes": [
+                        {
+                          "alignment": "left",
+                          "label": {
+                            "font": {
+                              "color": "#F6F6F6",
+                              "size": 12
+                            },
+                            "offset": 0,
+                            "style": {
+                              "classes": ""
+                            },
+                            "text": "Velocidad",
+                            "visible": true
+                          },
+                          "max": "",
+                          "min": "",
+                          "name": "Velocidad",
+                          "style": {
+                            "classes": ""
+                          },
+                          "tick": {
+                            "color": "#D4D4D4",
+                            "label": {
+                              "font": {
+                                "color": "",
+                                "size": 10
+                              },
+                              "style": {
+                                "classes": ""
+                              }
+                            },
+                            "style": {
+                              "classes": ""
+                            }
+                          },
+                          "width": ""
+                        }
+                      ],
+                      "markers": [
+                        {
+                          "axis": "Velocidad",
+                          "line": {
+                            "color": "",
+                            "dashArray": 0,
+                            "label": {
+                              "font": {
+                                "color": "",
+                                "size": 10
+                              },
+                              "position": "right",
+                              "style": {
+                                "classes": ""
+                              },
+                              "text": "rrr"
+                            },
+                            "opacity": 0.5,
+                            "style": {
+                              "classes": ""
+                            },
+                            "width": 1
+                          },
+                          "type": "line",
+                          "value": 0,
+                          "visible": true
+                        }
+                      ],
+                      "trends": [
+                        {
+                          "axis": "Velocidad",
+                          "baselines": [
+                            {
+                              "axis": "Velocidad",
+                              "color": "#FA0000",
+                              "column": "Max",
+                              "dashArray": 0,
+                              "function": "max",
+                              "label": {
+                                "font": {
+                                  "color": "",
+                                  "size": 10
+                                },
+                                "position": "right",
+                                "style": {
+                                  "classes": ""
+                                },
+                                "text": "Maximo"
+                              },
+                              "opacity": 0.5,
+                              "style": {
+                                "classes": ""
+                              },
+                              "visible": false,
+                              "width": 3
+                            },
+                            {
+                              "axis": "",
+                              "color": "",
+                              "column": "",
+                              "dashArray": 0,
+                              "function": "avg",
+                              "label": {
+                                "font": {
+                                  "color": "",
+                                  "size": 10
+                                },
+                                "position": "right",
+                                "style": {
+                                  "classes": ""
+                                },
+                                "text": ""
+                              },
+                              "opacity": 0.5,
+                              "style": {
+                                "classes": ""
+                              },
+                              "visible": true,
+                              "width": 3
+                            }
+                          ],
+                          "breakLine": true,
+                          "columns": [
+                            {
+                              "color": "#9B5353",
+                              "key": "",
+                              "styles": {
+                                "highlighted": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "muted": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "normal": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "selected": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "interpolation": "curveBasis",
+                          "radius": 2,
+                          "series": "Velocidad",
+                          "stack": true,
+                          "type": "area",
+                          "visible": true
+                        }
+                      ]
+                    }
+                  ],
+                  "series": [
+                    {
+                      "name": "Velocidad"
+                    }
+                  ],
+                  "timeAxis": {
+                    "height": 10,
+                    "tick": {
+                      "label": {
+                        "font": {
+                          "size": "2vh"
+                        }
+                      }
+                    }
+                  },
+                  "timeRange": {
+                    "timeFormat": "HH:mm:ss"
+                  },
+                  "title": {
+                    "font": {
+                      "size": 12
+                    },
+                    "height": 5,
+                    "text": "Velocidad Tiempo Real (8 Horas)",
+                    "visible": true
+                  },
+                  "xTrace": {
+                    "line": {
+                      "color": "#FFFFFF",
+                      "width": 3
+                    }
+                  }
+                },
+                "type": "ia.chart.timeseries"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "100px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "Cards/Card_Transparent",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_speed"
+        },
+        "position": {
+          "basis": "100%"
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

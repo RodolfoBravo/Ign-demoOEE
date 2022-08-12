@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-06-03T21:54:59Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "BGColor,xmlData",
+    "lastModificationSignature": "c57119cbc1b4c7e72798a4495db7667482c4ca958a0190cb1e2bec06ebca8a52"
+  }
+}

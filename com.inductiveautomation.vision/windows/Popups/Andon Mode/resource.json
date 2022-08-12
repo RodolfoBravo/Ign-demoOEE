@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "lefg113",
+      "timestamp": "2020-03-23T17:50:23Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "Subline,tagPath",
+    "lastModificationSignature": "df97a222bc3470fae72347cf325fd2eee27315b3b5a10e232e0f2eb9a2f9efdc"
+  }
+}

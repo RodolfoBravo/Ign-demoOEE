@@ -1,0 +1,1000 @@
+{
+  "custom": {
+    "defaultPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_GOFRADO/GF1/Shift/",
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1593606022832
+      ],
+      "$ts": 1593666000831
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1593606022832
+      ],
+      "$ts": 1593579600831
+    },
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_GOFRADO/GF1/Live Analysis/General/"
+  },
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1592534574103
+      ],
+      "$ts": 1548997200000
+    },
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1592534574103
+      ],
+      "$ts": 1546318800000
+    }
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.endDate": {
+      "persistent": true
+    },
+    "custom.startDate": {
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "binding": {
+        "config": {
+          "path": "/root/FlexContainer_0/EmbeddedView.props.params.eqPath"
+        },
+        "type": "property"
+      },
+      "paramDirection": "inout",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 957,
+      "width": 1537
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_3"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "43px"
+            },
+            "props": {
+              "color": "#FFFFFF",
+              "path": "material/date_range",
+              "style": {
+                "backgroundColor": "#FFFFFF00"
+              }
+            },
+            "type": "ia.display.icon"
+          },
+          {
+            "meta": {
+              "name": "Label_2"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tend_date \u003d start_day\n\tcal_end.setTime(start_day)\t\t\t\n\tcal_end.add(Calendar.DATE,1)\n\tstart_date \u003d system.date.addDays(end_date, -1)\t\t\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date\n\tself.view.getChild(\"root\").custom.boolFecha \u003d False\n\tself.view.getChild(\"root\").custom.bool \u003d True\n\t\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Button"
+                },
+                "position": {
+                  "basis": "36px"
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#9DBCD3",
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8
+                  },
+                  "text": "Ayer"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_3"
+            },
+            "position": {
+              "basis": "85px"
+            },
+            "props": {
+              "alignContent": "center",
+              "direction": "column",
+              "justify": "center",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Label_4"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tstart_date \u003d start_day\n\tcal_end.setTime(start_day)\t\t\t\n\tcal_end.add(Calendar.DATE,1)\n\tend_date \u003d system.date.addDays(start_date, 1)\t\t\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date\n\tself.view.getChild(\"root\").custom.boolFecha \u003d False\n\tself.view.getChild(\"root\").custom.bool \u003d True\n\t\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Button"
+                },
+                "position": {
+                  "basis": "36px"
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#9DBCD3",
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8
+                  },
+                  "text": "Día"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "85px"
+            },
+            "props": {
+              "alignContent": "center",
+              "direction": "column",
+              "justify": "center",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 6) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\tstart_date \u003d cal_start.getTime() \n\tcal_end \u003d Calendar.getInstance()\n\tcal_end.setTime(start_date)\t\n\tcal_end.add(Calendar.MONTH, + 1)\t\t\t\t\n\tend_date \u003d cal_end.getTime()\t\t\n\t\t\n\t\t\n\tself.view.custom.startDate \u003d start_date\n\tself.view.custom.endDate \u003d end_date\n\tself.view.getChild(\"root\").custom.boolFecha \u003d True\n\t#self.view.getChild(\"root\").custom.bool \u003d False\n\t\t"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Button_0"
+                },
+                "position": {
+                  "basis": "36px"
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#9DBCD3",
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8
+                  },
+                  "text": "Mes"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_0"
+            },
+            "position": {
+              "basis": "85px"
+            },
+            "props": {
+              "direction": "column",
+              "justify": "center"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Label_1"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "basis": "36px"
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "path": "/root.custom.boolFecha"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.options": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.startDate"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tyear \u003d system.date.getYear(value)\n\tyear_2 \u003d system.date.addYears(value, -2)\n\tyear_2 \u003d system.date.getYear(year_2)\n\tyear_1 \u003d system.date.addYears(value, -1)\n\tyear_1 \u003d system.date.getYear(year_1)\n\tyear1 \u003d system.date.addYears(value, 1)\n\tyear1 \u003d system.date.getYear(year1)\n\tyear2 \u003d system.date.addYears(value, 2)\n\tyear2 \u003d system.date.getYear(year2)\n\tlist \u003d []\n\tlist.append({\u0027value\u0027 : 0, \u0027label\u0027 : year_2 })\n\tlist.append({\u0027value\u0027 : 1, \u0027label\u0027 : year_1 })\n\tlist.append({\u0027value\u0027 : 2, \u0027label\u0027 : year })\n\tlist.append({\u0027value\u0027 : 3, \u0027label\u0027 : year1 })\n\tlist.append({\u0027value\u0027 : 4, \u0027label\u0027 : year2 })\n\treturn list ",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "placeholder": {
+                    "text": "Año"
+                  }
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_1"
+            },
+            "position": {
+              "basis": "85px"
+            },
+            "props": {
+              "direction": "column",
+              "justify": "center"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "13px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tif event:\n\t\tyear \u003d int(self.parent.parent.getChild(\"FlexContainer_1\").getChild(\"Dropdown\").props.value)\n\t\tmonth \u003d int(self.props.value)\n\t\tstart_date \u003d system.date.getDate(year, month, 1) #This would print \"Mon April 15 00:00:00 PDT 2016\"\n\t\tstart_date \u003d system.date.addHours(start_date,6)\n\t\tend_date \u003d system.date.addMonths(start_date, 1)\t\t\n\t\t\t\n\t\tself.view.custom.startDate \u003d start_date\n\t\tself.view.custom.endDate \u003d end_date\n\t\t"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Dropdown"
+                },
+                "position": {
+                  "basis": "36px"
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "path": "/root.custom.boolFecha"
+                      },
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "options": [
+                    {
+                      "label": "Enero",
+                      "value": 0
+                    },
+                    {
+                      "label": "Febrero",
+                      "value": 1
+                    },
+                    {
+                      "label": "Marzo",
+                      "value": 2
+                    },
+                    {
+                      "label": "Abril",
+                      "value": 3
+                    },
+                    {
+                      "label": "Mayo",
+                      "value": 4
+                    },
+                    {
+                      "label": "Junio",
+                      "value": 5
+                    },
+                    {
+                      "label": "Julio",
+                      "value": 6
+                    },
+                    {
+                      "label": "Agosto",
+                      "value": 7
+                    },
+                    {
+                      "label": "Septiembre",
+                      "value": 8
+                    },
+                    {
+                      "label": "Octubre",
+                      "value": 9
+                    },
+                    {
+                      "label": "Noviembre",
+                      "value": 10
+                    },
+                    {
+                      "label": "Diciembre",
+                      "value": 11
+                    }
+                  ],
+                  "placeholder": {
+                    "text": "Mes"
+                  }
+                },
+                "type": "ia.input.dropdown"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_2"
+            },
+            "position": {
+              "basis": "109px"
+            },
+            "props": {
+              "direction": "column",
+              "justify": "center"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "position": {
+              "basis": "338px"
+            },
+            "props": {
+              "params": {
+                "eqPah": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1",
+                "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_GOFRADO\\GF1"
+              },
+              "path": "dashboard_equipo/QuickNav"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_0"
+            },
+            "position": {
+              "basis": "434px",
+              "grow": 1
+            },
+            "props": {
+              "params": {
+                "fgColor": "#FFFFFF"
+              },
+              "path": "Header/Date Selector"
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "44px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "5px"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_0"
+            },
+            "position": {
+              "basis": "320px"
+            },
+            "propConfig": {
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "component/dataEquipo",
+              "style": {
+                "classes": "Cards/Card_Transparent"
+              }
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "EmbeddedView"
+                },
+                "position": {
+                  "basis": "1197px"
+                },
+                "propConfig": {
+                  "props.params.endDate": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.endDate"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.params.eqPath": {
+                    "binding": {
+                      "config": {
+                        "path": "view.params.eqPath"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.params.startDate": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.startDate"
+                      },
+                      "type": "property"
+                    }
+                  },
+                  "props.path": {
+                    "binding": {
+                      "config": {
+                        "path": "/root.custom.displayData"
+                      },
+                      "transforms": [
+                        {
+                          "fallback": "",
+                          "inputType": "scalar",
+                          "mappings": [
+                            {
+                              "input": false,
+                              "output": "component/OEE L"
+                            },
+                            {
+                              "input": true,
+                              "output": "component/data"
+                            }
+                          ],
+                          "outputType": "scalar",
+                          "type": "map"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "type": "ia.display.view"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_0"
+            },
+            "position": {
+              "basis": "1217.1px"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "position": {
+                  "basis": "7px"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "events": {
+                  "dom": {
+                    "onClick": {
+                      "config": {
+                        "script": "\tif self.view.getChild(\"root\").custom.displayData \u003d\u003d True:\n\t\tself.view.getChild(\"root\").custom.displayData \u003d False\n\telse:\n\t\tself.view.getChild(\"root\").custom.displayData \u003d True"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "55px"
+                },
+                "props": {
+                  "color": "#FFFFFF",
+                  "path": "material/poll"
+                },
+                "type": "ia.display.icon"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "11px"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_2"
+                },
+                "position": {
+                  "basis": "4px"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_1"
+                },
+                "position": {
+                  "basis": "11px"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer_1"
+            },
+            "position": {
+              "basis": "58px"
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "332px"
+        },
+        "props": {
+          "justify": "space-around"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "component/Produccion"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_0"
+            },
+            "position": {
+              "tabIndex": 1
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "component/Downtime"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_2"
+            },
+            "position": {
+              "tabIndex": 3
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "component/Eficiencia"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_4"
+            },
+            "position": {
+              "tabIndex": 5
+            },
+            "props": {
+              "path": "component/Perdidas"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_1"
+            },
+            "position": {
+              "tabIndex": 2
+            },
+            "props": {
+              "path": "component/Disponibilidad"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_5"
+            },
+            "position": {
+              "tabIndex": 6
+            },
+            "propConfig": {
+              "meta.visible": {
+                "binding": {
+                  "config": {
+                    "path": "/root.custom.bool"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "component/realtime"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_6"
+            },
+            "position": {
+              "tabIndex": 7
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "dashboard_equipo/Mantenimiento"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_3"
+            },
+            "position": {
+              "tabIndex": 4
+            },
+            "propConfig": {
+              "props.params.endDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.endDate"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.eqPath": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.params.startDate": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.startDate"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "path": "Quality/Equipment Summary"
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "TabContainer"
+        },
+        "position": {
+          "basis": "570.3px"
+        },
+        "props": {
+          "menuStyle": {
+            "fontSize": "20px"
+          },
+          "menuType": "modern",
+          "style": {
+            "classes": "Card_Transparent",
+            "color": "#FFFFFF"
+          },
+          "tabSize": {
+            "height": 50,
+            "width": 1000
+          },
+          "tabStyle": {
+            "active": {
+              "color": "#FFFFFF"
+            },
+            "inactive": {
+              "color": "#FFFFFF"
+            }
+          },
+          "tabs": [
+            "Producción",
+            "Downtime",
+            "Disponibilidad",
+            "Eficiencia",
+            "Calidad",
+            "Perdidas",
+            "Tiempo Real",
+            "Mantenimiento"
+          ]
+        },
+        "type": "ia.container.tab"
+      }
+    ],
+    "custom": {
+      "boolFecha": false,
+      "displayData": false
+    },
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#2B384B"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

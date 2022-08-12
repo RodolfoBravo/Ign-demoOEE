@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "sergio.feria",
+      "timestamp": "2020-09-17T12:18:17Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "equipo,info_db,ot_codigo,ot_info,pedido,posicion,selected_eq,tabla_extra",
+    "lastModificationSignature": "22503ba208dea01f24d0a38a75b074468f5a71bfd7b77a2bbc9ad9389d2530e8"
+  }
+}

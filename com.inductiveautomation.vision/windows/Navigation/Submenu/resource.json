@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "window.bin",
+    "thumbnail.png"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "admin",
+      "timestamp": "2022-07-13T04:18:17Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "Alarms,MesSettings,Planeacion,Reports,Settings,Submenu,Users",
+    "lastModificationSignature": "5e5b7c63bf10ae70cdac32ae9a9ce4ddf0f89c9dca9e9760be0ed8ff7662f5c6"
+  }
+}

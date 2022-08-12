@@ -1,0 +1,7 @@
+{
+  "title": "OEE and Downtime",
+  "description": "Sistema OEE y downtime",
+  "parent": "global",
+  "enabled": true,
+  "inheritable": true
+}

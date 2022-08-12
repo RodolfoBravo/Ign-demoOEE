@@ -1,0 +1,187 @@
+{
+  "custom": {},
+  "params": {
+    "fontColor": "#454545",
+    "fontSize": "2vw",
+    "value": 0
+  },
+  "propConfig": {
+    "params.fontColor": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.fontSize": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 250,
+      "width": 250
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "SimpleGauge"
+            },
+            "position": {
+              "height": "96%",
+              "rotate": {
+                "anchor": "-8% -24%"
+              },
+              "width": "100%"
+            },
+            "propConfig": {
+              "props.arc.color": {
+                "binding": {
+                  "config": {
+                    "path": "this.props.value"
+                  },
+                  "transforms": [
+                    {
+                      "fallback": "#4DC4FF",
+                      "inputType": "range",
+                      "mappings": [
+                        {
+                          "input": {
+                            "max": 40,
+                            "min": 0
+                          },
+                          "output": "#EE4D4D"
+                        },
+                        {
+                          "input": {
+                            "max": 84,
+                            "min": 41
+                          },
+                          "output": "#FFC44D"
+                        },
+                        {
+                          "input": {
+                            "max": 100,
+                            "min": 85
+                          },
+                          "output": "#8BC94D"
+                        }
+                      ],
+                      "outputType": "scalar",
+                      "type": "map"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.arcBackground.color": {
+                "binding": {
+                  "config": {
+                    "path": "this.props.arc.color"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.value"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "arc": {
+                "width": 7
+              },
+              "arcBackground": {},
+              "endAngle": 630,
+              "label": {
+                "visible": false
+              },
+              "startAngle": 270,
+              "style": {
+                "classes": []
+              }
+            },
+            "type": "ia.chart.simple-gauge"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "height": "100%",
+              "width": "100%"
+            },
+            "propConfig": {
+              "props.style.color": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fontColor"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.style.fontSize": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.fontSize"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "../SimpleGauge.props.value"
+                  },
+                  "transforms": [
+                    {
+                      "expression": "{value} + \"%\"",
+                      "type": "expression"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "fontWeight": "bolder",
+                "overflow": "hidden",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "CoordinateContainer"
+        },
+        "position": {
+          "basis": "378px",
+          "grow": 1
+        },
+        "type": "ia.container.coord"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

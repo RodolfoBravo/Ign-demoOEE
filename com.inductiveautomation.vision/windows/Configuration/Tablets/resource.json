@@ -1,0 +1,18 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "sergio.feria",
+      "timestamp": "2020-08-11T00:11:33Z"
+    },
+    "xml-format-version": 1,
+    "lastModificationSignature": "94c08cc0887e0f9756c3bcbdf4699e552e2087a967a8e136d6d8ec47113299c2"
+  }
+}

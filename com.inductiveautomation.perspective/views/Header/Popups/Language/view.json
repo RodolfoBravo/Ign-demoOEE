@@ -1,0 +1,100 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 215,
+      "width": 200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Title"
+        },
+        "position": {
+          "basis": "54px",
+          "shrink": 0
+        },
+        "props": {
+          "params": {
+            "icon": "material/language",
+            "label": "Language",
+            "popupId": "language-popup"
+          },
+          "path": "Header/Popups/Popup Title"
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "Languages"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "props": {
+          "index": 0,
+          "radios": [
+            {
+              "selected": true,
+              "text": "English",
+              "value": "en"
+            },
+            {
+              "selected": false,
+              "text": "Spanish",
+              "value": "es"
+            }
+          ],
+          "style": {
+            "classes": "Page_Text",
+            "marginLeft": "5px",
+            "marginRight": "24px"
+          },
+          "value": "en"
+        },
+        "type": "ia.input.radio-group"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "id": "language-popup",
+                "type": "close"
+              },
+              "scope": "C",
+              "type": "popup"
+            }
+          }
+        },
+        "meta": {
+          "name": "Save Button"
+        },
+        "position": {
+          "basis": "56px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "Button_Action",
+            "marginLeft": "15px",
+            "marginRight": "15px",
+            "marginTop": "10px"
+          },
+          "text": "Save Option"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

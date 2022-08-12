@@ -1,0 +1,635 @@
+{
+  "custom": {
+    "defaultPath": "[default]MINIPAK_POLYBOL/Colombia/2100_REFILADO/REF6/OEE/",
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1598394358564
+      ],
+      "$ts": 1598439600000
+    },
+    "refresh": null,
+    "shiftPath": "[MES]MINIPAK_POLYBOL/Colombia/2100_REFILADO/REF6/Shift/",
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1598394358564
+      ],
+      "$ts": 1598353200000
+    },
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/2100_REFILADO/REF6/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\2100_REFILADO\\REF6"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[default]\u0027 + tagPath + \u0027/OEE/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.endDate}"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.refresh": {
+      "binding": {
+        "config": {
+          "expression": "now(180000)"
+        },
+        "enabled": false,
+        "transforms": [
+          {
+            "code": "\timport socket\n\tdevice_ip \u003d socket.gethostbyname(socket.gethostname())\n\tdevice_ip \u003d device_ip.replace(\"\u0027\",\"\")\n\tclientIP \u003d system.tag.read(\u0027[System]Client/Network/IPAddress\u0027).value\n\tself.getChild(\"root\").getChild(\"FlexContainer_Charts\").getChild(\"FlexContainer_Top\").getChild(\"IP\").props.text \u003d clientIP\n\t\n\t\n\teqPath \u003d \u0027MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO2\u0027\n\tquery \u003d \u0027select eqPath from smarttvs_config where hostname\u003d ?\u0027\n\tdata \u003d system.db.runPrepQuery(query,[device_ip])\n\tif data.getRowCount() \u003e 0:\n\t\teqPath \u003d system.dataset.toPyDataSet(data)[0][\u0027eqPath\u0027]\n\tself.params.eqPath \u003d eqPath\n\t\n\tsystem.perspective.sendMessage(\u0027refresh\u0027)\n\treturn eqPath",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.shiftPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\t\ttry:\n\t\t\t\ttagPath \u003d value\n\t\t\t\tif tagPath is not None:\n\t\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Live Analysis/General/\u0027\n\t\t\t\treturn tagPath \n\t\t\texcept:\n\t\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.endDate": {
+      "binding": {
+        "config": {
+          "expression": "addDays({view.params.startDate},1)"
+        },
+        "type": "expr"
+      }
+    },
+    "params.eqPath": {
+      "binding": {
+        "config": {
+          "path": "session.props.host"
+        },
+        "transforms": [
+          {
+            "code": "\tip \u003d system.db.runPrepQuery(\u0027SELECT eqPath FROM smarttvs_config where hostname \u003d ?\u0027,[value])\n\tif ip.getRowCount() !\u003d0:\n\t\teqPath \u003d system.dataset.toPyDataSet(ip)[0][\u0027eqPath\u0027]\n\telse:\n\t\teqPath \u003d \u0027MINIPAK_POLYBOL\\\\Colombia\\\\2100_REFILADO\\\\REF6\u0027\n\t\t\n\treturn eqPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "paramDirection": "inout",
+      "persistent": true
+    },
+    "params.startDate": {
+      "binding": {
+        "config": {
+          "expression": "if(getHour24(now(20000)) \u003c 6, setTime(addDays(now(),-1),6,0,0),setTime(now(),6,0,0))\r\n//setTime(addDays(now(),-1),6,0,0)"
+        },
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1080
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Dashboard"
+        },
+        "position": {
+          "basis": "400px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.widgets[0].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[10].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[1].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[2].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[3].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[4].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[5].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[6].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[7].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[8].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          },
+          "props.widgets[9].viewParams.eqPath": {
+            "binding": {
+              "config": {
+                "path": "view.params.eqPath"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "stretch": {
+            "columnCount": 12,
+            "columnGutterSize": 5,
+            "rowCount": 12,
+            "rowGutterSize": 5
+          },
+          "style": {
+            "backgroundColor": "#C26A6A00"
+          },
+          "widgets": [
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 3,
+                "rowSpan": 3
+              },
+              "name": "oeeDiario",
+              "position": {
+                "columnEnd": 10,
+                "columnStart": 7,
+                "rowEnd": 4,
+                "rowStart": 1
+              },
+              "style": {
+                "backgroundColor": "#192434",
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/oeeGaugeForEquipment"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 3,
+                "rowSpan": 3
+              },
+              "name": "oeeAcumulado",
+              "position": {
+                "columnEnd": 7,
+                "columnStart": 4,
+                "rowEnd": 4,
+                "rowStart": 1
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/oeeGaugeForEquipmentMonthly"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 4,
+                "rowSpan": 3
+              },
+              "name": "currentWO",
+              "position": {
+                "columnEnd": 6,
+                "columnStart": 1,
+                "rowEnd": 7,
+                "rowStart": 4
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/currentWorkOrder"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 4,
+                "rowSpan": 3
+              },
+              "name": "speeds",
+              "position": {
+                "columnEnd": 5,
+                "columnStart": 1,
+                "rowEnd": 10,
+                "rowStart": 7
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/speedsAndChart"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 7,
+                "rowSpan": 3
+              },
+              "name": "nextWO",
+              "position": {
+                "columnEnd": 2,
+                "columnStart": 1,
+                "rowEnd": 2,
+                "rowStart": 10
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/nextWorkOrder"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 5,
+                "rowSpan": 3
+              },
+              "name": "times3",
+              "position": {
+                "columnEnd": 2,
+                "columnStart": 8,
+                "rowEnd": 13,
+                "rowStart": 9
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/timesRunStopChange"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 5,
+                "rowSpan": 3
+              },
+              "name": "dtReasonTimes",
+              "position": {
+                "columnEnd": 2,
+                "columnStart": 8,
+                "rowEnd": 9,
+                "rowStart": 4
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/downtimeReasonTimes"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 2,
+                "rowSpan": 2
+              },
+              "name": "woProgressGauge",
+              "position": {
+                "columnEnd": 8,
+                "columnStart": 6,
+                "rowEnd": 7,
+                "rowStart": 4
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/workOrderProgressGauge"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 2,
+                "rowSpan": 2
+              },
+              "name": "woCumplimiento",
+              "position": {
+                "columnEnd": 8,
+                "columnStart": 5,
+                "rowEnd": 10,
+                "rowStart": 7
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/graphRuntimeDowntimes"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 2,
+                "rowSpan": 2
+              },
+              "name": "alarma",
+              "position": {
+                "columnEnd": 13,
+                "columnStart": 10,
+                "rowEnd": 4,
+                "rowStart": 1
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {
+                "endDate": {
+                  "$": [
+                    "ts",
+                    192,
+                    1598393833494
+                  ],
+                  "$ts": 1598393833494
+                },
+                "startDate": {
+                  "$": [
+                    "ts",
+                    192,
+                    1598393923299
+                  ],
+                  "$ts": 1598350633494
+                }
+              },
+              "viewPath": "SmartTVs/Widgets/availabilityTrend"
+            },
+            {
+              "body": {
+                "style": {
+                  "classes": ""
+                }
+              },
+              "header": {
+                "enabled": false,
+                "style": {
+                  "classes": ""
+                },
+                "title": ""
+              },
+              "isConfigurable": false,
+              "minSize": {
+                "columnSpan": 2,
+                "rowSpan": 2
+              },
+              "name": "name",
+              "position": {
+                "columnEnd": 4,
+                "columnStart": 1,
+                "rowEnd": 4,
+                "rowStart": 1
+              },
+              "style": {
+                "classes": ""
+              },
+              "viewParams": {},
+              "viewPath": "SmartTVs/Widgets/eqNameStateMode"
+            }
+          ]
+        },
+        "type": "ia.display.dashboard"
+      }
+    ],
+    "custom": {
+      "bool": false,
+      "boolFecha": false
+    },
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

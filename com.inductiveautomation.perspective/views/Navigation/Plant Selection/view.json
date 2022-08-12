@@ -1,0 +1,101 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1598283164096
+      ],
+      "$ts": 1598283164096
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1598283164096
+      ],
+      "$ts": 1598196764096
+    }
+  },
+  "params": {},
+  "permissions": {
+    "securityLevels": [
+      {
+        "children": [],
+        "name": "Authenticated"
+      }
+    ],
+    "type": "AllOf"
+  },
+  "propConfig": {
+    "custom.endDate": {
+      "binding": {
+        "config": {
+          "expression": "now(900000) // Update every 15 mins"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "custom.startDate": {
+      "binding": {
+        "config": {
+          "path": "view.custom.endDate"
+        },
+        "transforms": [
+          {
+            "code": "\treturn system.date.addDays(value, -1) # One day before / Last 24h",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    }
+  },
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "FlexRepeater"
+        },
+        "position": {
+          "basis": "744px"
+        },
+        "propConfig": {
+          "props.instances": {
+            "binding": {
+              "config": {
+                "path": "view.custom.endDate"
+              },
+              "transforms": [
+                {
+                  "code": "\tplantList \u003d []\n\t\n\troles \u003d self.session.props.auth.user.roles\n\t\n\tif \"Minipak\" in roles:\n\t\tplantList.append( {\u0027code\u0027: \"1100_\", \u0027name\u0027: \"Minipak\"} )\n\tif \"Polybol\" in roles:\n\t\tplantList.append( {\u0027code\u0027: \"2100_\", \u0027name\u0027: \"Polybol\"} )\n\t\n\tplants \u003d [] # init instance list\n\t\n\tfor plant in plantList: #pyDict\n\t\t# Build Plant\u0027s Path\n\t\tplantPath \u003d \"MINIPAK_POLYBOL\\\\Colombia\\\\\" + plant[\u0027code\u0027] + \"*\\\\*\"\n\t\t\n\t\t# Execute Analysis\n\t\tanalysisName \u003d \"_oee_planta\"\n\t\tobj \u003d system.mes.analysis.getMESAnalysisSettings(analysisName)\n\t\tend \u003d self.view.custom.endDate\n\t\tstart \u003d self.view.custom.startDate\n\t\tparams \u003d {\u0027plantPath\u0027 : plantPath}\n\t\tresult \u003d system.mes.analysis.executeAnalysis(start, end, obj, params)\n\t\tdata \u003d result.getDataset()\n\t\t# Get OEE Data\n\t\toee \u003d int(round( data.getValueAt(0, \"OEE\") *100 ))\n\t\tavailability \u003d int(round( data.getValueAt(0, \"OEE Availability\") *100 ))\n\t\tperformance \u003d int(round( data.getValueAt(0, \"OEE Performance\") *100 ))\n\t\tquality \u003d int(round( data.getValueAt(0, \"OEE Quality\") *100 ))\n\t\t\n\t\t# Get Additional Info (drill down onto machine\u0027s states)\n\t\tmachineCount \u003d 0\n\t\tdownCount \u003d 0\n\t\t# Get a list of the Areas in this plant\n\t\tfilter \u003d system.mes.object.filter.createFilter()\n\t\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t\tfilter.setMESObjectNamePattern( plant[\u0027code\u0027]+\"*\" )\n\t\tlistOfAreas \u003d system.mes.searchMESObjects(filter)\n\t\t\n\t\tfor areaObj in listOfAreas:\n\t\t\t# Get the list of machines in the area\n\t\t\tmachinesInArea \u003d areaObj.getMESObject().getChildCollection().getList()\n\t\t\t# For each machine, get State Value // eqPath \u003e liveAnalysisTagPath\n\t\t\tmachineCount +\u003d len(machinesInArea)\n\t\t\tfor machine in machinesInArea:\n\t\t\t\teqPath \u003d machine.getMESObject().getEquipmentPath()\n\t\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath( eqPath )\n\t\t\t\ttry:\n\t\t\t\t\tstateValue \u003d system.tag.read( tagPath +\"Line State Value\" ).value\n\t\t\t\t\tif stateValue \u003d\u003d None:\n\t\t\t\t\t\tstateValue \u003d -1\n\t\t\t\texcept:\n\t\t\t\t\tstateValue \u003d -1\n\t\t\t\t\n\t\t\t\tif stateValue !\u003d 1: # Not Running\n\t\t\t\t\tdownCount +\u003d 1\n\t\t# Got Down Count, now Running/Down percentage \n\t\tutilization \u003d int(round( (machineCount - downCount) / float(machineCount) *100.0 ))\n\t\t\t\n\t\tplantParams \u003d {\t\u0027name\u0027: plant[\u0027name\u0027],\n\t\t\t\t\t\t\u0027itemCode\u0027: plant[\u0027code\u0027],\n\t\t\t\t\t\t\u0027isMachine\u0027: bool(0),\n\t\t\t\t\t\t\u0027children\u0027: \"areas\",\n\t\t\t\t\t\t\u0027oee\u0027: oee, \n\t\t\t\t\t\t\u0027availability\u0027: availability, \n\t\t\t\t\t\t\u0027performance\u0027: performance, \n\t\t\t\t\t\t\u0027quality\u0027: quality, \n\t\t\t\t\t\t\u0027util\u0027: utilization, \n\t\t\t\t\t\t\u0027downCount\u0027: downCount\n\t\t}\n\t\tplants.append( plantParams )\n\t\t\n\treturn plants",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "path": "page/Embedded/Widget",
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.flex-repeater"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

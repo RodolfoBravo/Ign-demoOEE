@@ -1,0 +1,51 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 58,
+      "width": 306
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Header Medium"
+        },
+        "position": {
+          "size": "large"
+        },
+        "props": {
+          "params": {
+            "menuSize": "medium"
+          },
+          "path": "Header/Header"
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "Header Small"
+        },
+        "props": {
+          "params": {
+            "menuSize": "small"
+          },
+          "path": "Header/Header"
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "breakpoint": 500,
+      "style": {
+        "classes": "Header"
+      }
+    },
+    "type": "ia.container.breakpt"
+  }
+}

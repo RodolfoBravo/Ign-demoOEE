@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-09-11T20:11:21Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "area_sel,areas,data_toProg,equipos,last_OT,orden_ots,ots_programadas,ots_schedule,refresh,table,updating",
+    "lastModificationSignature": "2c83bef494f37bd4c46b0028c58c5560f8b3ae8f59c8ffc2dc01fb576d904e91"
+  }
+}

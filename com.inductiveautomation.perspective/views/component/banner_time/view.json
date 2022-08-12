@@ -1,0 +1,376 @@
+{
+  "custom": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1592533489717
+      ],
+      "$ts": 1592542800716
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1592533489717
+      ],
+      "$ts": 1592456400716
+    }
+  },
+  "params": {
+    "endDate": {
+      "$": [
+        "ts",
+        192,
+        1592534196164
+      ],
+      "$ts": 1596258000000
+    },
+    "startDate": {
+      "$": [
+        "ts",
+        192,
+        1592534196164
+      ],
+      "$ts": 1593579600000
+    }
+  },
+  "propConfig": {
+    "custom.endDate": {
+      "persistent": true
+    },
+    "custom.startDate": {
+      "persistent": true
+    },
+    "params.endDate": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.startDate": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 52,
+      "width": 447
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Icon"
+        },
+        "position": {
+          "basis": "43px"
+        },
+        "props": {
+          "color": "#FFFFFF",
+          "path": "material/date_range",
+          "style": {
+            "backgroundColor": "#FFFFFF00"
+          }
+        },
+        "type": "ia.display.icon"
+      },
+      {
+        "meta": {
+          "name": "Label_2"
+        },
+        "position": {
+          "basis": "13px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tstart_date \u003d start_day\n\tcal_end.setTime(start_day)\t\t\t\n\tcal_end.add(Calendar.DATE,1)\n\tend_date \u003d system.date.addDays(start_date, 1)\t\t\t\n\t\t\n\tself.view.params.startDate \u003d start_date\n\tself.view.params.endDate \u003d end_date\n\tself.view.getChild(\"root\").custom.boolFecha \u003d False\n\t\n"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Button"
+            },
+            "position": {
+              "basis": "36px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#9DBCD3",
+                "borderBottomLeftRadius": 8,
+                "borderBottomRightRadius": 8,
+                "borderTopLeftRadius": 8,
+                "borderTopRightRadius": 8
+              },
+              "text": "Día"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "85px"
+        },
+        "props": {
+          "alignContent": "center",
+          "direction": "column",
+          "justify": "center",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "13px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tfrom java.util import Calendar\n\timport system\n\t\n\tcal_start \u003d Calendar.getInstance()\n\tcal_start.set(Calendar.HOUR_OF_DAY, 0 ) \n\tcal_start.set(Calendar.MINUTE, 0 )\n\tcal_start.set(Calendar.SECOND, 0 )\n\tstart_day \u003d cal_start.getTime()\n\t\n\tcal_end \u003d Calendar.getInstance()\t\n\t#Current day\n\tcal_start.set(Calendar.DAY_OF_MONTH, 1)\n\tstart_date \u003d cal_start.getTime() \n\tcal_end \u003d Calendar.getInstance()\n\tcal_end.setTime(start_date)\t\n\tcal_end.add(Calendar.MONTH, + 1)\t\t\t\t\n\tend_date \u003d cal_end.getTime()\t\t\n\t\t\n\t\t\n\tself.view.params.startDate \u003d start_date\n\tself.view.params.endDate \u003d end_date\n\tself.view.getChild(\"root\").custom.boolFecha \u003d True\n\t\t"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Button_0"
+            },
+            "position": {
+              "basis": "36px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#9DBCD3",
+                "borderBottomLeftRadius": 8,
+                "borderBottomRightRadius": 8,
+                "borderTopLeftRadius": 8,
+                "borderTopRightRadius": 8
+              },
+              "text": "Mes"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "85px"
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_1"
+        },
+        "position": {
+          "basis": "13px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Dropdown"
+            },
+            "position": {
+              "basis": "36px"
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "path": "/root.custom.boolFecha"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "options": [
+                {
+                  "label": 2018,
+                  "value": 2018
+                },
+                {
+                  "label": 2019,
+                  "value": 2019
+                },
+                {
+                  "label": 2020,
+                  "value": 2020
+                },
+                {
+                  "label": 2021,
+                  "value": 2021
+                }
+              ],
+              "placeholder": {
+                "text": "Año"
+              },
+              "value": 2020
+            },
+            "type": "ia.input.dropdown"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_1"
+        },
+        "position": {
+          "basis": "85px"
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label_0"
+        },
+        "position": {
+          "basis": "13px"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tif event:\n\t\tyear \u003d int(self.parent.parent.getChild(\"FlexContainer_1\").getChild(\"Dropdown\").props.value)\n\t\tmonth \u003d int(self.props.value)\n\t\tstart_date \u003d system.date.getDate(year, month, 1) #This would print \"Mon April 15 00:00:00 PDT 2016\"\n\t\tend_date \u003d system.date.addMonths(start_date, 1)\t\t\n\t\t\t\n\t\tself.view.params.startDate \u003d start_date\n\t\tself.view.params.endDate \u003d end_date\n\t\t"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Dropdown"
+            },
+            "position": {
+              "basis": "36px"
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "path": "/root.custom.boolFecha"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "options": [
+                {
+                  "label": "Enero",
+                  "value": 0
+                },
+                {
+                  "label": "Febrero",
+                  "value": 1
+                },
+                {
+                  "label": "Marzo",
+                  "value": 2
+                },
+                {
+                  "label": "Abril",
+                  "value": 3
+                },
+                {
+                  "label": "Mayo",
+                  "value": 4
+                },
+                {
+                  "label": "Junio",
+                  "value": 5
+                },
+                {
+                  "label": "Julio",
+                  "value": 6
+                },
+                {
+                  "label": "Agosto",
+                  "value": 7
+                },
+                {
+                  "label": "Septiembre",
+                  "value": 8
+                },
+                {
+                  "label": "Octubre",
+                  "value": 9
+                },
+                {
+                  "label": "Noviembre",
+                  "value": 10
+                },
+                {
+                  "label": "Diciembre",
+                  "value": 11
+                }
+              ],
+              "placeholder": {
+                "text": "Mes"
+              },
+              "value": 6
+            },
+            "type": "ia.input.dropdown"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer_2"
+        },
+        "position": {
+          "basis": "109px"
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "custom": {
+      "boolFecha": true
+    },
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.flex"
+  }
+}

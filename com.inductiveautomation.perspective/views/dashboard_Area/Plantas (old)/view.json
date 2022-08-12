@@ -1,0 +1,122 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1200
+    },
+    "path": "Dashboard_Area/Components/Template"
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "FlexContainer_0"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "params": {},
+                    "view": "Dashboard_Area/Areas"
+                  },
+                  "scope": "C",
+                  "type": "nav"
+                }
+              }
+            },
+            "meta": {
+              "name": "Button_0"
+            },
+            "position": {
+              "basis": "300px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#A5CEEF",
+                "borderBottomLeftRadius": 50,
+                "borderBottomRightRadius": 50,
+                "borderColor": "#6C90CF",
+                "borderStyle": "solid",
+                "borderTopLeftRadius": 50,
+                "borderTopRightRadius": 50,
+                "borderWidth": 10
+              },
+              "text": "Minipak",
+              "textStyle": {
+                "fontSize": "36px",
+                "fontWeight": "bold"
+              }
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "meta": {
+              "name": "Button_1"
+            },
+            "position": {
+              "basis": "300px"
+            },
+            "props": {
+              "style": {
+                "backgroundColor": "#F59BB5",
+                "borderBottomLeftRadius": 50,
+                "borderBottomRightRadius": 50,
+                "borderColor": "#D04E53",
+                "borderStyle": "solid",
+                "borderTopLeftRadius": 50,
+                "borderTopRightRadius": 50,
+                "borderWidth": 10
+              },
+              "text": "Polybol",
+              "textStyle": {
+                "fontSize": "36px",
+                "fontWeight": "bold"
+              }
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "justify": "space-evenly"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "FlexContainer_1"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "justify": "space-between",
+      "style": {
+        "backgroundColor": "#2B384B"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

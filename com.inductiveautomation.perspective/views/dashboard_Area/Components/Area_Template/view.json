@@ -1,0 +1,191 @@
+{
+  "custom": {},
+  "params": {
+    "area": "1100_ROTOGRABADO",
+    "refresh": true
+  },
+  "propConfig": {
+    "params.area": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.refresh": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 300,
+      "width": 1150
+    },
+    "path": "Dashboard_Area/Components/Template"
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "params": {},
+                "view": "dashboard_Area/Dashboard_Area"
+              },
+              "scope": "C",
+              "type": "nav"
+            }
+          }
+        },
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "150px"
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.area} + \u0027 - Message: \u0027 + {../EmbeddedView.custom.meessageRecived}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "color": "#FFFFFF",
+            "fontSize": 24,
+            "fontWeight": "bold",
+            "marginLeft": "20px"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "custom": {
+          "meessageRecived": "Not recived"
+        },
+        "meta": {
+          "name": "EmbeddedView"
+        },
+        "position": {
+          "basis": "1071px",
+          "grow": 1
+        },
+        "propConfig": {
+          "custom.refresh": {
+            "binding": {
+              "config": {
+                "path": "view.params.refresh"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.data": {
+            "binding": {
+              "config": {
+                "path": "this.custom.refresh"
+              },
+              "enabled": false,
+              "transforms": [
+                {
+                  "code": "\tarea \u003d self.view.params.area\n\tif area !\u003d \u0027\u0027 and value:\n\t\tfilter \u003d system.mes.object.filter.createFilter()\n\t\tfilter.setMESObjectTypeName(\u0027Area\u0027)\n\t\tfilter.setMESObjectNamePattern(area)\n\t\tlist \u003d system.mes.searchMESObjects(filter)\n\t\tif len(list) \u003e 0:\n\t\t\tarea_obj \u003d list.get(0).getMESObject()\n\t\t\tequipos \u003d area_obj.getChildCollection()\n\t\t\titems \u003d {}\n\t\t\tevents_example_1 \u003d [{\u0027mode\u0027:\u0027CIP\u0027,\u0027start\u0027:1569000471549,\u0027end\u0027:1569549471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Production\u0027,\u0027start\u0027:1570000471549,\u0027end\u0027:1570149471549}]\n\t\t\tevents_example_2 \u003d [{\u0027mode\u0027:\u0027CIP\u0027,\u0027start\u0027:1570000471549,\u0027end\u0027:1571549471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Production\u0027,\u0027start\u0027:1568700471549,\u0027end\u0027:1569800471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Specified Color Code\u0027,\u0027start\u0027:1568000471549,\u0027end\u0027:1568679471549}]\n\t\t\ti \u003d 0\n\t\t\tfor elem in equipos:\n\t\t\t\tequipo \u003d system.mes.loadMESObject(elem)\n\t\t\t\teqName \u003d equipo.getName()\n\t\t\t\tif i%2:\n\t\t\t\t\tevents \u003d events_example_1\n\t\t\t\telse:\n\t\t\t\t\tevents \u003d events_example_2\n\t\t\t\ttemp \u003d {\u0027events\u0027:events,\u0027name\u0027:eqName}\n\t\t\t\titems[eqName] \u003d temp\n\t\t\t\ti +\u003d 1\n\t\t\tself.custom.refresh \u003d False\n\t\t\treturn items\n\t\telse:\n\t\t\treturn self.props.params.data\n\telse:\n\t\treturn self.props.params.data\n\t\t\t",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "data": {
+              "machine_1": {
+                "events": [
+                  {
+                    "end": 1569549471549,
+                    "mode": "CIP",
+                    "start": 1569000471549
+                  },
+                  {
+                    "end": 1570149471549,
+                    "mode": "Production",
+                    "start": 1570000471549
+                  }
+                ],
+                "name": "Machine 1"
+              },
+              "machine_2": {
+                "events": [
+                  {
+                    "end": 1571549471549,
+                    "mode": "CIP",
+                    "start": 1570000471549
+                  },
+                  {
+                    "end": 1569800471549,
+                    "mode": "Production",
+                    "start": 1568700471549
+                  },
+                  {
+                    "end": 1568679471549,
+                    "mode": "Specified Color Code",
+                    "start": 1568000471549
+                  }
+                ],
+                "name": "Machine 2"
+              }
+            },
+            "exampleData": true,
+            "modes": [
+              {
+                "name": "Production"
+              },
+              {
+                "name": "CIP"
+              },
+              {
+                "color": "#31a131",
+                "name": "Specified Color Code"
+              }
+            ],
+            "range": {
+              "end": 1571149471549,
+              "start": 1567149471549
+            }
+          },
+          "path": "dashboard_Area/Components/Template",
+          "style": {
+            "marginLeft": "50px",
+            "marginRight": "100px"
+          }
+        },
+        "scripts": {
+          "customMethods": [],
+          "messageHandlers": [
+            {
+              "messageType": "refresh_area",
+              "pageScope": true,
+              "script": "\tarea \u003d self.view.params.area\n\tself.custom.meessageRecived \u003d \u0027Recived\u0027\n\tif area !\u003d \u0027\u0027:\n\t\tarea_obj \u003d system.mes.loadMESObject(area, \u0027Area\u0027)\n\t\tif area_obj !\u003d None:\n\t\t\tself.custom.meessageRecived \u003d \u0027Area loaded\u0027\n\t\t\tequipos \u003d area_obj.getChildCollection().getList()\n\t\t\titems \u003d {}\n\t\t\tevents_example_1 \u003d [{\u0027mode\u0027:\u0027CIP\u0027,\u0027start\u0027:1569000471549,\u0027end\u0027:1569549471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Production\u0027,\u0027start\u0027:1570000471549,\u0027end\u0027:1570149471549}]\n\t\t\tevents_example_2 \u003d [{\u0027mode\u0027:\u0027CIP\u0027,\u0027start\u0027:1570000471549,\u0027end\u0027:1571549471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Production\u0027,\u0027start\u0027:1568700471549,\u0027end\u0027:1569800471549},\n\t\t\t\t\t\t\t\t{\u0027mode\u0027:\u0027Specified Color Code\u0027,\u0027start\u0027:1568000471549,\u0027end\u0027:1568679471549}]\n\t\t\ti \u003d 0\n\t\t\tfor equipo in equipos:\n\t\t\t\t#lineObj \u003d system.mes.loadMESObject(equipo.getName(), \u0027Line\u0027)\n\t\t\t\t#eqPath \u003d lineObj.getEquipmentPath()\n\t\t\t\teqName \u003d equipo.getName()\n\t\t\t\tif i%2:\n\t\t\t\t\tevents \u003d events_example_1\n\t\t\t\telse:\n\t\t\t\t\tevents \u003d events_example_2\n\t\t\t\ttemp \u003d {\u0027events\u0027:events,\u0027name\u0027:eqName}\n\t\t\t\titems[eqName] \u003d temp\n\t\t\t\ti +\u003d 1\n\t\t\tself.props.params.data \u003d items",
+              "sessionScope": true,
+              "viewScope": true
+            }
+          ]
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "justify": "space-between",
+      "style": {
+        "backgroundColor": "#2B384B"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "#F6F6F60A",
+      "borderRadius": "4px",
+      "boxShadow": "0px 0px 5px rgba(0, 0, 70, 1)",
+      "margin": "4px"
+    }
+  }
+}

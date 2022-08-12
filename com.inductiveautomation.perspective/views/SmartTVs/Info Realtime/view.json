@@ -1,0 +1,433 @@
+{
+  "custom": {
+    "defaultPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/Shift/",
+    "tagPath": "[MES]MINIPAK_POLYBOL/Colombia/1100_ROTOGRABADO/RO4/Live Analysis/General/"
+  },
+  "params": {
+    "eqPath": "MINIPAK_POLYBOL\\Colombia\\1100_ROTOGRABADO\\RO4"
+  },
+  "propConfig": {
+    "custom.defaultPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d value\n\t\t\tif tagPath is not None:\n\t\t\t\ttagPath \u003d tagPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\tif \u0027[global]/\u0027 in (tagPath):\n\t\t\t\t\ttagPath \u003d tagPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\ttagPath \u003d \u0027[MES]\u0027 + tagPath + \u0027/Shift/\u0027\n\t\t\treturn tagPath \n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "custom.tagPath": {
+      "binding": {
+        "config": {
+          "path": "view.params.eqPath"
+        },
+        "transforms": [
+          {
+            "code": "\tif value!\u003d\u0027\u0027:\n\t\ttry:\n\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath(value)\n\t\texcept:\n\t\t\ttagPath \u003d value\n\telse:\n\t\treturn value\n\treturn tagPath",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.eqPath": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 444
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "22%",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "1vw",
+                "textIndent": "3px"
+              },
+              "text": "Equipo:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "283px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\teqObj \u003d system.mes.loadMESObjectByEquipmentPath(value)\n\teqName \u003d eqObj.getName()\n\treturn eqName",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontFamily": "Helvetica",
+                "fontSize": "80px",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Equipo"
+        },
+        "position": {
+          "basis": "20%"
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "20%",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "1vw",
+                "textIndent": "3px"
+              },
+              "text": "Area:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "10px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tsplit \u003d value.split(\"\\\\\")[2]\n\tcode \u003d split.split(\"_\")[0]\n\t\n\tif code \u003d\u003d \u00271100\u0027:\n\t\tplanta \u003d \"MINIPAK\"\n\telif code \u003d\u003d \u00272100\u0027:\n\t\tplanta \u003d \"POLYBOL\"\n\telse:\n\t\tplanta \u003d \"-\"\n\t\t\n\tsplit \u003d value.split(\"_\")[2]\n\tarea \u003d split.split(\"\\\\\")[0]\n\treturn planta+\u0027 - \u0027+area\n",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "40px",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Planta"
+        },
+        "position": {
+          "basis": "15%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "20%"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "1vw",
+                "textIndent": "3px"
+              },
+              "text": "Área:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "2vw",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.params.eqPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tsplit \u003d value.split(\"_\")[2]\n\tarea \u003d split.split(\"\\\\\")[0]\n\treturn area",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Area"
+        },
+        "position": {
+          "basis": "15%",
+          "display": false
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "20%"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "1vw",
+                "textIndent": "3px"
+              },
+              "text": "Estado:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "97px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "path": "view.custom.tagPath"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\ttry:\n\t\ttagPath \u003d value+\"Line State Name\"\n\t\ttagVal \u003d system.tag.read(tagPath).value\n\t\treturn tagVal\n\texcept:\n\t\treturn \"\"",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "property"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "boxShadow": "0px 0px 20px rgba(0, 0, 70, 1)",
+                    "color": "#DFDFDF",
+                    "fontFamily": "Helvetica",
+                    "fontSize": "70px",
+                    "fontWeight": "bold",
+                    "margin": "20px",
+                    "marginRight": "20px",
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer State"
+        },
+        "position": {
+          "basis": "30%"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "20%"
+            },
+            "props": {
+              "style": {
+                "color": "#FFFFFF",
+                "fontSize": "1vw",
+                "textIndent": "3px"
+              },
+              "text": "Modo:"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label_0"
+            },
+            "position": {
+              "basis": "97px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.style.color": {
+                "binding": {
+                  "config": {
+                    "path": "this.props.text"
+                  },
+                  "transforms": [
+                    {
+                      "fallback": "\"#FFFFFF\"",
+                      "inputType": "scalar",
+                      "mappings": [
+                        {
+                          "input": "Producción",
+                          "output": "\"#\"+{[default]Color Palete/Optimus.value}"
+                        },
+                        {
+                          "input": "Mantenimiento",
+                          "output": "\"#\"+{[default]Color Palete/Warning.value}"
+                        },
+                        {
+                          "input": "Cuadre",
+                          "output": "\"#\"+{[default]Color Palete/Warning.value}"
+                        }
+                      ],
+                      "outputType": "expression",
+                      "type": "map"
+                    }
+                  ],
+                  "type": "property"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.tagPath"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\ttry:\n\t\ttagPath \u003d value+\"Equipment Mode Name\"\n\t\ttagVal \u003d system.tag.read(tagPath).value\n\t\treturn tagVal\n\texcept:\n\t\treturn \"\"",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "fontFamily": "Helvetica",
+                "fontSize": "50px",
+                "fontWeight": "bold",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer Mode"
+        },
+        "position": {
+          "basis": "20%"
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

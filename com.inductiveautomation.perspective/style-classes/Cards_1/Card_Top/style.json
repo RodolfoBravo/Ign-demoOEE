@@ -1,0 +1,9 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "#FFFFFF0F",
+      "boxShadow": "0px 5px 50px rgba(0, 0, 5, .15) ",
+      "margin": "4px"
+    }
+  }
+}

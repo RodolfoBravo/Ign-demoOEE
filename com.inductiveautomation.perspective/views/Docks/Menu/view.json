@@ -1,0 +1,102 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 149
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Features"
+        },
+        "position": {
+          "grow": 1,
+          "shrink": 0
+        },
+        "props": {
+          "backActionStyle": {
+            "classes": "Menu/All_Header"
+          },
+          "backActionText": "All Features",
+          "headerStyle": {
+            "classes": "Menu/Item_Selected"
+          },
+          "itemStyle": {
+            "classes": "Menu/Item"
+          },
+          "items": [
+            {
+              "items": [],
+              "label": {
+                "icon": {
+                  "path": "material/dashboard"
+                },
+                "text": "Dashboard"
+              },
+              "navIcon": {},
+              "showHeader": false,
+              "target": "/"
+            },
+            {
+              "enabled": true,
+              "items": [],
+              "label": {
+                "icon": {
+                  "path": ""
+                },
+                "text": "Dashboard Areas"
+              },
+              "navIcon": {
+                "color": "#6C6C6C",
+                "path": "material/chevron_right"
+              },
+              "showHeader": false,
+              "style": {
+                "classes": ""
+              },
+              "target": "/Dashboard_Area",
+              "visible": true
+            },
+            {
+              "enabled": true,
+              "items": [],
+              "label": {
+                "icon": {
+                  "path": "material/delete_sweep"
+                },
+                "text": "Calidad"
+              },
+              "navIcon": {
+                "color": "#6C6C6C",
+                "path": ""
+              },
+              "showHeader": true,
+              "style": {
+                "classes": ""
+              },
+              "target": "/Quality",
+              "visible": true
+            }
+          ],
+          "style": {
+            "backgroundColor": "#F0F0F0",
+            "classes": "Menu/Menu"
+          }
+        },
+        "type": "ia.navigation.menutree"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "style": {
+        "classes": "Menu/Menu"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

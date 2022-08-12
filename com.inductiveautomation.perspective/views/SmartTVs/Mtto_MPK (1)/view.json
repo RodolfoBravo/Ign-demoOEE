@@ -1,0 +1,133 @@
+{
+  "custom": {
+    "update": {
+      "$": [
+        "ts",
+        192,
+        1598054490005
+      ],
+      "$ts": 1598054490005
+    }
+  },
+  "params": {
+    "planta": "1100_"
+  },
+  "propConfig": {
+    "custom.update": {
+      "binding": {
+        "config": {
+          "expression": "now(30000) // Update every 30s"
+        },
+        "type": "expr"
+      },
+      "persistent": true
+    },
+    "params.planta": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 570,
+      "width": 700
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "32px"
+        },
+        "props": {
+          "style": {
+            "letterSpacing": "1px",
+            "textAlign": "center",
+            "textTransform": "uppercase"
+          },
+          "text": "Mantenimiento / minipak"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Dashboard"
+        },
+        "position": {
+          "basis": "400px",
+          "grow": 1
+        },
+        "propConfig": {
+          "custom.machineCount": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.planta}+{view.custom.update}"
+              },
+              "transforms": [
+                {
+                  "code": "\tplantPath \u003d \"MINIPAK_POLYBOL\\\\Colombia\\\\\" + self.view.params.planta + \"*\\\\*\"\n\t\t\n\t# Get a list of the Areas in this plant\n\tfilter \u003d system.mes.object.filter.createFilter()\n\tfilter.setMESObjectTypeName(\u0027Line\u0027)\n\tfilter.setPrimaryMESObjectPath( plantPath )\n\tmachinesInPlant \u003d system.mes.searchMESObjects(filter)\n\t\n\treturn 20#int(int(len(machinesInPlant) + 6 )/2) #20",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.stretch.columnCount": {
+            "binding": {
+              "config": {
+                "expression": "5"
+              },
+              "type": "expr"
+            }
+          },
+          "props.stretch.rowCount": {
+            "binding": {
+              "config": {
+                "expression": "{this.custom.machineCount}+{this.props.stretch.columnCount}"
+              },
+              "transforms": [
+                {
+                  "code": "\tfixedColCount \u003d self.props.stretch.columnCount\n\tmachineCount \u003d self.custom.machineCount\n\treturn int(machineCount / fixedColCount) + (machineCount % fixedColCount \u003e 0)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.widgets": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.planta}+{view.custom.update}+{this.props.stretch.columnCount}+{this.custom.machineCount}"
+              },
+              "transforms": [
+                {
+                  "code": "\t# Build Plant\u0027s Path\n\tplantPath \u003d \"MINIPAK_POLYBOL\\\\Colombia\\\\\" + self.view.params.planta + \"*\\\\*\"\n\t\n\t# Get Additional Info (drill down onto machine\u0027s states)\n\t#machineCount \u003d 0\n\t#downCount \u003d 0\n\t\n\t# Get a list of the Machines in this plant\n\tfilter \u003d system.mes.object.filter.createFilter()\n\tfilter.setMESObjectTypeName(\u0027Line\u0027)\n\tfilter.setPrimaryMESObjectPath( plantPath )\n\tmachinesInPlant \u003d system.mes.searchMESObjects(filter)\n\t\n\t# Widget Config\n\twidgets \u003d []\n\trows \u003d self.props.stretch.rowCount\n\tcolumns \u003d self.props.stretch.columnCount\n\t\n\tmachinesToLoad \u003d self.custom.machineCount\n\t\n\tm \u003d -1\n\t#for machine in machinesInPlant:\n\tfor row in range(rows):\n\t\tfor col in range(columns):\n\t\t\tm +\u003d 1\n\t\t\tif m \u003c machinesToLoad: #len(machinesInPlant):\n\t\t\t\tlastOccupiedRow \u003d row+1\n\t\t\t\tlastOccupiedCol \u003d col+1\n\t\t\t\t\n\t\t\t\tmachine \u003d machinesInPlant[m]\n\t\t\n\t\t\t\teqName \u003d machine.getName()\n\t\t\t\teqPath \u003d machine.getMESObject().getEquipmentPath()\n\t\t\t\ttagPath \u003d MES1.getLiveAnalysisTagPath( eqPath )\n\t\t\t\t# Get State Value\n\t\t\t\ttry:\n\t\t\t\t\tstateValue \u003d system.tag.read( tagPath +\"Line State Value\" ).value\n\t\t\t\t\tif stateValue \u003d\u003d None:\n\t\t\t\t\t\tstateValue \u003d -1\n\t\t\t\texcept:\n\t\t\t\t\tstateValue \u003d -1\n\t\t\t\t\n\t\t\t\t# If State is Unplanned Downtime, get the state duration.\n\t\t\t\tif stateValue \u003d\u003d 3:\n\t\t\t\t\tanalysis_setting \u003d system.mes.analysis.createMESAnalysisSettings(\"dt_duration\")\n\t\t\t\t\tdatapoints \u003d [\n\t\t\t\t\t\t\t\t\"Line Downtime Event Sequence\",\n\t\t\t\t\t\t\t\t\"Line State Duration\"\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\tanalysis_setting.setSettingValues(\"Descending Order\u003dTrue,Row Limit\u003d1\")\n\t\t\t\t\tanalysis_setting.setDataPoints(datapoints)\n\t\t\t\t\tanalysis_setting.addParameter(\u0027eqPath\u0027)\n\t\t\t\t\tanalysis_setting.setFilterExpression(\"Equipment Path \u003d @eqPath\")\n\t\t\t\t\tanalysis_setting.setGroupBy(\"Line Downtime Event Sequence\")\n\t\t\t\t\tanalysis_setting.setOrderBy(\"Line Downtime Event Sequence\")\n\t\t\t\t\tstart_date \u003d system.date.addYears(system.date.now(), -1)\n\t\t\t\t\tend_date \u003d system.date.now()\n\t\t\t\t\tparams \u003d {\u0027eqPath\u0027: eqPath }\n\t\t\t\t\tanalysisData \u003d system.mes.analysis.executeAnalysis(start_date, end_date, analysis_setting, params).getDataset()\n\t\t\t\t\t# Get value in seconds\n\t\t\t\t\tsecs \u003d int(analysisData.getValueAt(0, \"Line State Duration\") * 60)\n\t\t\t\t\thours \u003d secs / 3600\n\t\t\t\t\tminutes \u003d secs / 60 - hours * 60\n\t\t\t\t\tdtDuration \u003d \"%dh %02dm\" % (hours, minutes)\n\t\t\t\telse:\n\t\t\t\t\tdtDuration \u003d \"--:--\"\t\n\t\t\t#\tif stateValue !\u003d 1: # Not Running\n\t\t\t#\t\tdownCount +\u003d 1\n\t\t\t#\t\tstate \u003d 1\n\t\t\t#\telse:\n\t\t\t#\t\tstate \u003d 3\n\t\t\t\t\t\n\t\t\t\t# Get PLC status\n\t\t\t\ttry: # Get defaultPath (tag)\n\t\t\t\t\tdefaultPath \u003d eqPath.replace(\u0027\\\\\u0027, \u0027/\u0027)\n\t\t\t\t\tif \u0027[global]/\u0027 in (defaultPath):\n\t\t\t\t\t\tdefaultPath \u003d defaultPath[len(\u0027[global]/\u0027):]    #Remove [global]\\\n\t\t\t\t\tdefaultPath \u003d \u0027[default]\u0027 + defaultPath + \u0027/OEE/\u0027\n\t\t\t\t\tplc \u003d system.tag.read( defaultPath + \"PLC/Is Connected\" ).value\n\t\t\t\t\tif plc \u003d\u003d None:\n\t\t\t\t\t\tplc \u003d bool(0)\n\t\t\t\texcept:\n\t\t\t\t\tplc \u003d bool(0)\n\t\t\t\t\n\t\t\t\t# Get alarms in equipments group (disabled)\n\t\t\t\tproperties \u003d [(\"Group\",\"\u003d\", eqName )]\n\t\t\t\ttags \u003d system.alarm.queryStatus(source\u003d[\"*\"],all_properties\u003dproperties)\n\t\t\t\talQty \u003d len(tags)\n\t\t\t\n\t\t\t\t# Machine\u0027s Widget params dict\n\t\t\t\twidgetParams \u003d {\u0027name\u0027: eqName,\n\t\t\t\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: stateValue,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027plc\u0027: plc,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027alarms\u0027: alQty,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027time\u0027: dtDuration },\n\t\t\t\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1),\n\t\t\t\t\t\t\t\t\t\t\t\u0027title\u0027: eqName\t}, \n\t\t\t\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \n\t\t\t\t\t\t\t\t\t\t\t\u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: row+1,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027rowEnd\u0027: row+1,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: col+1,\n\t\t\t\t\t\t\t\t\t\t\t\t\u0027columnEnd\u0027: col+1\n\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\twidgets.append( widgetParams )\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\tdef getNextPosition(lastOccupiedCol, lastOccupiedRow):\n\t\tnextAvailableCol \u003d lastOccupiedCol +1\n\t\tnextAvailableRow \u003d lastOccupiedRow\n\t\tif nextAvailableCol \u003e columns:\n\t\t\tnextAvailableCol \u003d 1\n\t\t\tnextAvailableRow \u003d lastOccupiedRow +1\n\t\tlastOccupiedCol \u003d nextAvailableCol\n\t\tlastOccupiedRow \u003d nextAvailableRow\n\t\treturn nextAvailableRow, nextAvailableCol\n\t\n\t\n\t\"\"\"\n\t\n\t# #\t# Manually add each service area:\n\tsN \u003d 1\n\tserviceName \u003d \"Caldera Vapor 200 y 300 BHP\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\t\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Baja Presion de Vapor\").value\n\t\tal2 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Tanque Condensado\").value\n\t\tal3 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Caldera 200BHP\").value\n\t\tal4 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Caldera 300BHP\").value\n\t\talarmCount \u003d int( al1 + al2 + al3 + al4 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 4\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow, \u0027rowEnd\u0027: nextAvailableRow, \n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\t\n\tserviceName \u003d \"Tanque Condensado\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\tsN +\u003d 1\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Bajo Nivel Tanque de Condensado\").value\n\t\talarmCount \u003d int( al1 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 1\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow,\u0027rowEnd\u0027: nextAvailableRow,\n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\tserviceName \u003d \"Chiller Absorcion y Trane\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\tsN +\u003d 1\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Chiller de Absorcion\").value\n\t\tal2 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Chiller TRANE\").value\n\t\tal3 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Baja Presion Agua Distribuidor\").value\n\t\tal4 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Alta Temperatura Agua Chiller\").value\n\t\tal5 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Bomba 1\").value\n\t\tal6 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Bomba 2\").value\n\t\talarmCount \u003d int( al1 + al2 + al3 + al4 + al5 + al6 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 6\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow,\u0027rowEnd\u0027: nextAvailableRow,\n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\tserviceName \u003d \"Compresores GA 132 y 160\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\tsN +\u003d 1\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Baja Presion de Aire\").value\n\t\tal2 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Compresor GA132\").value\n\t\tal3 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Compresor GA160\").value\n\t\talarmCount \u003d int( al1 + al2 + al3 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 3\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow,\u0027rowEnd\u0027: nextAvailableRow,\n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\tserviceName \u003d \"Tanques Servicios Generales\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\tsN +\u003d 1\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Control de Nivel de Tanques\").value\n\t\talarmCount \u003d int( al1 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 1\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow,\u0027rowEnd\u0027: nextAvailableRow,\n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\tserviceName \u003d \"Sistema Refrigeracion Agua Torres\"\n\tnextAvailableRow, nextAvailableCol \u003d getNextPosition(lastOccupiedCol, lastOccupiedRow)\n\tlastOccupiedCol \u003d nextAvailableCol\n\tlastOccupiedRow \u003d nextAvailableRow\n\tsN +\u003d 1\n\t# Read Alarms/PLC:\n\ttry:\n\t\tplc \u003d bool(1)\n\t\tal1 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Torre Enfriamiento 1\").value\n\t\tal2 \u003d system.tag.read(\"[default]Servicios/Minipak/Alarmas/Falla Torre Enfriamiento 3\").value\n\t\talarmCount \u003d int( al1 + al2 )\n\texcept:\n\t\tplc \u003d bool(0)\n\t\talarmCount \u003d 2\n\twidgetParams \u003d {\u0027name\u0027: serviceName,\n\t\t\t\t\t\u0027viewPath\u0027: \"Mantenimiento/TvWidget\",\n\t\t\t\t\t\u0027viewParams\u0027: {\t\u0027state\u0027: 1, \u0027plc\u0027: plc, \u0027alarms\u0027: alarmCount,\n\t\t\t\t\t\t\t\t\t\u0027time\u0027: \"00:00:00\" },\n\t\t\t\t\t\u0027isConfigurable\u0027: bool(0),\n\t\t\t\t\t\u0027header\u0027: {\t\u0027enabled\u0027: bool(1), \u0027title\u0027: serviceName\t}, \n\t\t\t\t\t\u0027minSize\u0027: {\u0027columnSpan\u0027: 1, \u0027rowSpan\u0027: 1 }, \n\t\t\t\t\t\u0027position\u0027: {\t\u0027rowStart\u0027: nextAvailableRow,\u0027rowEnd\u0027: nextAvailableRow,\n\t\t\t\t\t\t\t\t\t\u0027columnStart\u0027: nextAvailableCol, \u0027columnEnd\u0027: nextAvailableCol }\n\t}\n\twidgets.append( widgetParams )\n\t\n\t\n\t\"\"\"\n\t\n\t\n\t\n\t\n\t\n\treturn widgets",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "editingToggle": false,
+          "stretch": {}
+        },
+        "type": "ia.display.dashboard"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "backgroundColor": "#192434"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

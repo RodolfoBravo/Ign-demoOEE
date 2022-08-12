@@ -1,0 +1,16 @@
+{
+  "scope": "DG",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "data.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "slvdr",
+      "timestamp": "2020-08-25T19:44:48Z"
+    },
+    "lastModificationSignature": "1e296d34e95e64bb9e7cd7993d2bc46a87458525c70fdb6b5484b19adad93393"
+  }
+}

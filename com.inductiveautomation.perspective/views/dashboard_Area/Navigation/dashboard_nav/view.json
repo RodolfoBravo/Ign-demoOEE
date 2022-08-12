@@ -1,0 +1,114 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 40,
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tself.getSibling(\"Dropdown_0\").props.value \u003d \u0027\u0027\n\tself.getSibling(\"Dropdown_1\").props.value \u003d \u0027\u0027\n\tself.session.custom.planta \u003d self.props.value"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Dropdown"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "options": [
+            {
+              "label": "Minipak",
+              "value": "Minipak"
+            },
+            {
+              "label": "Polybol",
+              "value": "Polybol"
+            }
+          ],
+          "style": {
+            "backgroundColor": "#FFFFFF00",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_0"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "options": [
+            {
+              "label": "1100_Impresion",
+              "value": "1100_Impresion"
+            },
+            {
+              "label": "1100_Rotograbado",
+              "value": "1100_Rotograbado"
+            },
+            {
+              "label": "1100_Refilado",
+              "value": "1100_Refilado"
+            }
+          ],
+          "value": "1100_Refilado"
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_1"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "options": [
+            {
+              "label": "RO1",
+              "value": "RO1"
+            },
+            {
+              "label": "RO2",
+              "value": "RO2"
+            },
+            {
+              "label": "RO3",
+              "value": "RO3"
+            }
+          ],
+          "value": "RO2"
+        },
+        "type": "ia.input.dropdown"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "alignItems": "center",
+      "justify": "space-evenly",
+      "style": {
+        "backgroundColor": "#808080"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "rodolfo.bravo",
+      "timestamp": "2020-05-15T16:10:03Z"
+    },
+    "xml-format-version": 1,
+    "parameter-names": "LastOperationDate,loc,lotNumber,lotTrace,partNumber,rowPackCP,rowpackSerial",
+    "lastModificationSignature": "d8f32fbc2ab1216e76a29dfffd80e5848dbd765151e45d5ad2bee471c97b3aff"
+  }
+}

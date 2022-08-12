@@ -1,0 +1,18 @@
+{
+  "scope": "C",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "thumbnail.png",
+    "window.bin"
+  ],
+  "attributes": {
+    "lastModification": {
+      "actor": "rodolfo.bravo",
+      "timestamp": "2020-06-09T06:20:02Z"
+    },
+    "xml-format-version": 1,
+    "lastModificationSignature": "b3411edaa881351dfa0ea9d13df9fac3bb5ee0d1275032d68270d8b5d3ddaf2f"
+  }
+}
